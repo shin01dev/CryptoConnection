@@ -16,6 +16,7 @@ import {
   getAccount,
   
 } from '@solana/spl-token';
+import {Loader2 } from 'lucide-react'
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -355,7 +356,11 @@ const getPhantomLink = () => {
   }
 };
 
-const link = getPhantomLink();
+const [link, setLink] = useState("https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=ko"); // 기본값 설정
+
+useEffect(() => {
+  setLink(getPhantomLink());
+}, []);
 
 // Define common button style
 const buttonStyle = { 
@@ -399,15 +404,17 @@ const [manualWalletAddress, setManualWalletAddress] = useState<string | null>(nu
 const [transferAmount, setTransferAmount] = useState<number | null>(null);
 const [isTokenTransferred, setIsTokenTransferred] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
+const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 async function sendToken() {
-  setIsLoading(true); // 로딩 시작
-
+  setIsLoading(true);       // 로딩 시작
+  setIsTokenTransferred(false);  // 토큰 전송 상태를 리셋
+  
   if (coinNumber === null || (transferAmount !== null && transferAmount / decimal > coinNumber)) {
     console.error('Transfer amount exceeds available coin number or coin number is not yet loaded');
+    setErrorMessage("전송 실패 !");
     return; // 함수를 여기서 종료합니다.
   }
-  
   let provider = window && window.solana ? window.solana : null;
   
 
@@ -423,9 +430,12 @@ async function sendToken() {
     console.log(toWallet+"qqqqqqqqqqq");
 
 } else {
-    console.error('Wallet not connected or manual address not provided');
-    return;
+  console.error('Wallet not connected or manual address not provided');
+  setErrorMessage("전송 실패");
+  return;
+  
 }
+setErrorMessage(null);
 
   
   try {
@@ -489,6 +499,7 @@ async function sendToken() {
     console.error(error);
   }
   setIsLoading(false); // 로딩 종료
+  window.location.reload(); // 페이지를 새로고침
 
 }
 
@@ -519,24 +530,49 @@ return (
 <Link href="/r/communityWallet">
 커뮤니티 지갑</Link>
       </h1>   
+      {coinNumber !== null ? (
+  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
+    {coinNumber !== 0 ? (
+      <>
+        <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> {/* 48x48 pixels */}
+        <span className="ml-2">COT : {coinNumber}</span>
+      </>
+    ) : (
+      <div className="flex items-center">
+                <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 ml-2 mr-2" /> {/* 48x48 pixels */}
+
+        <span>  COT : 0</span>
+      </div>
+    )}
+  </div>
+) : ( 
+  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
+    <span>토큰 정보를 가져오는 중...</span>
+    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+  </div>
+)}
 
     <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4">
   {ConnectedWalletNow ? (
     <>
-      <span className="text-sm sm:text-base">현재 연결된 지갑 주소: </span>
+      <span className="text-sm sm:text-base" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>1. 현재 연결된 지갑 주소: </span>
       <span className="text-xs sm:text-sm">{ConnectedWalletNow.toString()}</span>
     </>
   ) : (
     <>
-<span className="text-xs sm:text-sm">
-      1. <a 
-         href={link} 
-         target="_blank" 
-         rel="noopener noreferrer"
-         style={{ color: 'blue' }}>
+    
+<span className="text-xs sm:text-sm" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>
+    1. <a 
+        href={link} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}>
         팬텀 지갑
-      </a>을 연결하거나, 아래에 팬텀 지갑 Solana 주소를 입력해주세요:
-    </span>
+    </a>을 연결하거나, 아래에 팬텀 지갑 Solana 주소를 입력해주세요:
+</span>
+
+
+
 
       <input 
         type="text" 
@@ -550,19 +586,13 @@ return (
 </div>
 
 
-{coinNumber ? (
-  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
-    <img src="/favicon.ico" alt="Coin Image" className="w-12 h-12" /> {/* 48x48 pixels */}
-    <span className="ml-2">COT : {coinNumber}</span>
-  </div>
-) : (
-  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4">
-    Loading...
-  </div>
-)}
+
 
     <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4">
-      <label className="text-gray-600 block mb-2">2. 전송할 토큰 수량을 입력해 주세요.</label>
+    <label className="text-gray-600 block mb-2" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>
+    2. 전송할 토큰 수량을 입력해 주세요.
+</label>
+
       <input
         type="number"
         className="border rounded-md p-2 w-full"
@@ -588,24 +618,41 @@ return (
 
     {inputError && <div className="text-red-500 shadow-md p-4 bg-white rounded-md w-full max-w-md">{inputErrorMessage}</div>}
 
-    <button className="mr-8 ml-8 bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 active:bg-blue-700 focus:outline-none shadow-md w-full max-w-md" onClick={sendToken}>
-      3. 연결된 팬텀 지갑으로 토큰 전송하기
-    </button>
-{/* 여기에 메시지를 추가합니다. */}
-{isLoading && (
-      <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 text-center">
-        로딩 중...
-      </div>
-    )} 
-{isTokenTransferred && (
-      <div className="mt-4 shadow-md p-4 bg-green-100 text-green-800 rounded-md w-full max-w-md">
-        토큰이 성공적으로 전송 되었습니다
-      </div>
-    )}
+    <button className="mr-10 ml-10 text-black rounded-md p-2 hover:bg-opacity-90 active:bg-opacity-80 focus:outline-none shadow-md w-3/4 max-w-md transform transition-transform duration-300 hover:scale-105" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }} onClick={sendToken}>
+    <span style={{ backgroundColor: 'rgba(255, 255, 0, 0.6)' }}>
+        3. 연결된 팬텀 지갑으로 토큰 전송하기
+    </span>
+</button>
 
-    <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md text-center">
-      연결된 지갑 주소로, 토큰이 지급됩니다
-    </div>
+
+{/* 로딩 중 메시지 */}
+{isLoading && !isTokenTransferred && !errorMessage && (
+  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center justify-center">
+  <span className="mr-2">토큰을 지급하는 중...</span>
+  <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+</div>
+
+)}
+
+{/* 에러 메시지 */}
+{errorMessage && (
+  <div className="text-red-600 font-medium text-sm bg-red-50 border border-red-400 p-3 rounded-md shadow-md transform transition-transform duration-300 hover:scale-105">
+    {errorMessage}
+  </div>
+)}
+
+{/* 토큰 전송 성공 메시지 */}
+{isTokenTransferred && (
+  <div className="mt-4 shadow-md p-4 bg-green-100 text-green-800 rounded-md w-full max-w-md">
+    토큰이 성공적으로 전송 되었습니다
+  </div>
+)}
+
+{/* 지갑 연결 안내 메시지 */}
+{/* <div className="sm:shadow-md p-4 bg-white rounded-md w-full max-w-md text-center sm:ml-4 , sm:mr-4">
+  연결된 지갑 주소로, 토큰이 지급됩니다
+</div> */}
+
     {/* <button style={buttonStyle} onClick={createToken}>Create token</button>
 <button style={buttonStyle} onClick={mintToken}>Mint token</button>
 <button style={buttonStyle} onClick={saveTokenToDb}>Save database</button>

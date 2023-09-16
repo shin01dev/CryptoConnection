@@ -15,7 +15,7 @@ const Navbar = async () => {
           <a href='/'>
             <div className="flex gap-2 items-center cursor-pointer">
               <img src='/favicon.ico' className='h-8 w-8 md:h-12 md:w-10 ml-3' />
-              <p className='text-zinc-700 text-sm font-medium'>코인 커뮤니티</p>
+              <p className='text-zinc-700 text-sm font-medium'>크립토 커넥션 </p>
             </div>
           </a>
           {/* actions */}

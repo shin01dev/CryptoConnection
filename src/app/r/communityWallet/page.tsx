@@ -17,6 +17,7 @@ import {
   
 } from '@solana/spl-token';
 import { useToast } from '@/hooks/use-toast';
+import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 import { useState, useEffect, SetStateAction } from 'react';
 import axios from 'axios';
@@ -72,17 +73,6 @@ async function connectWallet() {
   
   const [userInputWallet, setUserInputWallet] = useState('');
 
-  
-  const getTransactions = async (tokenAccountAddress: string, mintAddress: string) => {
-    const apiUrl = '/api/saveTransactionsInfo';
-    
-    await axios.post(apiUrl, {
-      tokenAccountAddress,
-      mintAddress,
-    });
-  
-    console.log("Transactions 서버로 전송됨");
-};
 
   
   
@@ -138,6 +128,8 @@ async function connectWallet() {
             variant: 'destructive'
         });  // 예외 오류 메시지
     }
+    window.location.reload(); // 페이지를 새로고침
+
 }
 
 
@@ -212,48 +204,135 @@ if (typeof window !== 'undefined' && window.solana && window.solana.publicKey) {
   ConnectedWalletNow = new PublicKey(provider.publicKey.toBase58());
 }
 // }, []);
+const getPhantomLink = () => {
+  if (typeof window === 'undefined') {
+    return "https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=ko"; // 기본 링크
+  }
 
+  const userAgent = window.navigator.userAgent;
+
+  if (/Android/i.test(userAgent)) {
+    return "https://play.google.com/store/apps/details?id=app.phantom&hl=ko&gl=US&pli=1";
+  } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+    return "https://apps.apple.com/kr/app/phantom-crypto-wallet/id1598432977";
+  } else {
+    return "https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=ko";
+  }
+};
+
+const [link, setLink] = useState("https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=ko"); // 기본값 설정
+
+useEffect(() => {
+  setLink(getPhantomLink());
+}, []);
+  
+
+const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
+
+const getTransactions = async (tokenAccountAddress: string, mintAddress: string) => {
+  setIsTransactionsLoading(false);
+
+  const apiUrl = '/api/saveTransactionsInfo';
+  
+  await axios.post(apiUrl, {
+    tokenAccountAddress,
+    mintAddress,
+  });
+
+  setIsTransactionsLoading(true);
+  console.log("Transactions 서버로 전송됨");
+  window.location.reload(); // 페이지를 새로고침
+
+};
 
 return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
       <h1 className="text-gray-700 text-2xl font-semibold mb-6">커뮤니티 지갑</h1>
+      <div className="">
+      {coinNumber !== null ? (
+  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md  flex items-center">
+    <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> {/* 이미지 추가 */}
+    <span className="ml-2">COT : {coinNumber}</span>
+  </div>
+) : ( 
+<div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
+  <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> {/* 이미지 추가 */}
+  <span className="flex items-center">
+    Loading... <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+  </span>
+</div>
 
+)
+}
+      </div>
       {/* Public Key Section */}
       <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        <h2 className="font-medium text-gray-600">등록된 지갑 공개 주소</h2>
-        <p className="text-blue-500">{publicKey}</p>
-        <input
-          className="border rounded p-2 w-full mt-2"
-          value={publicKeyInput}
-          onChange={(e) => setPublicKeyInput(e.target.value)}
-          placeholder="Public Key for Crypto Transactions"
-        />
-        <button className="mt-2 bg-blue-500 text-white rounded p-2 w-full hover:bg-blue-600 transition duration-300" onClick={updatePublicKeyForCrypto}>
-          Update Public Key
-        </button>
-      </div>
+      <h2 className="font-medium text-gray-600 flex items-center text-xs md:text-sm lg:text-base" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>
+  1. 환전 주소로 COT 토큰을 보낼, 회원님의 팬텀 지갑 Solana 주소를 등록해 주세요
+</h2>
+
+
+
+    <p className="text-purple-500 break-all overflow-hidden">등록된 주소 : {publicKey}</p>
+    <input
+      className="border rounded p-2 w-full mt-2"
+      value={publicKeyInput}
+      onChange={(e) => setPublicKeyInput(e.target.value)}
+      placeholder="Public Key for Crypto Transactions"
+    />
+    <button className="mt-2 bg-blue-500 text-white rounded p-2 w-full hover:bg-blue-600 transition duration-300"style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }} onClick={updatePublicKeyForCrypto}>
+      Update Public Key
+    </button>
+</div>
 
       {/* 환전 주소 Section */}
       <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        <p className="text-sm">환전 주소 : BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu</p>
-      </div>
+      <p className="text-sm break-all overflow-hidden" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>
+  2. 환전 주소로 COT 토큰을 전송해 주세요.<br /> <span className="text-red-600">(전송할 팬텀 지갑의 Solana 지갑주소를 꼭 먼저 등록하셔야 합니다)</span>
+</p>
+
+
+
+    <p className="text-purple-500  text-sm break-all overflow-hidden ">
+        환전 주소 : BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu
+    </p>
+</div>
+
 
       {/* Coin Number Section */}
-      <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        {coinNumber ? `COIN: ${coinNumber}` : 'Loading...'}
-      </div>
+
 
       {/* Token 전송하기 Button Section */}
       <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300" onClick={() => getTransactions('BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu', '8urzVvMEJyNqWpXjvA8vLvUbwLUhNzFpfckKyExBZpKR')}>
-          커뮤니티 지갑으로 토큰 전송하기
-        </button>
+        <div className="text-sm break-all overflow-hidden" style={{ backgroundColor: 'rgba(255, 255, 0, 0.5)' }}>
+  3. 솔라나 스캔에서 전송 확인 후 버튼을 눌러주세요.
+  </div>
+  <a href="https://solscan.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline ml-1">
+    Solana Scan에서 확인하기
+  </a>
+  <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300 mt-2" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }}onClick={() => getTransactions('BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu', '8urzVvMEJyNqWpXjvA8vLvUbwLUhNzFpfckKyExBZpKR')}>
+    커뮤니티 지갑으로 토큰 전송하기
+  </button>
+  <div>
+    {!isTransactionsLoading ? (
+      <div className="flex items-center">
+  <div className="text-purple-500">회원님이 전송한 토큰을 확인하는 중...</div>
+  <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+</div>
+    ) : (
+      // 내용을 보여줄 부분
+      <div>
+        {/* 내용 컴포넌트 */}
       </div>
+    )}
+  </div>
+</div>
+
 
       {/* 설명 Section */}
-      <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        연결된 지갑주소와 환전 주소로 토큰을 보낸 지갑 주소가 동일 해야, 커뮤니티 토큰이 충전 됩니다
-      </div>
+      {/* <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
+        등록된 지갑주소와 환전 주소로 토큰을 보낸 지갑 주소가 동일 해야, 커뮤니티 토큰이 충전 됩니다
+      </div> */}
 
       {inputError && <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4"><p className="text-red-500">{inputErrorMessage}</p></div>}
       {errorMsg && <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4"><p className="text-red-500">{errorMsg}</p></div>}
@@ -276,85 +355,3 @@ return (
 
 
 
-
-
-      //토큰 만들기
-
-
-    //   async function createToken() {
-        // const fromAirdropSignature = await connection.requestAirdrop(fromWallet.publicKey, LAMPORTS_PER_SOL);
-        // await connection.confirmTransaction(fromAirdropSignature);
-     
-        // Create new token mint
-//         mint = await createMint(
-//             connection, 
-//             fromWallet, 
-//             fromWallet.publicKey, 
-//             null, 
-//             9 // 9 here means we have a decmial of 9 0's
-//         );
-//         console.log(`Create token: ${mint.toBase58()}`);
-    
-//         // Get the token account of the fromWallet address, and if it does not exist, create it
-//         fromTokenAccount = await getOrCreateAssociatedTokenAccount(
-//             connection,
-//             fromWallet,
-//             mint,
-//             fromWallet.publicKey
-//         );
-//         console.log(`Create Token Account: ${fromTokenAccount.address.toBase58()}`);
-  
-//     }
-  
-//     async function mintToken() {      
-//         // Mint 1 new token to the "fromTokenAccount" account we just created
-//         const signature = await mintTo(
-//             connection,
-//             fromWallet,
-//             mint,
-//             fromTokenAccount.address,
-//             fromWallet.publicKey,
-//             1000000000000 // 1000 billion
-//         );
-//         console.log(`Mint signature: ${signature}`);
-        
-//     }
-  
-//     async function checkBalance() {
-      
-//         // get the supply of tokens we have minted into existance
-//         const mintInfo = await getMint(connection, mint);
-//     console.log(mintInfo.supply);
-    
-//     // get the amount of tokens left in the account
-//         const tokenAccountInfo = await getAccount(connection, fromTokenAccount.address);
-//     console.log(tokenAccountInfo.amount);
-//     }
-  
-//     async function saveTokenToDb() {
-//       if (mint && fromWallet && fromTokenAccount.address) {
-//           const tokenData = {
-//               mint: mint.toBase58(),
-//               wallet: fromWallet.publicKey.toBase58(),
-//               privateKey: Array.from(fromWallet.secretKey),
-//               fromTokenAccountAddress: fromTokenAccount.address
-//           };
-  
-//           try {
-//               const response = await axios.post('/api/saveKeyData', tokenData);
-//               console.log(response.data);
-//           } catch (error) {
-//               console.error(error); // 서버 측에서 발생한 오류를 콘솔에 출력
-//           }
-//       } else {
-//           console.log('Mint or Wallet or Token Account Address is not initialized yet');
-//       }
-//   }
-  
-// <button style={buttonStyle} onClick={createToken}>Create token</button>
-// <button style={buttonStyle} onClick={mintToken}>Mint token</button>
-// <button style={buttonStyle} onClick={saveTokenToDb}>Save database</button>
-
-
-
-// <button style={buttonStyle} onClick={getCoinNumber}>getCoinNumber</button>
