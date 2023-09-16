@@ -1,0 +1,208 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+model Account {
+  crypto_currency   String? @default("0")
+  id                String  @id @default(cuid())
+  userId            String   @default(cuid()) @unique
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  public_key     String?
+  password_for_crypto_transactions     String? @default(cuid()) @unique
+  public_key_for_crypto_transactions  String? 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Follow {
+  followerId  String
+  followingId String
+  follower    User? @relation("Followed", fields: [followerId], references: [id])
+  following   User? @relation("Follower", fields: [followingId], references: [id])
+  notification String
+  createdAt DateTime @default(now())
+
+  @@id([followerId, followingId])
+}
+
+model User {
+  id                String         @id @default(cuid())
+  name              String?
+  email             String?        @unique
+  emailVerified     DateTime?
+  createdSubreddits Subreddit[]    @relation("CreatedBy")
+  subscriptions     Subscription[]
+  votes             Vote[]
+  username          String?        @unique
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  Post              Post[]
+  Comment           Comment[]
+  CommentVote       CommentVote[]
+
+  following  Follow[] @relation("Follower")
+  followers  Follow[] @relation("Followed")
+
+}
+
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+model Subreddit {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  realname      String?   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  creatorId   String?
+  Creator     User?          @relation("CreatedBy", fields: [creatorId], references: [id])
+  subscribers Subscription[]
+
+  @@index([name])
+}
+
+model Subscription {
+  user        User?      @relation(fields: [userId], references: [id])
+  userId      String
+  subreddit   Subreddit? @relation(fields: [subredditId], references: [id])
+  subredditId String
+
+  @@id([userId, subredditId])
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  content     Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  subreddit   Subreddit? @relation(fields: [subredditId], references: [id])
+  subredditId String
+  comments    Comment[] 
+  votes       Vote[]
+  thumbnail    String?   // New field added
+  donateTo     String?
+  donateCoin   String?
+  notification String?
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  notification  String?
+
+  replyToId String?
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
+
+  votes     CommentVote[]
+  commentId String?
+}
+
+model Vote {
+  user   User     @relation(fields: [userId], references: [id])
+  userId String
+  post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  type   VoteType
+  notification    String?
+    createdAt DateTime @default(now())
+
+
+  @@id([userId, postId])
+}
+
+model CommentVote {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  type      VoteType
+  notification    String?
+  createdAt DateTime @default(now())
+
+
+
+  @@id([userId, commentId])
+}
+
+
+model crypto_key_info {
+  id          String    @id @default(cuid())
+  mint       String
+  fromWallet       String
+  privateKey              String      @db.VarChar(8192)   // 변경된 부분: VARCHAR 길이를 8192로 수정
+  fromTokenAccountAddress       String
+  createdAt DateTime @default(now())
+
+
+
+
+}
+
+model crypto_transactions {
+  id                        String    @id @default(cuid())
+  TransactionSignature       String   @unique
+  Time                      String
+  Source_Address            String      
+  Destination_Address       String
+  Amount                    String
+  UI_Amount                 String
+  Mint_Address              String
+  DidYouGive                String
+  createdAt DateTime @default(now())
+
+}
+
+
+model giveCryptoUser{
+  id                        String   @id @default(cuid())
+  Time                      String?
+  postId                    String?     
+  TokenAmount               String?
+  userId                    String?
+  subredditName             String?
+  level                     String?
+  notification              String?
+  createdAt DateTime @default(now())
+
+}
