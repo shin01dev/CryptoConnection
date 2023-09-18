@@ -118,6 +118,8 @@ model Post {
   donateTo     String?
   donateCoin   String?
   notification String?
+    vote_Sum   String? 
+
 }
 
 model Comment {

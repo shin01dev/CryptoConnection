@@ -152,7 +152,15 @@ export async function PATCH(req: Request) {
 
       // 투표 합계 다시 계산
     const votesAmt = await calculateVotesAmt(postId);
-    
+    // 여기에 vote_Sum 업데이트 코드 추가
+await db.post.update({
+  where: {
+    id: postId,
+  },
+  data: {
+    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+  },
+});
     await awardTokens(post, votesAmt);
 
 
@@ -186,7 +194,15 @@ export async function PATCH(req: Request) {
         },
       })
       const votesAmt = await calculateVotesAmt(postId);
-
+// 여기에 vote_Sum 업데이트 코드 추가
+await db.post.update({
+  where: {
+    id: postId,
+  },
+  data: {
+    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+  },
+});
       await awardTokens(post, votesAmt);
 
 
@@ -217,7 +233,15 @@ export async function PATCH(req: Request) {
     })
 
     const votesAmt = await calculateVotesAmt(postId);
-
+// 여기에 vote_Sum 업데이트 코드 추가
+await db.post.update({
+  where: {
+    id: postId,
+  },
+  data: {
+    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+  },
+});
     await awardTokens(post, votesAmt);
 
 
