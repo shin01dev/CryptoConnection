@@ -21,7 +21,7 @@ interface PostFeedProps {
 const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
   const lastPostRef = useRef<HTMLElement>(null)
 
-  const BASE_URL = 'http://localhost:3000';
+  const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
 
 
   const { ref, entry } = useIntersection({

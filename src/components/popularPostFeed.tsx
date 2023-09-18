@@ -20,7 +20,7 @@ interface PostFeedProps {
 
 const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
     let [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-    const BASE_URL = 'http://localhost:3000';
+    const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
     const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   

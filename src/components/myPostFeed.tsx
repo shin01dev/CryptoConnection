@@ -24,7 +24,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
     root: lastPostRef.current,
     threshold: 1,
   })
-  const BASE_URL = 'http://localhost:3000';
+  const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
   const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   
