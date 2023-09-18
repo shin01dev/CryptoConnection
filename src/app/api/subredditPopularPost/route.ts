@@ -1,19 +1,15 @@
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { z } from 'zod'
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/db';
+import { z } from 'zod';
 
 export async function GET(req: Request) {
-  const url = new URL(req.url)
-  console.log("999")
+  const url = new URL(req.url);
+  console.log("999");
 
-  const session = await getAuthSession()
-
-  let followedCommunitiesIds: string[] = []
-
+  const session = await getAuthSession();
 
   try {
     const { limit, page, subredditName } = z
-    
       .object({
         limit: z.string(),
         page: z.string(),
@@ -23,72 +19,32 @@ export async function GET(req: Request) {
         subredditName: url.searchParams.get('subredditName'),
         limit: url.searchParams.get('limit'),
         page: url.searchParams.get('page'),
-      })
-      console.log(subredditName+"9")
-      // console.log(encodeURIComponent(subredditName)+"9")
-
-
-  
-
-      const getVoteDifference = async (postId: string) => {
-        const upVotes = await db.vote.count({
-          where: {
-            postId: postId,
-            type: 'UP'   // 'UP'은 실제 UP 투표를 나타내는 값으로 바꿔야 합니다.
-          }
-        });
-      
-        const downVotes = await db.vote.count({
-          where: {
-            postId: postId,
-            type: 'DOWN'   // 'DOWN'은 실제 DOWN 투표를 나타내는 값으로 바꿔야 합니다.
-          }
-        });
-      
-        return upVotes - downVotes;
-      };
-      
-      const allPostIds = await db.vote.findMany({
-        select: {
-          postId: true
-        },
-        distinct: ['postId']
       });
-      
-      const validPostIds = [];
-      for (const { postId } of allPostIds) {
-        const difference = await getVoteDifference(postId);
-        if (difference >= 1) {
-          validPostIds.push(postId);
-        }
-      }
-      
-      const validPosts = await db.post.findMany({
-        where: {
-          id: {
-            in: validPostIds
-          },
-          subreddit: subredditName ? { name: encodeURIComponent(subredditName) } : undefined,
+    console.log(subredditName + "9");
 
+    const validPosts = await db.post.findMany({
+      where: {
+        vote_Sum: {
+          gte: 1  // `vote_Sum` 값이 1 이상인 포스트만 가져옵니다.
         },
-        orderBy: {
-          createdAt: 'desc'
-        },
-        take: parseInt(limit),
-        skip: (parseInt(page) - 1) * parseInt(limit),
-        include: {
-          subreddit: true,
-          votes: true,
-          author: true,
-          comments: true,
-        },
-      });
-      
-      
-      return new Response(JSON.stringify(validPosts));
-      
-  
+        subreddit: subredditName ? { name: encodeURIComponent(subredditName) } : undefined,
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: parseInt(limit),
+      skip: (parseInt(page) - 1) * parseInt(limit),
+      include: {
+        subreddit: true,
+        votes: true,
+        author: true,
+        comments: true,
+      },
+    });
+
+    return new Response(JSON.stringify(validPosts));
+
   } catch (error) {
-    return new Response('Could not fetch posts', { status: 500 })
+    return new Response('Could not fetch posts', { status: 500 });
   }
 }

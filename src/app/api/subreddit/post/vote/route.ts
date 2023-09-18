@@ -158,7 +158,7 @@ await db.post.update({
     id: postId,
   },
   data: {
-    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+    vote_Sum: (votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
   },
 });
     await awardTokens(post, votesAmt);
@@ -200,7 +200,7 @@ await db.post.update({
     id: postId,
   },
   data: {
-    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+    vote_Sum: (votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
   },
 });
       await awardTokens(post, votesAmt);
@@ -239,7 +239,7 @@ await db.post.update({
     id: postId,
   },
   data: {
-    vote_Sum: String(votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
+    vote_Sum: (votesAmt), // String 형태로 저장합니다. (vote_Sum 필드가 String 타입이므로)
   },
 });
     await awardTokens(post, votesAmt);

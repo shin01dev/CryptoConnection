@@ -22,6 +22,7 @@ const Page = ({}: PageProps) => {
         const response = await axios.get('/api/populPosts');
         if (response.status === 200) {
           const result = response.data;
+          console.log(JSON.stringify(result)+"!!!")
           if (Array.isArray(result.filteredPosts)) {
             setData(result.filteredPosts);
             setSession(result.userId);
