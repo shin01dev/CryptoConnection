@@ -260,7 +260,7 @@ async function checkAndSaveKeys() {
 const getTokenBalance = async (): Promise<number> => {
   const connection = new Connection('https://fragrant-cosmological-ensemble.solana-mainnet.discover.quiknode.pro/4771f857c3d336d109cbd1812a6f7745a198eb15/','confirmed');
 // 지정된 토큰 어드레스
-const tokenAddress = new PublicKey("BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu");
+const tokenAddress = new PublicKey("HQNntSpnCFsEA3Vyac9yQNEsmBovwx6XYuzXsJomW8fE");
 
 // 조회하려는 계정의 주소
 const accountAddress = new PublicKey(keys.publicKey);

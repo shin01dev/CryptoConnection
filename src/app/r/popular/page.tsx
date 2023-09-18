@@ -1,20 +1,19 @@
-'use client'
-import MiniCreatePost from '@/components/MiniCreatePost'
-import PopularPostFeed from '@/components/popularPostFeed'
-import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+'use client';
+import MiniCreatePost from '@/components/MiniCreatePost';
+import PopularPostFeed from '@/components/popularPostFeed';
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 interface PageProps {}
 
 const Page = ({}: PageProps) => {
   const [error, setError] = useState(null);
-  const [Data, setData] = useState<any[]>([]); // If you are not using 'Data', you should remove this
-  const [Session, setSession] = useState<any[]>([]); // If you are not using 'Session', you should remove this
-
-  // PopularPostFeed 컴포넌트를 저장할 상태
+  const [Data, setData] = useState<any[]>([]); 
+  const [Session, setSession] = useState<any[]>([]); 
   const [popularFeedElement, setPopularFeedElement] = useState<React.ReactNode | null>(null);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     async function fetchData() {
@@ -26,8 +25,8 @@ const Page = ({}: PageProps) => {
             setData(result.filteredPosts);
             setSession(result.userId);
             
-            // API 호출이 성공적으로 완료된 후 PopularPostFeed 컴포넌트를 상태에 저장
             setPopularFeedElement(<PopularPostFeed key={result.filteredPosts.length} initialPosts={result.filteredPosts} session={result.userId} />);
+            setLoading(false); 
           } else {
             throw new Error('Data format is not as expected');
           }
@@ -37,6 +36,7 @@ const Page = ({}: PageProps) => {
       } catch (error:any) {
         console.error('Error fetching data:', error);
         setError(error);
+        setLoading(false);
       }
     }
 
@@ -46,8 +46,15 @@ const Page = ({}: PageProps) => {
   return (
     <>
       <div className='sm:ml-20 ml-1'>
-          {/* 상태에서 저장된 PopularPostFeed 컴포넌트를 렌더링 */}
-          {popularFeedElement}
+        {popularFeedElement}
+        {loading ? null : Data.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-64 mt-10">
+
+            <span className="text-gray-500 font-semibold text-lg">
+              인기글이 아직 없습니다.
+            </span>
+          </div>
+        )}
       </div>
     </>
   );

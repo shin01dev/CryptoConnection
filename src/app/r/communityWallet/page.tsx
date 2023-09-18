@@ -294,7 +294,7 @@ return (
 
 
     <p className="text-purple-500  text-sm break-all overflow-hidden ">
-        환전 주소 : BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu
+        환전 주소 : HQNntSpnCFsEA3Vyac9yQNEsmBovwx6XYuzXsJomW8fE
     </p>
 </div>
 
@@ -310,7 +310,7 @@ return (
   <a href="https://solscan.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline ml-1">
     Solana Scan에서 확인하기
   </a>
-  <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300 mt-2" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }}onClick={() => getTransactions('BkWSdkrLJQ8rWd41itsitq5JRmEbmELHr7Zbx9qhhrLu', '8urzVvMEJyNqWpXjvA8vLvUbwLUhNzFpfckKyExBZpKR')}>
+  <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300 mt-2" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }}onClick={() => getTransactions('HQNntSpnCFsEA3Vyac9yQNEsmBovwx6XYuzXsJomW8fE', 'AhrB82aokkXPXvqgdR5X4hVfo4iq7FQqigqTFpB236YB')}>
     커뮤니티 지갑으로 토큰 전송하기
   </button>
   <div>

@@ -140,17 +140,16 @@ const SubNavbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
              <DropdownMenu>
-             <DropdownMenuTrigger className='mr-4'>
-            <div
-              className='relative pb-2'
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
-                게시판
-              </p>
-            </div>
-          </DropdownMenuTrigger>
+             <div
+  className='relative pb-2'
+  onMouseEnter={() => setIsHovering(true)}
+  onMouseLeave={() => setIsHovering(false)}
+>
+  <a href="http://localhost:3000/category" className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+    게시판
+  </a>
+</div>
+
           
           <DropdownMenuContent>
             
