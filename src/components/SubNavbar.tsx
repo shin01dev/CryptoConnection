@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { BASE_URL } from './BASE_URL'
 
 const SubNavbar = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -145,7 +146,7 @@ const SubNavbar = () => {
   onMouseEnter={() => setIsHovering(true)}
   onMouseLeave={() => setIsHovering(false)}
 >
-  <a href="http://localhost:3000/category" className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+  <a href="/category" className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
     게시판
   </a>
 </div>

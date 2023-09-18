@@ -17,7 +17,6 @@ export async function POST(req: any) {
     console.log(userId)
 
     const decodedSlug = decodeURIComponent(slug);
-console.log(decodedSlug+"3")
     const subreddit = await db.subreddit.findFirst({
       where: { name: slug },
       include: {

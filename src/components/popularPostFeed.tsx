@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from './BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -10,6 +11,7 @@ import { FC, useEffect, useRef } from 'react'
 import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
@@ -20,7 +22,6 @@ interface PostFeedProps {
 
 const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
     let [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-    const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
     const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   
@@ -96,15 +97,25 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 
       )}
     </span>
-  <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
-        (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
-  <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-  </span>
-</a>
+    <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+  <Link href={
+    (currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`)
+    ? BASE_URL
+    : (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`))
+      ? `/r/${decodedSubredditName}`
+      : `/r/${decodedSubredditName}`
+  }>
 
-  </span>
+      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+        {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`)
+          ? '인기 글'
+          : '인기 글'
+        }
+      </span>
+  
+  </Link>
+</span>
+
 </div>
 )}
       {posts.map((post, index) => {

@@ -50,7 +50,7 @@ const Page = ({params}: PageProps) => {
       <h1 className='font-bold text-3xl md:text-4xl h-14 ml-4'>
         {decodedSlug}
       </h1>
-      <div className='sm:ml-20 ml-1 flex justify-center items-center min-h-screen transform -translate-y-2/4'>
+      <div className='sm:ml-20 ml-1 flex justify-center items-center min-h-screen'>
           {loading ? 
             <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
           : 
@@ -60,6 +60,5 @@ const Page = ({params}: PageProps) => {
     </>
   );
 };
-
 
 export default Page;

@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from './BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -10,6 +11,7 @@ import { FC, useEffect, useRef } from 'react'
 import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
+import Link from 'next/link'
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
@@ -20,7 +22,6 @@ interface PostFeedProps {
 
 const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
   const lastPostRef = useRef<HTMLElement>(null)
-  const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -86,15 +87,15 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
       <>
       <div className="flex space-x-2"> {/* space-x-2는 두 span 태그 사이의 간격을 주기 위해 사용됩니다. */}
   <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={`${BASE_URL}/r/myFeed/${session}`}>
+    <Link href={`${BASE_URL}/r/myFeed/${session}`}>
       ({userName}) 최신 글
-    </a>
+    </Link>
   </span>
 
   <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={`${BASE_URL}/r/donation/${session}`}>
+    <Link href={`${BASE_URL}/r/donation/${session}`}>
       ({userName}) 후원 글
-    </a>
+    </Link>
   </span>
 </div>
 

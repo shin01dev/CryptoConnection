@@ -41,7 +41,7 @@ export async function POST(req: any) {
           if (vote.type === 'DOWN') return acc - 1;
           return acc;
         }, 0);
-        return votesAmt >= 10;
+        return votesAmt >= 1;
       });
   
       return new Response(JSON.stringify({

@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from './BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -20,7 +21,6 @@ interface PostFeedProps {
 
 const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,slug }) => {
     let [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-    const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
     const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   

@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from './BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -21,7 +22,6 @@ interface PostFeedProps {
 const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
   const lastPostRef = useRef<HTMLElement>(null)
 
-  const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
 
 
   const { ref, entry } = useIntersection({
@@ -83,19 +83,19 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   </a>
   
       ) : (
-        <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+        <Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
           <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
             {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
           </span>
-        </a>
+        </Link>
       )}
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+    <Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
       <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
         {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
       </span>
-    </a>
+    </Link>
   </span>
 </div>
 )}

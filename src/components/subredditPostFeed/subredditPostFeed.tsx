@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from '../BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -10,7 +11,7 @@ import { FC, useEffect, useRef } from 'react'
 import Post from '../Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
-
+import Link from 'next/link'
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
@@ -21,7 +22,6 @@ interface PostFeedProps {
 
 const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,dataKey}) => {
     let [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-    const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
     const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   
@@ -100,11 +100,11 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
       )}
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+    <Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
       <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
         {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
       </span>
-    </a>
+    </Link>
   </span>
 </div>
 )}

@@ -1,4 +1,5 @@
 'use client'
+import { BASE_URL } from './BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -10,7 +11,7 @@ import { FC, useEffect, useRef } from 'react'
 import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
-
+import Link from 'next/link'
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
@@ -24,7 +25,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
     root: lastPostRef.current,
     threshold: 1,
   })
-  const BASE_URL = 'https://crypto-community-git-main-shin01dev.vercel.app';
   const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   
@@ -105,24 +105,24 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   </a>
   
       ) : (
-<a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
+<Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
         (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
   <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
     {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
   </span>
-</a>
+</Link>
 
 
       )}
       
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
+  <Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
         (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
   <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
     {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
   </span>
-</a>
+</Link>
   </span>
 </div>
 

@@ -25,6 +25,8 @@ export async function GET(req: Request) {
         page: url.searchParams.get('page'),
       })
       console.log(subredditName+"9")
+      // console.log(encodeURIComponent(subredditName)+"9")
+
 
   
 
@@ -56,7 +58,7 @@ export async function GET(req: Request) {
       const validPostIds = [];
       for (const { postId } of allPostIds) {
         const difference = await getVoteDifference(postId);
-        if (difference >= 10) {
+        if (difference >= 1) {
           validPostIds.push(postId);
         }
       }
@@ -66,9 +68,8 @@ export async function GET(req: Request) {
           id: {
             in: validPostIds
           },
-          subreddit: {
-            name: encodeURIComponent("비트코인") // Match the subreddit name to the one provided in the request
-          }
+          subreddit: subredditName ? { name: encodeURIComponent(subredditName) } : undefined,
+
         },
         orderBy: {
           createdAt: 'desc'

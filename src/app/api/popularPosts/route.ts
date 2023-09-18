@@ -55,7 +55,7 @@ export async function GET(req: Request) {
       const validPostIds = [];
       for (const { postId } of allPostIds) {
         const difference = await getVoteDifference(postId);
-        if (difference >= 10) {
+        if (difference >= 1) {
           validPostIds.push(postId);
         }
       }
