@@ -87,11 +87,11 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
   </a>
   
       ) : (
-        <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
+        <a href={currentURL === `${BASE_URL}/r/popular` ? BASE_URL : 
         (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
-  <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
-  </span>
+    <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+        {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
+    </span>
 </a>
 
       )}
