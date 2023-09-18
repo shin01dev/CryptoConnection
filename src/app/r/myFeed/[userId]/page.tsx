@@ -252,31 +252,41 @@ return (
         <div className='flex items-center justify-between mb-6'>
           <h1 className='font-bold text-3xl md:text-4xl mb-4 sm:ml-60 ml-3'>최근 게시물</h1>
         </div>
-
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-x-6 mx-auto sm:ml-60 mr-2 ml-1' style={{maxWidth: '1200px'}}>
-          {postFeed}
-      <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last hidden md:block'>
-  <div className='bg-emerald-100 px-6 py-4'>
-    <p className='font-semibold py-3 flex items-center gap-1.5'>
-      <HomeIcon className='h-4 w-4' />
-      홈
-    </p>
-  </div>
-  <dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
-    <div className='flex justify-between gap-x-4 py-3'>
-      <p className='text-zinc-500'>
-        개인 커뮤니티를 생성하여, 다른 사람과 함께 공유해 보세요!
-      </p>
+        <div className='flex'>
+          <div className='flex-grow grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-x-6 mx-auto sm:ml-60 mr-2 ml-1' style={{maxWidth: '1000px'}}>
+            {postFeed}
+            {(!postFeed || posts.length === 0) && (
+                <div className="flex flex-col items-center justify-center mt-10">
+                <span className="text-gray-500 font-semibold text-lg">
+                  최근 게시물이 아직 없습니다
+                </span>
+              </div>
+            )}
+          </div>
+          <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last hidden md:block mr-8 ml-4'>
+    <div className='bg-emerald-100 px-6 py-4'>
+        <p className='font-semibold py-3 flex items-center gap-1.5'>
+            <HomeIcon className='h-4 w-4' />
+            홈
+        </p>
     </div>
-    <Link
-      className={buttonVariants({ className: 'w-full mt-4 mb-6' })}
-      href={`/r/create`}>
-      커뮤니티 생성
-    </Link>
-  </dl>
+    <dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
+        <div className='flex justify-between gap-x-4 py-3'>
+            <p className='text-zinc-500'>
+                개인 커뮤니티를 생성하여, 다른 사람과 함께 공유해 보세요!
+            </p>
+        </div>
+        <Link
+            className={buttonVariants({ className: 'w-full mt-4 mb-6' })}
+            href={`/r/create`}>
+            커뮤니티 생성
+        </Link>
+    </dl>
 </div>
 
-        </div>
+  
+</div>
+
         
       </>
     )}

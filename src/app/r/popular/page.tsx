@@ -5,6 +5,7 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 interface PageProps {}
 
@@ -46,14 +47,23 @@ const Page = ({}: PageProps) => {
   return (
     <>
       <div className='sm:ml-20 ml-1'>
-        {popularFeedElement}
-        {loading ? null : Data.length === 0 && (
+        {loading ? (
           <div className="flex flex-col items-center justify-center h-64 mt-10">
-
             <span className="text-gray-500 font-semibold text-lg">
-              인기글이 아직 없습니다.
+            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
             </span>
           </div>
+        ) : (
+          <>
+            {popularFeedElement}
+            {Data.length === 0 && (
+              <div className="flex flex-col items-center justify-center h-64 mt-10">
+                <span className="text-gray-500 font-semibold text-lg">
+                  인기글이 아직 없습니다.
+                </span>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

@@ -230,7 +230,8 @@ useEffect(() => {
                     ? <>        
                         <span> · </span>
                         <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto' }} />
-                        {donateCoins}
+                        <span> · </span>
+  {donateCoins}
                       </>
                     : null
             }

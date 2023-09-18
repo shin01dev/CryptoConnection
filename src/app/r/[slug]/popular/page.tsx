@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import SubredditPopularPostFeed from '@/components/subredditPopularPostFeed'
+import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 interface PageProps {
   params: {
@@ -14,14 +15,11 @@ interface PageProps {
 }
 
 const Page = ({params}: PageProps) => {
-  const { slug } = params
-  const decodedSlug = decodeURIComponent(slug) // 한국어 문자열 디코딩
-  // Remove or use the following states if you are not utilizing them.
-  // const [error, setError] = useState(null);
-  // const [data, setData] = useState<any[]>([]);
-  // const [session, setSession] = useState<any[]>([]);
-
+  const { slug } = params;
+  const decodedSlug = decodeURIComponent(slug);
+  
   const [popularFeedElement, setPopularFeedElement] = useState<React.ReactNode | null>(null);
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
     async function fetchData() {
@@ -31,35 +29,37 @@ const Page = ({params}: PageProps) => {
         });
         if (response.status === 200) {
           const result = response.data;
-          if (Array.isArray(result.filteredPosts)) {
-            // setData(result.filteredPosts);  // Uncomment if you need it
-            // setSession(result.userId);     // Uncomment if you need it
+          if (Array.isArray(result.filteredPosts) && result.filteredPosts.length > 0) {
             setPopularFeedElement(<SubredditPopularPostFeed subredditName={decodedSlug} key={result.filteredPosts.length} initialPosts={result.filteredPosts} session={result.userId} slug={slug} />);
           } else {
-            throw new Error('Data format is not as expected');
+            setPopularFeedElement(<p className="mt-5 text-lg text-center text-gray-500">인기 게시물이 아직 없습니다.</p>);
           }
         } else {
           throw new Error('Failed to fetch data');
         }
       } catch (error: any) {
         console.error('Error fetching data:', error);
-        // setError(error);    // Uncomment if you need it
       }
+      setLoading(false); // 데이터 로딩이 완료되었거나 에러가 발생했을 때 로딩 상태를 false로 설정
     }
 
     fetchData();
   }, []);
-
   return (
     <>
       <h1 className='font-bold text-3xl md:text-4xl h-14 ml-4'>
         {decodedSlug}
       </h1>
-      <div className='sm:ml-20 ml-1'>
-          {popularFeedElement}
+      <div className='sm:ml-20 ml-1 flex justify-center items-center min-h-screen transform -translate-y-2/4'>
+          {loading ? 
+            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+          : 
+            popularFeedElement
+          }
       </div>
     </>
   );
 };
+
 
 export default Page;
