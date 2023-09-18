@@ -20,7 +20,7 @@ interface PostFeedProps {
 
 const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,slug }) => {
     let [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-    const BASE_URL = 'http://localhost:3000';
+    const BASE_URL = 'https://crypto-community-183w279u5-shin01dev.vercel.app';
     const [currentURL, setCurrentURL] = useState('');
     const decodedSubredditName = decodeURIComponent(subredditName || '');
   

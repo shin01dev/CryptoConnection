@@ -15,6 +15,7 @@ export const fetchCache = 'force-no-store'
 import { useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react'; // ChevronDown은 아래 화살표 아이콘입니다. 필요에 따라 라이브러리를 수정해주세요.
+import {Loader2 } from 'lucide-react'
 
 import {
     DropdownMenu,
@@ -140,7 +141,7 @@ return (
   <>
     {loading ? (
       <div className="flex justify-center items-center h-screen ">
-        로딩 중...
+        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
       </div>
     ) : (
       <>
