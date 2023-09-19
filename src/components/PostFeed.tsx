@@ -83,11 +83,11 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   </a>
   
       ) : (
-        <Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+        <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
           <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
             {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
           </span>
-        </Link>
+        </a>
       )}
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
