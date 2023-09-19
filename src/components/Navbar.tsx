@@ -12,12 +12,12 @@ const Navbar = async () => {
       <div className='max-w-full md:mr-4 h-full mx-auto flex flex-col md:flex-row items-center justify-between gap-2 px-2 md:px-0'>
         <div className="flex gap-2 items-center">
           {/* logo */}
-          <a href='/'>
+          <Link href='/'>
             <div className="flex gap-2 items-center cursor-pointer">
               <img src='/favicon.ico' className='h-8 w-8 md:h-12 md:w-10 ml-3' />
               <p className='text-zinc-700 text-sm font-medium'>크립토 커넥션 </p>
             </div>
-          </a>
+          </Link>
           {/* actions */}
           {session?.user ? (
             <UserAccountNav user={session.user} />
