@@ -598,10 +598,10 @@ useEffect(() => {
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <a href={`/r/myFeed/${user.id}`}>내 게시물</a>
+            <Link href={`/r/myFeed/${user.id}`}>내 게시물</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-    <a href={`/r/popular`}>인기 게시물</a>
+    <Link href={`/r/popular`}>인기 게시물</Link>
 </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
