@@ -506,7 +506,7 @@ useEffect(() => {
 
             팔로우 알람 
             {followNotificationCount > 0 && 
-            <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm">
+            <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm ml-1">
                 {followNotificationCount}
             </span>}
             </Link>
@@ -523,7 +523,7 @@ useEffect(() => {
     {/* <div onClick={deleteCommentNotification}> */}
       댓글 알람 
       {commentNotificationCount > 0 && 
-      <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm">
+      <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm ml-1">
         {commentNotificationCount}
       </span>}
       </Link>
@@ -539,7 +539,7 @@ useEffect(() => {
     {/* <a className="block w-full text-left" onClick={updateVoteNotificationStatus}> */}
       좋아요 알람 
       {voteNotificationCount > 0 && 
-      <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm">
+      <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm ml-1">
         {voteNotificationCount}
       </span>}
     {/* </a> */}
@@ -552,7 +552,7 @@ useEffect(() => {
 
         토큰 알람 
         {tokenNotificationCount > 0 && 
-        <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm">
+        <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm ml-1">
             {tokenNotificationCount}
         </span>}
         </Link>
@@ -569,7 +569,7 @@ useEffect(() => {
 
     후원 알람 
     {sponsorNotificationCount > 0 && 
-    <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm">
+    <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-sm ml-1">
       {sponsorNotificationCount}
     </span>}
     </Link>
