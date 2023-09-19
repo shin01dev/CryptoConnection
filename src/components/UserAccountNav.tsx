@@ -600,10 +600,7 @@ useEffect(() => {
           <DropdownMenuItem asChild>
             <Link href={`/r/myFeed/${user.id}`}>내 게시물</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-    <Link href={`/r/popular`}>인기 게시물</Link>
-</DropdownMenuItem>
-
+ 
           <DropdownMenuItem asChild>
             <Link href={`/r/wallet/`}>내 지갑</Link>
           </DropdownMenuItem>
