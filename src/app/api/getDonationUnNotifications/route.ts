@@ -21,7 +21,6 @@ export async function POST(req: any) {
     });
 
     // 업데이트된 post 항목들의 개수를 출력합니다.
-    console.log('Updated Posts Count:', updateNotificationStatus.count);
 
     return new Response(JSON.stringify({ updatedCount: updateNotificationStatus.count }), { status: 200 });
 

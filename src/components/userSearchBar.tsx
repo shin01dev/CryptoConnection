@@ -49,7 +49,6 @@ const UserSearchBar: FC<SearchBarProps> = ({}) => {
     queryFn: async () => {
       if (!input) return []
       const { data } = await axios.get(`/api/userSearch?q=${input}`)
-      console.log(JSON.stringify(data)+"데이터 입니다")
 
       // 데이터 타입을 User에 맞게 수정
       return data as (User & {

@@ -21,7 +21,6 @@ const Page: React.FC<pageProps> = ({ params }) => {
       const response = await axios.post('/api/editor', { slug });
       if (response.status === 200) {
         const subreddit = response.data.subreddit;
-        console.log('Retrieved subreddit:', subreddit);
         setSubredditId(subreddit.id);
         setSubredditName(decodeURIComponent(subreddit.name));
       } else {

@@ -5,7 +5,6 @@ export async function POST(req: any) {
   try {
     const body = await req.json();
     const targetUserId = body.targetUserId;
-    console.log(targetUserId + "  아이디가 정상적으로 엔드포인트로 전송 완료 . ");
 
     if (!targetUserId) {
       return new Response(JSON.stringify({ message: 'Missing targetUserId in the request body.' }), { status: 400 });

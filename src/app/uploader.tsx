@@ -20,7 +20,6 @@ export default function Thumbnail() {
         });
         // 에러 처리 등을 추가해야 합니다
       }
-      console.log("Files: ", res);
       alert("Upload Completed");
     }
   return (
@@ -33,7 +32,6 @@ export default function Thumbnail() {
             // Assuming the response is an array and we are interested in the first file
             setImageUrl(res[0].fileUrl);
           }
-          console.log("Files: ", res);
           alert("Upload Completed");
         }}
         onUploadError={(error: Error) => {

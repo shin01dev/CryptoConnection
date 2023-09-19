@@ -11,7 +11,6 @@ export async function POST(req: any) {
         const body = await req.json();
 
         const params = body.slug; // req에서 params를 추출하기 위해 이 코드를 추가했습니다. 실제 요청 형식에 따라 다를 수 있습니다.
-        console.log(decodeURIComponent(params)+"파람스")
         const subreddit = await db.subreddit.findFirst({
             where: {
                 name: params,

@@ -33,7 +33,6 @@ export default function Home(props: any) {
         const segment = getLastSegmentOfURL();
         setLastSegment(segment);
     }, []);
-    console.log(lastSegment)
 
     useEffect(() => {
         async function fetchFollowings() {

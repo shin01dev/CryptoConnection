@@ -94,7 +94,6 @@ await db.$transaction(async (prisma) => {
     });
 
     if (existingTransaction) {
-      console.log('Transaction already exists in the database.');
       continue;
     }
 
@@ -112,7 +111,6 @@ await db.$transaction(async (prisma) => {
     }
 
     const updatedCryptoCurrencyValue = parseFloat(account.crypto_currency || "0") + parseFloat(tokenData.UI_Amount);
-    console.log("충전된 커뮤니티 코인 값 : " + updatedCryptoCurrencyValue);
 
     // 한번의 쿼리로 계정과 거래를 업데이트합니다.
     await prisma.account.update({

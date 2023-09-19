@@ -69,8 +69,7 @@ await db.post.create({
   },
 })
 
-console.log(donateTo+"이게 도네이트 투")
-console.log(donateCoin+"이게 도네이트 코인")
+
 //후원한 코인 차감하기
 
 const userId = session.user.id;

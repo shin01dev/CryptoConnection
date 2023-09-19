@@ -6,16 +6,13 @@ import { notFound } from 'next/navigation'
 import { json } from 'stream/consumers'
 
 const CustomFeed = async () => {
-  // console.log("Decoded ID: " + decodeURIComponent(props));
 
 
 
   const session = await getAuthSession()
-  console.log(session?.user?.id+"유저아이디!@!@")
 
   // only rendered if session exists, so this will not happen
   if (!session) return notFound()
-  console.log(session.user.id+"커스텀")
   const subscribedSubredditIds = await db.subscription.findMany({
     where: {
       userId: session.user.id,
@@ -51,7 +48,6 @@ const CustomFeed = async () => {
 
 
 
-  console.log(session.user.id+"커스텀")
 
   return <PostFeed initialPosts={posts} session={session.user.id} />
 }

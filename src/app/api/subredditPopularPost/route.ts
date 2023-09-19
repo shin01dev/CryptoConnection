@@ -4,7 +4,6 @@ import { z } from 'zod';
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  console.log("999");
 
   const session = await getAuthSession();
 
@@ -20,7 +19,6 @@ export async function GET(req: Request) {
         limit: url.searchParams.get('limit'),
         page: url.searchParams.get('page'),
       });
-    console.log(subredditName + "9");
 
     const validPosts = await db.post.findMany({
       where: {

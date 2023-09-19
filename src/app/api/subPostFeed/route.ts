@@ -21,7 +21,6 @@ export async function GET(req: Request) {
         page: url.searchParams.get('page'),
         session: url.searchParams.get('session'),
       });
-      console.log(parsedData.subredditName+"9")
 
     let whereClause: any = {};
 

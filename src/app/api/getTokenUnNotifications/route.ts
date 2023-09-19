@@ -1,3 +1,5 @@
+
+
 import { db } from '@/lib/db';
 import { getAuthSession } from '@/lib/auth';
 
@@ -20,7 +22,6 @@ export async function POST(req: any) {
       }
     });
 
-    console.log('Number of notifications updated:', updatedCount.count);
 
     return new Response(JSON.stringify({ updatedCount: updatedCount.count }), { status: 200 });
 

@@ -56,7 +56,6 @@ export async function POST(req: any) {
       });
     
 
-    console.log(JSON.stringify(votesByOthers) + "QWQWQZZZZz");
     return new Response(JSON.stringify({ votesByOthers }), { status: 200 });
 
   } catch (error) {

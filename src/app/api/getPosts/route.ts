@@ -18,8 +18,6 @@ export async function POST(req: any) {
     const body = await req.json(); // Parse the request body as JSON
 
     const userId = body.userId as string; // Access userId from the parsed JSON
-    console.log("Request Body:", body);
-    console.log("User IDD:", userId);
 
     if (!userId) {
         throw new Error('User ID is required.');
@@ -42,7 +40,6 @@ export async function POST(req: any) {
             take: INFINITE_SCROLL_PAGINATION_RESULTS,
 
         });
-        // console.log(posts)
 
 
         

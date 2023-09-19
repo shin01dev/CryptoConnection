@@ -50,20 +50,16 @@ async function connectWallet() {
     if ("solana" in window) {
       const provider = window.solana;
       if (provider.isPhantom) {
-        console.log("Phantom is installed!");
       }
       if (!provider.isConnected) {
         await provider.connect();
       }
       if (provider.publicKey) {
         toWallet=(new PublicKey(provider.publicKey.toBase58()));
-        console.log(`Connected to wallet ${provider.publicKey}`);
       } else {
-        console.log("Failed to get wallet public key");
       }
     }
     else {
-      console.log("Please install Phantom Wallet.");
     }
   }
   
@@ -97,13 +93,11 @@ async function connectWallet() {
   const { toast } = useToast()
   async function updatePublicKeyForCrypto() {
     try {
-        console.log(publicKeyInput);
         const response = await axios.post('/api/update_public_key_for_crypto_transactions', {
             newPublicKey: publicKeyInput
         });
 
         if (response.status === 200) {
-            console.log('public_key_for_crypto_transactions 업데이트 성공');
             setIsUpdated(true);
             toast({
                 title: '성공',

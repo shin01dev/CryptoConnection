@@ -82,7 +82,6 @@ const commentMutation = useMutation(
     const response = await axios.patch('/api/subreddit/post/commentLink/', payload);
     const data = response.data;
     setAuthorId(data.authorId); // Set authorId state here
-    console.log("authorId: dd", data.authorId);
     return data;
   },
   {

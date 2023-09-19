@@ -50,7 +50,6 @@ export async function POST(req: any) {
     });
     
     
-    console.log(JSON.stringify(userPostsVotes, null, 2) + "00000000");
  
 
     return new Response(JSON.stringify({ postsVotes: userPostsVotes } ), { status: 200 });

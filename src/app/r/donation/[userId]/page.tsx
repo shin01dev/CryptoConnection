@@ -43,10 +43,8 @@ export default function Home(props: any) {
         if (userResponse.status === 200) {
           const userData = userResponse.data;  // userData로 이름 변경
           if (userData && userData.userId) {
-            console.log("User ID:", userData.userId);
             setUserId(userData.userId);
           } else {
-            console.log("User ID not found in the response.");
             return;  // If no userId found, no need to fetch posts.
           }
         } else {
@@ -59,9 +57,7 @@ export default function Home(props: any) {
             userId: props.params.userId,
           });
           setPosts(postResponse.data);
-          console.log(props.params.userId+"QQQQQ")
-          console.log(userResponse.data.userId+"TTTTTT")
-
+        
           setPostFeed(<DonationPostFeed initialPosts={postResponse.data} session={props.params.userId} />);
         }
 
@@ -83,7 +79,6 @@ export default function Home(props: any) {
 useEffect(() => {
   async function checkFollowStatus() {
     try {
-      console.log(props.params.userId+"ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ")
 
       const response = await axios.post(`/api/checkFollowingStatus`, {
         targetUserId: props.params.userId
@@ -113,7 +108,6 @@ async function handleFollow() {
 
     if (response.status === 200) {
       setIsFollowing(!isFollowing); // API의 응답을 바탕으로 상태 변경
-      console.log(response.data.isFollowing+"QWEQWEQWEQWEQWEQWEZZZZZZZ")
       toast({
         title: "Success",
         description: response.data.message, // API의 응답 메시지를 사용

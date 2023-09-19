@@ -50,9 +50,7 @@ export async function POST(req: any) {
         take: 50 // 최근 50개만 가져옴
       });
     
-    console.log('Give Crypto User Records:', giveCryptoUserRecords);
-    console.log('Donated Posts:', donatedPosts);
-
+   
     return new Response(JSON.stringify({ giveCryptoUserRecords, donatedPosts }), { status: 200 });
 
   } catch (error) {

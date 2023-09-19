@@ -64,11 +64,7 @@ async function fetchUserFollows(skipValue: number) {
               followCreationDate: new Date(follow.createdAt).toLocaleString()
           }));
   
-          console.log("Fetched follower usernames:", mappedFollows.map((f: { followerUsername: any; }) => f.followerUsername));
-          console.log("Fetched following usernames:", mappedFollows.map((f: { followingUsername: any; }) => f.followingUsername));
-          console.log("fetchedfollowingId:", mappedFollows.map((f: { followingId: any; }) => f.followingId));
-          console.log("fetchedfollowerId", mappedFollows.map((f: { followerId: any; }) => f.followerId));
-  
+         
           setFollowCreationDates(mappedFollows.map((f: { followCreationDate: any; }) => f.followCreationDate));
           setFollowerUsernames(mappedFollows.map((f: { followerUsername: any; }) => f.followerUsername));
           setFollowingUsernames(mappedFollows.map((f: { followingUsername: any; }) => f.followingUsername));
@@ -101,7 +97,6 @@ async function fetchUserFollows(skipValue: number) {
       }
   
       const result = await response.json();
-      console.log(result.message); // 서버로부터의 응답 메시지 출력
   
       // API 호출이 성공한 후 페이지 이동
       // window.location.href = '/r/followNotifications';
@@ -113,7 +108,6 @@ async function fetchUserFollows(skipValue: number) {
         console.error("Unknown error occurred.");
       }
     }
-    console.log("실행됨ㅇ")
 
 }
 useEffect(() => {

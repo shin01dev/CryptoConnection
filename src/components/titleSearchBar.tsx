@@ -49,7 +49,6 @@ const TitleSearchBar: FC<SearchBarProps> = ({}) => {
     queryFn: async () => {
       if (!input) return []
       const { data } = await axios.get(`/api/titleSearchBar?q=${encodeURIComponent(input)}`) // Change the API endpoint to something appropriate
-      console.log(JSON.stringify(data)+"데이터 입니다")
 
       // 데이터 타입을 Post에 맞게 수정
       return data as (Post & {

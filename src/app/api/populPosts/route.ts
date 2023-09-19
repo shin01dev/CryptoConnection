@@ -5,7 +5,6 @@ import { db } from '@/lib/db';
 export async function GET(req: any) {
     const session = await getAuthSession(); // `req` 파라미터를 전달합니다.
     const userId = session?.user?.id;
-    console.log(userId);
 
     try {
         const latestPosts = await db.post.findMany({

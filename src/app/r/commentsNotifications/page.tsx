@@ -106,12 +106,7 @@ export default function Home(props: any) {
       }
   
       const result = await response.json();
-      console.log(result.message); // 서버로부터의 응답 메시지 출력
   
-      // API 호출이 성공한 후 페이지 이동
-      // window.location.href = '/r/commentsNotifications';
-      console.log("실행됨 !")
-
     } catch (error) {
       if (error instanceof Error) { // 타입 가드
         console.error("Error updating follow notifications status:", error.message);
@@ -124,7 +119,6 @@ export default function Home(props: any) {
     const timer = setTimeout(() => {
         deleteCommentNotification();
     }, 100); // Delay of 1 second
-  console.log("살행됨")
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
   

@@ -5,12 +5,10 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'; // 해당 경로�
 export async function GET(req: Request) {
   const session = await getAuthSession();
   
-  console.log(session?.user?.id + "유저아이디!@!@");
 
   // only rendered if session exists, so this will not happen
   if (!session) return notFound(); // notFound 함수가 정의되어 있지 않으므로, 해당 함수를 구현하거나 다른 에러 처리 메커니즘을 사용해야 합니다.
 
-  console.log(session.user.id + "커스텀");
 
   const subscribedSubredditIds = await db.subscription.findMany({
     where: {

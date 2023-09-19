@@ -3,7 +3,6 @@ import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 export async function POST(req: any) {
   const body = await req.json();
-  console.log('넌 할 수 있어:', body.slug);
 
   const session = await getAuthSession();
   const userId = session?.user?.id;

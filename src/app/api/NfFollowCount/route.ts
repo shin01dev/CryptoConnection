@@ -37,7 +37,6 @@ export async function POST(req: any) {
         notification: true
       }
     });
-console.log(JSON.stringify(userFollows)+"QQQQQQQQ")
   
 
     return new Response(JSON.stringify({ follows: userFollows }), { status: 200 });

@@ -13,7 +13,6 @@ export async function POST(req: Request) {
     }
 
     const userId = session.user.id; // 세션에서 사용자 ID를 가져옵니다.
-console.log('Public key updated successfully for publicKey:', publicKey);
 
     // userId에 일치하는 계정의 public_key 업데이트
     await db.account.updateMany({

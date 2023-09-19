@@ -20,7 +20,6 @@ export async function POST(req: Request) {
       data: { donateTo: donateTo, donateCoin: donateCoin },
     });
 
-    console.log('Donate information updated successfully for userId:', userId);
     return new Response('Donate information updated successfully');
   } catch (error) {
     console.error(error);

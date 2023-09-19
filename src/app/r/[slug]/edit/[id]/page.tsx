@@ -37,9 +37,7 @@ const page = async ({ params }: pageProps) => {
   })
 
   const decodeName = decodeURI(Post.name)
-  console.log(decodeName + " 이름")
 
-  console.log(subreddit)
   const cachedPost = (await redis.hgetall(
     `post:${params.id}`
   )) as CachedPost
@@ -56,12 +54,7 @@ const page = async ({ params }: pageProps) => {
     },
   })
 
-  console.log(post?.id+"포스트 아이디")
-  console.log(post?.title+"포스트 타이틀")
-  console.log(post?.content+"포스트 컨텐트")
-  console.log(cachedPost?.content+"포스트 컨텐트 블락")
-
-
+ 
 
   return (
     <div className='flex flex-col items-start gap-6'>

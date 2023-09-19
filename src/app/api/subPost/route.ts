@@ -14,7 +14,6 @@ export async function POST(req: any) {
 
     const session = await getAuthSession(); // `req` 파라미터를 전달합니다.
     const userId = session?.user?.id;
-    console.log(userId)
 
     const decodedSlug = decodeURIComponent(slug);
     const subreddit = await db.subreddit.findFirst({
@@ -34,8 +33,8 @@ export async function POST(req: any) {
         },
       },
     });
-    // console.log(JSON.stringify(subreddit)+"123123123")
 
+    
     if (!subreddit) {
       return new Response(JSON.stringify({ error: 'Subreddit not found' }), { status: 404 });
     }

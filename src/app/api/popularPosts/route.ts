@@ -21,7 +21,6 @@ export async function GET(req: Request) {
         limit: url.searchParams.get('limit'),
         page: url.searchParams.get('page'),
       });
-    console.log(subredditName + "9");
 
     // We assume vote_Sum is of type String, so we use the "startsWith" filter for efficiency
     // This will fetch posts with vote_Sum values starting from "1" to "9", "10", "11" and so on

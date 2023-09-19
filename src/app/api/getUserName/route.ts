@@ -14,7 +14,6 @@ export async function POST(req: any) {
         username: true
       }
     });
-console.log(JSON.stringify(user)+"유저 네임입니다!!!")
     if (!user) {
       return new Response('User not found', { status: 404 });
     }

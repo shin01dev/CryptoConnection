@@ -96,7 +96,6 @@ function formatTimestamp(timestamp: string) {
         } catch (error) {
             console.error('Error updating token notification:', error);
         }
-        console.log("실행됨")
 
       };
       useEffect(() => {

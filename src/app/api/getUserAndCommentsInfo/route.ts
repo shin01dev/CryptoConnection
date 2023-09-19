@@ -40,7 +40,6 @@ if (!post) {
 }
 
 let subredditName = post.subreddit ? post.subreddit.name : null;
-console.log(subredditName + "이름");
 
 if (!subredditName) {
   throw new Error('Subreddit not found for the post.');

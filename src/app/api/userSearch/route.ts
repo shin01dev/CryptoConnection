@@ -7,7 +7,6 @@ export async function GET(req: Request) {
 
   if (!q) return new Response('Invalid query', { status: 400 });
   const decodedQuery = decodeURIComponent(q);  // 디코딩된 검색어 생성
-  console.log(decodedQuery + "이건 디코딩된 쿼리 입니다");
 
   const results = await db.user.findMany({
     where: {

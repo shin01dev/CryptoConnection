@@ -17,7 +17,6 @@ export async function POST(req: any) {
       }
     });
     
-    console.log('Notification On Count:', notificationOnCount);
 
     return new Response(JSON.stringify({  notificationOnCount }), { status: 200 });
 

@@ -49,7 +49,6 @@ const ContentSearchBar: FC<SearchBarProps> = ({}) => {
     queryFn: async () => {
       if (!input) return []
       const { data } = await axios.get(`/api/contentSearchBar?q=${encodeURIComponent(input)}`) // 엔드포인트를 text를 검색할 수 있는 것으로 수정
-      console.log(JSON.stringify(data)+"데이터 입니다")
 
       return data as (Post & {
         _count: Prisma.PostCountOutputType,

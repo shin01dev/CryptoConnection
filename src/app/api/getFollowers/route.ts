@@ -7,7 +7,6 @@ export async function POST(req: any) {
   try {
     const body = await req.json();
     const lastSegment = body.lastSegment; // 팔로우할 사용자의 ID를 요청 본문에서 가져옵니다.
-console.log(JSON.stringify(body)+"ZXZXCZXCZXCZXCZXCZXC")
 
     const session = await getAuthSession();
     if (!session?.user) {

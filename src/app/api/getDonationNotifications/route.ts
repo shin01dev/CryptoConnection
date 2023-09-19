@@ -18,7 +18,6 @@ export async function POST(req: any) {
     });
 
     // 가져온 post 항목들의 수를 출력합니다.
-    console.log('Matching Posts Count:', matchingPosts.length);
 
     // 일치하는 게시물의 수를 반환합니다.
     return new Response(JSON.stringify({ matchingPostsCount: matchingPosts.length }), { status: 200 });

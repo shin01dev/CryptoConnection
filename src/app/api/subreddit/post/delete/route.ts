@@ -28,7 +28,6 @@ export async function POST(req: Request) {
         authorId: session.user.id, // Ensure that the user is the author of the post.
       },
     });
-    console.log(postId+"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
 
     if (!post) {
       return new Response('Post not found or unauthorized', { status: 404 });

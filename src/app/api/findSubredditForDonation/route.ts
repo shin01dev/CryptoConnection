@@ -10,7 +10,6 @@ export async function POST(req: Request) {
     }
 
     const userId = session.user.id; // 세션에서 사용자 ID를 가져옵니다.
-    console.log('User ID:', userId);
 
     const requestBody = await req.json(); // 요청 본문을 JSON 형태로 파싱합니다.
     const { donateTo, donateCoin } = requestBody; // 요청 본문에서 donateTo와 donateCoin 값을 가져옵니다.

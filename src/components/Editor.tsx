@@ -83,7 +83,6 @@ useEffect(() => {
       // Get the first object from the response data array
       const firstObject = response.data[0];
       // Log the crypto_currency value
-      console.log("COIN: " + firstObject.crypto_currency);
 
       // 1. 값을 상태 변수에 저장
       setMaxCoinValue(firstObject.crypto_currency);
@@ -112,7 +111,6 @@ async function subscribeToSubreddit(subredditId: string) {
 
     if (response.ok) {
       const responseBody = await response.text();
-      console.log(`Subscribed to subreddit with ID: ${responseBody}`);
     } else {
       const error = await response.text();
       console.error(`Failed to subscribe: ${error}`);
@@ -177,9 +175,7 @@ useEffect(() => {
       donateTo,
     }: PostCreationRequest) => {
       const payload: PostCreationRequest = { title, content, subredditId ,postId,thumbnail,editThumbnail,donateCoin,donateTo}
-      console.log("Coin Value:", donateCoin);
-      console.log("Donation To:", donateTo);
-      
+     
       // currentURL이 /edit/를 포함하는지 확인
       const isEditing = currentURL.includes('/edit/')
   
@@ -275,7 +271,6 @@ useEffect(() => {
                 
                   const newFile = new File([file], newFileName, { type: file.type });
                 
-                  console.log(newFile.name); // This should log the cleaned name with the original extension
                 
                   const [res] = await uploadFiles([newFile], 'imageUploader')
                 
@@ -389,7 +384,6 @@ useEffect(() => {
       });
       // 에러 처리 등을 추가해야 합니다
     }
-    console.log("Files: ", res);
     alert("Upload Completed");
   }
 

@@ -1,3 +1,7 @@
+
+
+
+
 'use client'
 import CustomFeed from '@/components/homepage/CustomFeed';
 import GeneralFeed from '@/components/homepage/GeneralFeed';
@@ -51,7 +55,6 @@ export default function Home(props: any) {
         } catch (error) {
             console.error('Error updating token notification:', error);
         }
-        console.log("실행됨")
 
       };
       

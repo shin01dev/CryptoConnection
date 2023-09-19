@@ -1,3 +1,6 @@
+
+
+
 'use client'
 import CustomFeed from '@/components/homepage/CustomFeed'
 import GeneralFeed from '@/components/homepage/GeneralFeed'
@@ -53,11 +56,9 @@ async function updateVoteNotificationStatus() {
     }
 
     const result = await response.json();
-    console.log(result.message); // 서버로부터의 응답 메시지 출력
 
     // API 호출이 성공한 후 페이지 이동
 
-console.log("실행됨 !")
   } catch (error) {
     if (error instanceof Error) { // 타입 가드
       console.error("Error updating follow notifications status:", error.message);
@@ -92,7 +93,6 @@ async function fetchUserVotes() {
 
     const result = await response.json();
     if (result.length === 0) setHasMore(false); // 응답 데이터가 없으면 더 가져올 데이터가 없다고 판단합니다.
-    console.log(JSON.stringify(result, null, 2)+"11111")
 
     return result;
   } catch (error) {
@@ -122,7 +122,6 @@ async function fetchUserVotes() {
       
           const result = await response.json();
       
-          // console.log(JSON.stringify(result)+"QQQQQ");  // { username: "example", postTitle: "example title", subredditName: "example name" }
           return result;
       
         } catch (error) {

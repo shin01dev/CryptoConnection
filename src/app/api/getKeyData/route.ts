@@ -32,7 +32,6 @@ tokenData.forEach((token:any) => {
 
   // Replace string private key with array private key in the token data
   token.privateKey = privateKeyAsArray;
-  console.log("checkckckckckckck" + token.privateKey)
 });
 
     return new Response(JSON.stringify(tokenData));

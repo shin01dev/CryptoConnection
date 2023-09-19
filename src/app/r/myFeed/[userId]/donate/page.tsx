@@ -28,7 +28,6 @@ async function getCoinNumber() {
   const firstObject = response.data[0];
 
   // Log the crypto_currency value
-  console.log("COIN: " + firstObject.crypto_currency);
   
   setCoinNumber(firstObject.crypto_currency);  // Setting the state with the fetched value
 }
