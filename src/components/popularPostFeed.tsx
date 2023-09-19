@@ -49,9 +49,12 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
         return pages.length + 1
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-      cacheTime: 0,
-      refetchOnWindowFocus: true,
-      staleTime: 0,    }
+   // 캐싱 설정 추가
+   staleTime: 1000 * 60 * 5, // 5분 동안 데이터는 '신선'하게 유지됩니다.
+   cacheTime: 1000 * 60 * 30, // 30분 동안 데이터는 메모리에 캐싱됩니다.
+   
+   refetchOnWindowFocus: false, // 사용자가 창에 포커스될 때 데이터를 새로 가져오지 않도록 설정합니다.
+ }
       
     
   )
