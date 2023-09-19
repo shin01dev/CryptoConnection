@@ -198,23 +198,29 @@ useEffect(() => {
     </span>
 </Link>                     )}
 
-         <span className="px-0">
+          <span className="px-0">
                             {
                                 donateCoins && donateCoins >= 1
                                     ? <>                        <span>· </span>
 
                                         <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto' }} />
-                                        <span> · </span>
+                                               <span> · </span>
+
                                         {donateCoins}
                                     </>
                                     : null
                             }
-                        </span> 
+                        </span>
                 </div>
 
     {/* Author, Date, and Subreddit Name (For Desktop) */}
 <div className="flex space-x-1 items-center text-xxxxs text-gray-500 hidden md:flex mt-1">
-
+{/* <Link href={`/r/myFeed/${post.author.id}`}>
+    <span className="cursor-pointer hover:underline">
+        {post.author.username}
+    </span>
+</Link>   
+    <span>·</span> */}
  
     {subredditName && (
       <span className="cursor-pointer hover:underline">

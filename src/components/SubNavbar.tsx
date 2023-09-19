@@ -14,7 +14,7 @@ const SubNavbar = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className='top-[height of main navbar + 2px] inset-x-0 h-fit bg-gradient-to-r bg-gradient-to-l from-purple-800 to-purple-300 border-b border-zinc-300 z-[10] py-2'>
+    <div className='top-[height of main navbar + 2px] inset-x-0 h-fit bg-gradient-to-r bg-gradient-to-l from-purple-800 to-purple-300 border-b border-zinc-300 z-[10] py-1'>
     <div className='container max-w-7xl h-full mx-auto flex items-center justify-center gap-1'>
         <DropdownMenu >
           <DropdownMenuTrigger className='mr-4'>
