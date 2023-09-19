@@ -49,9 +49,9 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
         return pages.length + 1
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-      cacheTime: 0,
-      refetchOnWindowFocus: true,
-      staleTime: 0,    }
+      cacheTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 1, // 1 minute      refetchOnWindowFocus: true,
+   }
       
     
   )
