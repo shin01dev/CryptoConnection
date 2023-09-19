@@ -15,7 +15,7 @@ export async function POST(req: any) {
           name: body.slug,
         },
         vote_Sum: {
-          gte: 0  // `vote_Sum` 값이 2 이상인 포스트만 가져옵니다.
+          gte: 1  
         }
       },
       include: {

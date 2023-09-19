@@ -25,7 +25,7 @@ export async function GET(req: Request) {
     const validPosts = await db.post.findMany({
       where: {
         vote_Sum: {
-          gte: 0  // `vote_Sum` 값이 1 이상인 포스트만 가져옵니다.
+          gte: 1  // `vote_Sum` 값이 1 이상인 포스트만 가져옵니다.
         },
         subreddit: subredditName ? { name: encodeURIComponent(subredditName) } : undefined,
       },

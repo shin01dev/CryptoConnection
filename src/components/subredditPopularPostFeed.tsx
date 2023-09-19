@@ -70,7 +70,6 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
 
     
   }, []);
-  console.log('decodedSubredditName:', decodedSubredditName);
 
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>

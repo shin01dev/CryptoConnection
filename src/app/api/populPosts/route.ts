@@ -11,7 +11,7 @@ export async function GET(req: any) {
         const latestPosts = await db.post.findMany({
           where: {
             vote_Sum: {
-              gt: 0, // vote_Sum이 1 이상인 게시물만 가져옵니다.
+              gte: 1, // vote_Sum이 1 이상인 게시물만 가져옵니다.
             }
           },
           include: {
