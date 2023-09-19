@@ -1,9 +1,4 @@
-
-
-
-
-
-'use client';
+'use client'
 import MiniCreatePost from '@/components/MiniCreatePost';
 import PopularPostFeed from '@/components/popularPostFeed';
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config';
@@ -16,9 +11,8 @@ interface PageProps {}
 
 const Page = ({}: PageProps) => {
   const [error, setError] = useState(null);
-  const [Data, setData] = useState<any[]>([]); 
-  const [Session, setSession] = useState<any[]>([]); 
-  const [popularFeedElement, setPopularFeedElement] = useState<React.ReactNode | null>(null);
+  const [data, setData] = useState<any[]>([]); 
+  const [session, setSession] = useState<any[]>([]); 
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
@@ -30,8 +24,6 @@ const Page = ({}: PageProps) => {
           if (Array.isArray(result.filteredPosts)) {
             setData(result.filteredPosts);
             setSession(result.userId);
-            
-            setPopularFeedElement(<PopularPostFeed key={result.filteredPosts.length} initialPosts={result.filteredPosts} session={result.userId} />);
             setLoading(false); 
           } else {
             throw new Error('Data format is not as expected');
@@ -50,28 +42,26 @@ const Page = ({}: PageProps) => {
   }, []);
 
   return (
-    <>
-      <div className='sm:ml-20 ml-1'>
-        {loading ? (
-          <div className="flex flex-col items-center justify-center h-64 mt-10">
-            <span className="text-gray-500 font-semibold text-lg">
+    <div className='sm:ml-20 ml-1'>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center h-64 mt-10">
+          <span className="text-gray-500 font-semibold text-lg">
             <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-            </span>
-          </div>
-        ) : (
-          <>
-            {popularFeedElement}
-            {Data.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-64 mt-10">
-                <span className="text-gray-500 font-semibold text-lg">
-                  인기글이 아직 없습니다.
-                </span>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </>
+          </span>
+        </div>
+      ) : (
+        <>
+          <PopularPostFeed key={data.length} initialPosts={data} session={session} />
+          {data.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-64 mt-10">
+              <span className="text-gray-500 font-semibold text-lg">
+                인기글이 아직 없습니다.
+              </span>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
