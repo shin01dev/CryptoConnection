@@ -8,30 +8,49 @@ import { BrowserRouter } from 'react-router-dom';
 import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 interface PageProps {}
-
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+const CACHE_KEY = 'populPostsData';
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 const Page = ({}: PageProps) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState<any[]>([]); 
   const [session, setSession] = useState<any[]>([]); 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
+      // Check for cached data
+      const cachedData = localStorage.getItem(CACHE_KEY);
+      const cacheTimestamp = localStorage.getItem(CACHE_KEY + ':timestamp');
+      
+      if (cachedData && cacheTimestamp && (Date.now() - Number(cacheTimestamp) < CACHE_DURATION)) {
+        const parsedData = JSON.parse(cachedData);
+        setData(parsedData.filteredPosts);
+        setSession(parsedData.userId);
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await axios.get('/api/populPosts');
         if (response.status === 200) {
           const result = response.data;
           if (Array.isArray(result.filteredPosts)) {
+            // Cache the data
+            localStorage.setItem(CACHE_KEY, JSON.stringify(result));
+            localStorage.setItem(CACHE_KEY + ':timestamp', Date.now().toString());
+
             setData(result.filteredPosts);
             setSession(result.userId);
-            setLoading(false); 
+            setLoading(false);
           } else {
             throw new Error('Data format is not as expected');
           }
         } else {
           throw new Error('Failed to fetch data');
         }
-      } catch (error:any) {
+      } catch (error: any) {
         console.error('Error fetching data:', error);
         setError(error);
         setLoading(false);

@@ -1,6 +1,4 @@
-'use client'
 import { BASE_URL } from './BASE_URL'
-
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
 import { useIntersection } from '@mantine/hooks'
