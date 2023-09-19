@@ -28,7 +28,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
   const lastPostRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
-    threshold: 1,
+    threshold: 0.1,
   })
   const queryClient = useQueryClient();
 
@@ -55,7 +55,10 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
         return pages.length + 1
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-
+      staleTime: 1000 * 60 * 5, // 5분 동안 데이터는 '신선'하게 유지됩니다.
+      cacheTime: 1000 * 60 * 30, // 30분 동안 데이터는 메모리에 캐싱됩니다.
+      
+      refetchOnWindowFocus: false, // 사용자가 창에 포커스될 때 데이터를 새로 가져오지 않도록 설정합니다.
     }
 
   )
@@ -83,29 +86,29 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
   <div className='flex gap-2'>
     <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
       {currentURL === `${BASE_URL}/r/popular` ? (
-     <Link href={BASE_URL}>
+     <a href={BASE_URL}>
    
       <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
         커뮤니티 글
       </span>
   
-  </Link>
+  </a>
   
   ) : (
-<Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+<a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
     <span className={(currentURL !== `${BASE_URL}/r/popular` && currentURL !== `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
         {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
     </span>
-</Link>
+</a>
 
   )}
 </span>
 <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-<Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+<a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
   <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
     {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
   </span>
-</Link>
+</a>
 </span>
 </div>
 )}

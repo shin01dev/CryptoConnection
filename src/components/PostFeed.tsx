@@ -26,7 +26,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
-    threshold: 1,
+    threshold: 0.1,
   })
   const [currentURL, setCurrentURL] = useState('');
   const decodedSubredditName = decodeURIComponent(subredditName || '');
@@ -49,7 +49,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
       initialData: { pages: [initialPosts], pageParams: [1] },
       cacheTime: 0,
       refetchOnWindowFocus: true,
-      staleTime: 0,    }
+      staleTime: 0,  
+    
+    }
   )
   useEffect(() => {
     setCurrentURL(window.location.href);
@@ -92,11 +94,11 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
       )}
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-    <Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+    <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
       <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
         {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
       </span>
-    </Link>
+    </a>
   </span>
 </div>
 )}

@@ -25,7 +25,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
-    threshold: 1,
+    threshold: 0.1,
   })
   const [userName, setUsername] = useState<string | null>(null); // username 상태 변수를 추가
   const [currentURL, setCurrentURL] = useState('');
@@ -46,9 +46,11 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
         return pages.length + 1
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-      cacheTime: 0,
-      refetchOnWindowFocus: true,
-      staleTime: 0,    }
+      staleTime: 1000 * 60 * 5, // 5분 동안 데이터는 '신선'하게 유지됩니다.
+      cacheTime: 1000 * 60 * 30, // 30분 동안 데이터는 메모리에 캐싱됩니다.
+      
+      refetchOnWindowFocus: true, // 사용자가 창에 포커스될 때 데이터를 새로 가져오지 않도록 설정합니다.
+       }
   )
 
   useEffect(() => {
@@ -87,15 +89,15 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
       <>
       <div className="flex space-x-2"> {/* space-x-2는 두 span 태그 사이의 간격을 주기 위해 사용됩니다. */}
   <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <Link href={`${BASE_URL}/r/myFeed/${session}`}>
+    <a href={`${BASE_URL}/r/myFeed/${session}`}>
       ({userName}) 최신 글
-    </Link>
+    </a>
   </span>
 
   <span className="cursor-pointer text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200 p-2 rounded-md transition hover:bg-gray-300">
-  <Link href={`${BASE_URL}/r/myFeed/${session}`}>
+  <a href={`${BASE_URL}/r/myFeed/${session}`}>
     ({userName}) 후원 글
-  </Link>
+  </a>
 </span>
 
 </div>
