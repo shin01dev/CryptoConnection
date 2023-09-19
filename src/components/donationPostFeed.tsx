@@ -92,11 +92,12 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
     </Link>
   </span>
 
-  <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <Link href={`${BASE_URL}/r/donation/${session}`}>
-      ({userName}) 후원 글
-    </Link>
-  </span>
+  <span className="cursor-pointer text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200 p-2 rounded-md transition hover:bg-gray-300">
+  <Link href={`${BASE_URL}/r/myFeed/${session}`}>
+    ({userName}) 후원 글
+  </Link>
+</span>
+
 </div>
 
       </>

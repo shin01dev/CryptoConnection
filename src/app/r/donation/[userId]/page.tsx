@@ -134,9 +134,10 @@ async function handleFollow() {
 return (
   <>
     {loading ? (
-      <div className="flex justify-center items-center h-screen ">
-        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-      </div>
+    <div className="flex justify-center  mt-60 h-screen ">
+    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+    </div>
+
     ) : (
       <>
         <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 ">

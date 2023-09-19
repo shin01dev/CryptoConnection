@@ -49,9 +49,9 @@ const Page = ({ params }: PageProps) => {
 
   if (loading) {
     return (
-      <div className='flex justify-center items-start pt-40 h-screen'>
-        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-      </div>
+      <div className='flex justify-center items-start pt-80 h-screen'>
+      <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+  </div>
     );
   }
 

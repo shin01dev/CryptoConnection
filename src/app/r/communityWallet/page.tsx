@@ -21,6 +21,7 @@ import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 import { useState, useEffect, SetStateAction } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 const solanaWeb3 = require('@solana/web3.js');
 const decimal =1000000000  //9자리
@@ -240,8 +241,22 @@ const getTransactions = async (tokenAccountAddress: string, mintAddress: string)
 };
 
 return (
-    <div className="flex flex-col items-center justify-center h-screen px-4">
-      <h1 className="text-gray-700 text-2xl font-semibold mb-6">커뮤니티 지갑</h1>
+  
+<div className="flex flex-col items-center justify-center space-y-2">
+<div className="flex space-x-4">
+    <h1 className="text-gray-800 mb-8 p-2 border border-gray-300 rounded-full shadow-md">
+        <Link href="/r/wallet">
+            출금
+        </Link>
+    </h1>
+
+    <h1 className="text-gray-800 mb-8 p-2 border border-gray-300 rounded-full shadow-md" style={{ backgroundColor: 'rgba(255, 255, 0, 0.6)' }}>
+        <Link href="/r/communityWallet">
+            입금
+        </Link>
+    </h1>
+</div>
+
       <div className="">
       {coinNumber !== null ? (
   <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md  flex items-center">

@@ -166,7 +166,7 @@ useEffect(() => {
 return (
   <>
     {loading ? (
-   <div className="flex items-center justify-center text-gray-600">
+   <div className="flex items-center justify-center text-gray-600 mt-60">
    <p className="mr-2">유저 정보를 가져오는 중...</p>
    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
  </div>

@@ -133,11 +133,11 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
       <>
 <div className="flex space-x-2"> {/* space-x-2는 두 span 태그 사이의 간격을 주기 위해 사용됩니다. */}
-  <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <Link href={`${BASE_URL}/r/myFeed/${session}`}>
-      ({userName}) 최신 글
-    </Link>
-  </span>
+<span className="cursor-pointer text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200 p-2 rounded-md transition hover:bg-gray-300">
+  <Link href={`${BASE_URL}/r/myFeed/${session}`}>
+    ({userName}) 최신 글
+  </Link>
+</span>
 
   <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
     <Link href={`${BASE_URL}/r/donation/${session}`}>

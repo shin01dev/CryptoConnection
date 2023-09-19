@@ -97,10 +97,11 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 </span>
 <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
 <Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
-<span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-  {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-</span>
+  <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
+    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글글글' : `인기 글`}
+  </span>
 </Link>
+
 </span>
 </div>
 )}

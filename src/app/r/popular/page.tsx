@@ -40,18 +40,17 @@ const Page = ({}: PageProps) => {
 
     fetchData();
   }, []);
-
   return (
-    <div className='sm:ml-20 ml-1'>
+    <div>
       {loading ? (
-        <div className="flex flex-col items-center justify-center h-64 mt-10">
-          <span className="text-gray-500 font-semibold text-lg">
-            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-          </span>
+        <div className="flex flex-col items-center justify-center h-64 mt-40">
+          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
         </div>
       ) : (
         <>
-          <PopularPostFeed key={data.length} initialPosts={data} session={session} />
+          <div className="sm:ml-20">
+            <PopularPostFeed key={data.length} initialPosts={data} session={session} />
+          </div>
           {data.length === 0 && (
             <div className="flex flex-col items-center justify-center h-64 mt-10">
               <span className="text-gray-500 font-semibold text-lg">
@@ -63,6 +62,7 @@ const Page = ({}: PageProps) => {
       )}
     </div>
   );
+  
 };
 
 export default Page;

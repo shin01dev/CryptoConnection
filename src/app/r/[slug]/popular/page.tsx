@@ -52,7 +52,9 @@ const Page = ({params}: PageProps) => {
       </h1>
       <div className="flex flex-col justify-center mt-10">
           {loading ? 
-            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin self-center' />
+            <div className='flex justify-center items-start pt-60 h-screen'>
+    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+</div>
           : 
             popularFeedElement
           }

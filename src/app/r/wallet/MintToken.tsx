@@ -525,31 +525,46 @@ const minusCryptoCurrency = async (coinNumber: any) => {
 
 return (
   
-<div className="flex flex-col items-center justify-center space-y-4">
-<h1 className="text-gray-800 mb-8">
-<Link href="/r/communityWallet">
-커뮤니티 지갑</Link>
-      </h1>   
-      {coinNumber !== null ? (
-  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
-    {coinNumber !== 0 ? (
-      <>
-        <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> {/* 48x48 pixels */}
-        <span className="ml-2">COT : {coinNumber}</span>
-      </>
-    ) : (
-      <div className="flex items-center">
-                <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 ml-2 mr-2" /> {/* 48x48 pixels */}
+<div className="flex flex-col items-center justify-center space-y-2">
+<div className="flex space-x-4">
+<h1 className="text-gray-800 mb-8 p-2 border border-gray-300 rounded-full shadow-md"style={{ backgroundColor: 'rgba(255, 255, 0, 0.6)' }}>
+        <Link href="/r/wallet">
+            출금
+        </Link>
+    </h1>
 
-        <span>  COT : 0</span>
+    <h1 className="text-gray-800 mb-8 p-2 border border-gray-300 rounded-full shadow-md" >
+        <Link href="/r/communityWallet">
+            입금
+        </Link>
+    </h1>
+</div>
+   
+      {coinNumber !== null ? (
+          <div className="">
+          {coinNumber !== null ? (
+      <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md  flex items-center">
+        <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> {/* 이미지 추가 */}
+        <span className="ml-2">COT : {coinNumber}</span>
       </div>
+    ) : ( 
+    <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
+      <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> {/* 이미지 추가 */}
+      <span className="flex items-center">
+    Loading... <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+  </span>
+    </div>
+    
     )}
   </div>
 ) : ( 
-  <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
-    <span>토큰 정보를 가져오는 중...</span>
-    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
-  </div>
+<div className="shadow-md p-4 bg-white rounded-md flex items-center">
+  <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> {/* 이미지 추가 */}
+  <span className="flex items-center">
+    Loading... <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+  </span>
+</div>
+
 )}
 
     <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4">
