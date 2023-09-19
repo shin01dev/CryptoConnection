@@ -8,8 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { Home as HomeIcon, Loader2 } from 'lucide-react'
 
 interface PageProps {}
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
 
 const Page = ({}: PageProps) => {
   const [error, setError] = useState(null);

@@ -47,9 +47,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
         return pages.length + 1
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-      cacheTime: 600000,
+      cacheTime: 0,
       refetchOnWindowFocus: true,
-      staleTime: 300000,    }
+      staleTime: 0,    }
   )
   useEffect(() => {
     setCurrentURL(window.location.href);

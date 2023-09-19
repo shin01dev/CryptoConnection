@@ -117,18 +117,12 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
       
     </span>
   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  <Link 
-  href={
-    (currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
-    (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`
-  }
-  prefetch
->
+  <Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
+        (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
   <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
     {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
   </span>
 </Link>
-
   </span>
 </div>
 
