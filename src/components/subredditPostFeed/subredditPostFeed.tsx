@@ -83,29 +83,29 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
   <div className='flex gap-2'>
     <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
       {currentURL === `${BASE_URL}/r/popular` ? (
-    <a href={BASE_URL}>
+     <Link href={BASE_URL}>
    
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        커뮤니티 글
-      </span>
-  
-  </a>
-  
-      ) : (
-        <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
-          <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-            {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
-          </span>
-        </a>
-      )}
-    </span>
-  <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-    <Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-      </span>
-    </Link>
-  </span>
+     <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+       커뮤니티 글
+     </span>
+ 
+ </Link>
+ 
+ ) : (
+   <Link href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+     <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+       {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
+     </span>
+   </Link>
+ )}
+</span>
+<span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+<Link href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+ <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+   {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
+ </span>
+</Link>
+</span>
 </div>
 )}
       {posts.map((post, index) => {

@@ -50,15 +50,16 @@ const Page = ({params}: PageProps) => {
       <h1 className='font-bold text-3xl md:text-4xl h-14 ml-4'>
         {decodedSlug}
       </h1>
-      <div className='sm:ml-20 ml-1 flex justify-center items-center min-h-screen'>
+      <div className="flex flex-col justify-center mt-10">
           {loading ? 
-            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+            <Loader2 className='w-6 h-6 text-zinc-500 animate-spin self-center' />
           : 
             popularFeedElement
           }
       </div>
     </>
-  );
+);
+
 };
 
 export default Page;
