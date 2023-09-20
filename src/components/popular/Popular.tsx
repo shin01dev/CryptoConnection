@@ -8,7 +8,6 @@ const PopularFeed = async () => {
   const session = await getAuthSession();
 
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound();
 
   const posts = await db.post.findMany({
     where: {
@@ -28,7 +27,7 @@ const PopularFeed = async () => {
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   });
 
-  return <SubPostFeed  initialPosts={posts} session={session.user.id} />;
+  return <SubPostFeed  initialPosts={posts} session={session?.user.id} />;
 };
 
 export default PopularFeed;

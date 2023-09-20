@@ -14,7 +14,6 @@ const SubredditFeed = async ({ slug }: { slug: string }) => {
     // 현재 경로에 대한 작업 수행
   }
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound();
 
   const posts = await db.post.findMany({
     where: {
@@ -34,7 +33,7 @@ const SubredditFeed = async ({ slug }: { slug: string }) => {
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   });
 
-  return <SubPostFeed initialPosts={posts} subredditName={slug} session={session.user.id} dataKey={undefined}  />;
+  return <SubPostFeed initialPosts={posts} subredditName={slug} session={session?.user.id} dataKey={undefined}  />;
 };
 
 export default SubredditFeed;

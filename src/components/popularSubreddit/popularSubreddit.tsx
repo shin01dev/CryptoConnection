@@ -6,7 +6,7 @@ import SubredditPopularPostFeed from '../subredditPopularPostFeed';
 import { notFound } from 'next/navigation';
 
 // slug 매개변수의 타입을 명시적으로 지정
-const popularSubredditFeed = async ({ slug }: { slug: string }) => {
+const PopularSubredditFeed = async ({ slug }: { slug: string }) => {
   const session = await getAuthSession();
   // 현재 경로를 가져오기
   if (typeof window !== 'undefined') {
@@ -14,7 +14,6 @@ const popularSubredditFeed = async ({ slug }: { slug: string }) => {
     // 현재 경로에 대한 작업 수행
   }
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound();
 
   const posts = await db.post.findMany({
     where: {
@@ -44,7 +43,7 @@ const popularSubredditFeed = async ({ slug }: { slug: string }) => {
   });
   
 
-  return <SubredditPopularPostFeed initialPosts={posts} subredditName={slug} session={session.user.id} slug={slug}  />;
+  return <SubredditPopularPostFeed initialPosts={posts} subredditName={slug} session={session?.user.id} slug={slug}  />;
 };
 
-export default popularSubredditFeed;
+export default PopularSubredditFeed;
