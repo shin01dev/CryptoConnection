@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import axios from 'axios';
+import { useLayoutEffect } from 'react';
 
 type PartialVote = Pick<Vote, 'type'>;
 
@@ -55,6 +56,7 @@ const Post: FC<PostProps> = ({
 
   const [lastSegment, setLastSegment] = useState<string | null>("");
   const [donateCoins, setDonateCoins] = useState<number | null>(null);
+  const isWindow = typeof window !== 'undefined';
 
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -113,7 +115,7 @@ const Post: FC<PostProps> = ({
     }
   }
   
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined') { 
       const currentLastSegment = window.location.href.split('/').pop() || null;
@@ -121,7 +123,7 @@ const Post: FC<PostProps> = ({
 
     }
   }, []);
-  
+
 // Only listen to changes in post.id for fetching coins
 useEffect(() => {
   if (post.id) {
@@ -129,8 +131,26 @@ useEffect(() => {
   }
 }, [post.id]);
 
+useEffect(() => {
+  if ('scrollRestoration' in history) {
+      // 스크롤 복원 기능을 활성화
+      history.scrollRestoration = 'auto';
+  }
+
+  return () => {
+      if ('scrollRestoration' in history) {
+          // 컴포넌트가 언마운트될 때 스크롤 복원 기능을 비활성화
+          history.scrollRestoration = 'manual';
+      }
+  };
+}, []);
 
 
+useLayoutEffect(() => {
+  if (isWindow) {
+    window.scroll(0, sessionStorage.y);
+  }
+}, []);
   
 
   const handleDeletePost = async (postId: any) => {
@@ -162,13 +182,15 @@ useEffect(() => {
           
 {/* Thumbnail Image */}
 {post.thumbnail && (
-    <Link href={`/r/${subredditName}/post/${post.id}`}>
-        <img
-            src={post.thumbnail}
-            alt="post image"
-            className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white "
-        />
-    </Link>
+  <Link href={`/r/${subredditName}/post/${post.id}`} >
+    <img
+        src={post.thumbnail}
+        alt="post image"
+        className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white "
+        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+    />
+</Link>
+
 )}
 
             <div className="flex-grow pr-1">
@@ -177,14 +199,18 @@ useEffect(() => {
 
 {/* Post Title and Donation */}
 <div className="flex items-center justify-between space-x-0.5 mt-1">
-    <Link href={`/r/${subredditName}/post/${post.id}`}>
-        <span className="flex-grow text-base cursor-pointer hover:underline"> {/* cursor-pointer와 hover:underline 추가 */}
-            <h1 className="font-bold truncate inline">
-                {truncateTitle(post.title)}
-                <span className="text-red-400">[{commentAmt}]</span>
-            </h1>
-        </span>
-    </Link>
+<Link href={`/r/${subredditName}/post/${post.id}`}>
+    <span 
+        className="flex-grow text-base cursor-pointer hover:underline" 
+        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}  // 여기에 추가
+    >
+        <h1 className="font-bold truncate inline">
+            {truncateTitle(post.title)}
+            <span className="text-red-400">[{commentAmt}]</span>
+        </h1>
+    </span>
+</Link>
+
 </div>
 
                 {/* Author, Date, and Subreddit Name (For Mobile) */}
@@ -192,11 +218,16 @@ useEffect(() => {
   
              
                     {subredditName && (
-    <Link href={`/r/${subredditName}`}>
-    <span className="cursor-pointer hover:underline">
-    [{decodeURIComponent(subredditName)}]
-    </span>
-</Link>                     )}
+   <Link href={`/r/${subredditName}`}>
+   <span 
+       className="cursor-pointer hover:underline" 
+       onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+   >
+       [{decodeURIComponent(subredditName)}]
+   </span>
+</Link>
+
+                  )}
 
           <span className="px-0">
                             {
@@ -215,19 +246,17 @@ useEffect(() => {
 
     {/* Author, Date, and Subreddit Name (For Desktop) */}
 <div className="flex space-x-1 items-center text-xxxxs text-gray-500 hidden md:flex mt-1">
-{/* <Link href={`/r/myFeed/${post.author.id}`}>
-    <span className="cursor-pointer hover:underline">
-        {post.author.username}
-    </span>
-</Link>   
-    <span>·</span> */}
+
  
     {subredditName && (
       <span className="cursor-pointer hover:underline">
 
 
         
-    <Link href={`/r/${subredditName}`}>
+<Link href={`/r/${subredditName}`}>
+    <span 
+        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+    >
         [{decodeURIComponent(subredditName)}]
         <span className="px-0 ml-0">
             {
@@ -236,12 +265,14 @@ useEffect(() => {
                         <span> · </span>
                         <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto', display: 'inline-block' }} />
                         <span> · </span>
-          {donateCoins}
+                        {donateCoins}
                       </>
                     : null
             }
         </span>
-    </Link>
+    </span>
+</Link>
+
 
 
 </span>
@@ -260,13 +291,17 @@ useEffect(() => {
         initialVotesAmt={_votesAmt}
         initialVote={_currentVote?.type}
     />
-    <Link href={`/r/myFeed/${post.author.id}`}>
-        <span className="cursor-pointer hover:underline">
-            / {post.author.username}
-            <span> · </span>
-            <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
-        </span>
-    </Link>
+ <Link href={`/r/myFeed/${post.author.id}`}>
+    <span 
+        className="cursor-pointer hover:underline"
+        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+    >
+        / {post.author.username}
+        <span> · </span>
+        <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
+    </span>
+</Link>
+
 </span>
 
               
@@ -281,15 +316,25 @@ useEffect(() => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  <Link href={`/r/${subredditName}/edit/${post.id}`}>
-                    Edit Post
-                  </Link>
+                <Link href={`/r/${subredditName}/edit/${post.id}`}>
+    <span 
+        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+        className="cursor-pointer hover:underline"
+    >
+        Edit Post
+    </span>
+</Link>
+
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <button onClick={() => handleDeletePost(post.id)}>
-                    Delete Post
-                  </button>
+                <button onClick={() => {
+                  sessionStorage.setItem("y", String(window.pageYOffset));
+                  handleDeletePost(post.id);
+              }}>
+                  Delete Post
+              </button>
+
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

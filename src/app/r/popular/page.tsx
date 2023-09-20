@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Home as HomeIcon, Loader2 } from 'lucide-react'
+import router, { useRouter } from "next/router";
+
 
 interface PageProps {}
 
@@ -14,6 +16,9 @@ const Page = ({}: PageProps) => {
   const [data, setData] = useState<any[]>([]); 
   const [session, setSession] = useState<any[]>([]); 
   const [loading, setLoading] = useState(true); 
+
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -49,6 +54,7 @@ const Page = ({}: PageProps) => {
       ) : (
         <>
           <div className="sm:ml-20">
+            
             <PopularPostFeed key={data.length} initialPosts={data} session={session} />
           </div>
           {data.length === 0 && (
