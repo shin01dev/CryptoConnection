@@ -1,67 +1,25 @@
-'use client'
-import MiniCreatePost from '@/components/MiniCreatePost'
-import PopularPostFeed from '@/components/popularPostFeed'
-import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import SubredditPopularPostFeed from '@/components/subredditPopularPostFeed'
-import { Home as HomeIcon, Loader2 } from 'lucide-react'
+//src/app/r/[slug]/popular/page.tsx
+import CustomFeed from '@/components/homepage/CustomFeed'
+import GeneralFeed from '@/components/homepage/GeneralFeed'
+import { buttonVariants } from '@/components/ui/Button'
+import { Home as HomeIcon } from 'lucide-react'
+import Link from 'next/link'
+import PopularFeed from '@/components/popular/Popular'
+import PopularSubredditFeed from '@/components/popularSubreddit/popularSubreddit'
 
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
-const Page = ({params}: PageProps) => {
-  const { slug } = params;
-  const decodedSlug = decodeURIComponent(slug);
-  
-  const [popularFeedElement, setPopularFeedElement] = useState<React.ReactNode | null>(null);
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+export default async function Home({ params }: { params: { slug: string } }) {
+  console.log(decodeURIComponent(params.slug)+"이게 슬러그");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.post('/api/subredditPopularPosts', {
-          slug: slug
-        });
-        if (response.status === 200) {
-          const result = response.data;
-          if (Array.isArray(result.filteredPosts) && result.filteredPosts.length > 0) {
-            setPopularFeedElement(<SubredditPopularPostFeed subredditName={decodedSlug} key={result.filteredPosts.length} initialPosts={result.filteredPosts} session={result.userId} slug={slug} />);
-          } else {
-            setPopularFeedElement(<p className="mt-5 text-lg text-center text-gray-500">인기 게시물이 아직 없습니다.</p>);
-          }
-        } else {
-          throw new Error('Failed to fetch data');
-        }
-      } catch (error: any) {
-        console.error('Error fetching data:', error);
-      }
-      setLoading(false); // 데이터 로딩이 완료되었거나 에러가 발생했을 때 로딩 상태를 false로 설정
-    }
-
-    fetchData();
-  }, []);
   return (
     <>
-      <h1 className='font-bold text-3xl md:text-4xl h-14 ml-4'>
-        {decodedSlug}
-      </h1>
-      <div className="flex flex-col justify-center mt-10">
-          {loading ? 
-            <div className='flex justify-center items-start pt-60 h-screen'>
-    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-</div>
-          : 
-            popularFeedElement
-          }
+      {/* <h1 className='font-bold text-3xl md:text-4xl ml-4'>커뮤니티 게시물</h1> */}
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6 ml-1  sm:ml-20'>
+        {/* @ts-expect-error server component */}
+<PopularSubredditFeed slug={params.slug} />
       </div>
     </>
-);
-
-};
-
-export default Page;
+  )
+}

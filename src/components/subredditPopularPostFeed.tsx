@@ -37,7 +37,7 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
     ['infinite-query'],
     async ({ pageParam = 1 }) => {
       const query =
-        `/api/subredditPopularPost?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}&session=${session}` +
+        `/api/subredditPopularPost?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}&session=${session}&slug=${slug}` +
         (!!subredditName ? `&subredditName=${subredditName}` : '')
 
       const { data } = await axios.get(query)

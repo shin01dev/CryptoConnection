@@ -54,6 +54,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
     }
        
   )
+
+
+  
   useEffect(() => {
     setCurrentURL(window.location.href);
 

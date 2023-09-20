@@ -59,6 +59,29 @@ const Post: FC<PostProps> = ({
   const isWindow = typeof window !== 'undefined';
 
   const [isDesktop, setIsDesktop] = useState(false);
+//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__
+
+const saveScrollPosition = (url: any) => {
+  sessionStorage.setItem(`y_${url}`, String(window.pageYOffset));
+}
+const saveCurrentPath = () => {
+  sessionStorage.setItem('previousPath', window.location.pathname);
+}
+
+// useLayoutEffect(() => {
+//   if (isWindow) {
+//     const previousPath = sessionStorage.getItem('previousPath');
+//     if (window.location.pathname === `/r/${subredditName}/post/${post.id}` && previousPath !== `/r/${subredditName}/post/${post.id}`) {
+//       const savedScrollPosition = sessionStorage.getItem(`y_${window.location.pathname}`);
+//       if (savedScrollPosition) {
+//         window.scroll(0, parseInt(savedScrollPosition, 10));
+//       }
+//     }
+//   }
+// }, []);
+
+
+//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__
 
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
@@ -131,27 +154,15 @@ useEffect(() => {
   }
 }, [post.id]);
 
-useEffect(() => {
-  if ('scrollRestoration' in history) {
-      // 스크롤 복원 기능을 활성화
-      history.scrollRestoration = 'auto';
-  }
-
-  return () => {
-      if ('scrollRestoration' in history) {
-          // 컴포넌트가 언마운트될 때 스크롤 복원 기능을 비활성화
-          history.scrollRestoration = 'manual';
-      }
-  };
-}, []);
 
 
-useLayoutEffect(() => {
-  if (isWindow) {
-    window.scroll(0, sessionStorage.y);
-  }
-}, []);
-  
+
+
+
+
+
+
+
 
   const handleDeletePost = async (postId: any) => {
     try {
@@ -187,9 +198,14 @@ useLayoutEffect(() => {
         src={post.thumbnail}
         alt="post image"
         className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white "
-        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
+        onClick={() => {
+            saveCurrentPath(); 
+            saveScrollPosition(window.location.pathname);
+        }}
     />
 </Link>
+
+
 
 )}
 
@@ -202,7 +218,6 @@ useLayoutEffect(() => {
 <Link href={`/r/${subredditName}/post/${post.id}`}>
     <span 
         className="flex-grow text-base cursor-pointer hover:underline" 
-        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}  // 여기에 추가
     >
         <h1 className="font-bold truncate inline">
             {truncateTitle(post.title)}
@@ -221,8 +236,7 @@ useLayoutEffect(() => {
    <Link href={`/r/${subredditName}`}>
    <span 
        className="cursor-pointer hover:underline" 
-       onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
-   >
+       >
        [{decodeURIComponent(subredditName)}]
    </span>
 </Link>
@@ -255,8 +269,7 @@ useLayoutEffect(() => {
         
 <Link href={`/r/${subredditName}`}>
     <span 
-        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
-    >
+        >
         [{decodeURIComponent(subredditName)}]
         <span className="px-0 ml-0">
             {
@@ -294,7 +307,6 @@ useLayoutEffect(() => {
  <Link href={`/r/myFeed/${post.author.id}`}>
     <span 
         className="cursor-pointer hover:underline"
-        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
     >
         / {post.author.username}
         <span> · </span>
@@ -318,7 +330,6 @@ useLayoutEffect(() => {
                 <DropdownMenuItem>
                 <Link href={`/r/${subredditName}/edit/${post.id}`}>
     <span 
-        onClick={() => sessionStorage.setItem("y", String(window.pageYOffset))}
         className="cursor-pointer hover:underline"
     >
         Edit Post
@@ -328,8 +339,8 @@ useLayoutEffect(() => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                <button onClick={() => {
-                  sessionStorage.setItem("y", String(window.pageYOffset));
+                <button 
+                onClick={() => {sessionStorage.setItem("y", String(window.pageYOffset));
                   handleDeletePost(post.id);
               }}>
                   Delete Post

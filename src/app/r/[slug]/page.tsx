@@ -1,92 +1,25 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import MiniCreatePost from '@/components/MiniCreatePost';
-import PostFeed from '@/components/PostFeed';
-import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config';
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db';
-import SubPostFeed from '@/components/subredditPostFeed/subredditPostFeed';
-import axios from 'axios';
-import { Home as HomeIcon, Loader2 } from 'lucide-react'
+// src/app/r/[slug]
+import CustomFeed from '@/components/homepage/CustomFeed'
+import GeneralFeed from '@/components/homepage/GeneralFeed'
+import { buttonVariants } from '@/components/ui/Button'
+import { Home as HomeIcon } from 'lucide-react'
+import Link from 'next/link'
+import PopularFeed from '@/components/popular/Popular'
+import SubredditFeed from '@/components/subreddit/subreddit'
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
-const Page = ({ params }: PageProps) => {
-  const { slug } = params;
-  const decodedSlug = decodeURIComponent(slug);
-
-  type SubredditDataType = {
-    subreddit: {
-      name: string;
-      posts: any[];
-    };
-    userId: any;
-  };
-
-  const [subredditData, setSubredditData] = useState<SubredditDataType | null>(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchSubreddit(slug: string) {
-      try {
-        const response = await axios.post('/api/subPost', { slug: slug });
-        setSubredditData(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error);
-        setLoading(false);
-        console.error('Error fetching subreddit:', error);
-      }
-    }
-
-    fetchSubreddit(slug);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-start pt-80 h-screen'>
-      <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-  </div>
-    );
-  }
-
-  if (error) {
-    return <div>Error fetching data</div>;
-  }
-
-  if (!subredditData) {
-    return null;
-  }
-
-  const { subreddit, userId } = subredditData;
-
-  if (!subreddit) return <div>Subreddit not found</div>;
+export default async function Home({ params }: { params: { slug: string } }) {
+  console.log(params.slug+"!!!!!!");
 
   return (
     <>
-      <h1 className='font-bold text-3xl md:text-4xl h-14 ml-4'>
-        {decodeURIComponent(subreddit.name)}
-      </h1>
-      <SubPostFeed 
-        dataKey={slug}
-        initialPosts={subreddit.posts} 
-        subredditName={subreddit.name} 
-        session={userId} 
-      />
-      {subreddit.posts.length === 0 && (
-        <div className="flex flex-col items-center justify-center mt-10">
-          <span className="text-gray-500 font-semibold text-lg">
-            게시물이 아직 없습니다.
-          </span>
-        </div>
-      )}
+      {/* <h1 className='font-bold text-3xl md:text-4xl ml-4'>커뮤니티 게시물</h1> */}
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6 ml-1  sm:ml-20'>
+        {/* @ts-expect-error server component */}
+<SubredditFeed slug={params.slug} />
+      </div>
     </>
-  );
-};
-
-export default Page;
+  )
+}

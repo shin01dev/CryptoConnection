@@ -19,7 +19,7 @@ interface PostFeedProps {
   
 }
 
-const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
+const MyPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
   const lastPostRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -91,7 +91,14 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
   const [userName, setUsername] = useState<string | null>(null); // username 상태 변수를 추가
-
+  useEffect(() => {
+    const ids = posts.map(p => p.id);
+    const hasDuplicates = ids.some((id, index) => ids.indexOf(id) !== index);
+    if(hasDuplicates) {
+      console.warn('Duplicate IDs detected:', ids);
+    }
+  }, [posts]);
+  
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
       {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
@@ -198,4 +205,4 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   )
 }
 
-export default PostFeed
+export default MyPostFeed
