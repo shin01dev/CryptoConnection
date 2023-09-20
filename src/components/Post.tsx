@@ -304,7 +304,7 @@ useEffect(() => {
         initialVotesAmt={_votesAmt}
         initialVote={_currentVote?.type}
     />
- <Link href={`/r/myFeed/${post.author.id}`}>
+ <a href={`/r/myFeed/${post.author.id}`}>
     <span 
         className="cursor-pointer hover:underline"
     >
@@ -312,7 +312,7 @@ useEffect(() => {
         <span> · </span>
         <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
     </span>
-</Link>
+</a>
 
 </span>
 

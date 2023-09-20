@@ -136,7 +136,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
         } else {
           return (
             <Post
-              key={post.id}
+              key={post.id+"1024"}
               post={post}
               commentAmt={post.comments.length}
               subredditName={post.subreddit?.name ?? "Unknown"}
