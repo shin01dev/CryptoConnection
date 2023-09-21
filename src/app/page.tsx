@@ -4,6 +4,7 @@ import { buttonVariants } from '@/components/ui/Button'
 import { getAuthSession } from '@/lib/auth'
 import { Home as HomeIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -16,8 +17,12 @@ export default async function Home() {
     <>
       {/* <h1 className='font-bold text-3xl md:text-4xl ml-4'>커뮤니티 게시물</h1> */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6 ml-1  sm:ml-20' >
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
+
         {/* @ts-expect-error server component */}
         {session ? <CustomFeed /> : <GeneralFeed />}
+        {/* </Suspense> */}
+
 
   {/* subreddit info */}
   <div className='hidden md:block overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last mr-10 sm:ml-30' style={{ ...(process.browser && window.innerWidth >= 768 ? { marginLeft: '15rem' } : {}) }}>

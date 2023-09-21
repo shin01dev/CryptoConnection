@@ -12,16 +12,32 @@ import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link'
+import { ArrowDown } from 'lucide-react'; // Assuming this is the right import for the arrow icon.
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import { ChevronDown } from 'lucide-react'; // ChevronDown은 아래 화살표 아이콘입니다. 필요에 따라 라이브러리를 수정해주세요.
+import { Button, buttonVariants } from '@/components/ui/Button'
+
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
   session :any
-  
+  username:any
+  followersCount:any
+  followingCount:any
+  yourUserId:any
+
 }
 
-const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
+const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,username ,followersCount,followingCount,yourUserId}) => {
   const lastPostRef = useRef<HTMLElement>(null)
+  const [isFollowVisible, setIsFollowVisible] = useState<boolean>(false); // Add this state for the toggle functionality
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -86,21 +102,70 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
   return (
     
     <ul className='flex flex-col col-span-2 space-y-6'>
-      <>
-      <div className="flex space-x-2"> {/* space-x-2는 두 span 태그 사이의 간격을 주기 위해 사용됩니다. */}
-  <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={`${BASE_URL}/r/myFeed/${session}`}>
-      ({userName}) 최신 글
-    </a>
-  </span>
+     <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start">
+        {session !== yourUserId && (
+  <Link 
+    href={`/r/myFeed/${session}/donate`} 
+    className={`${buttonVariants({ className: 'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 hover:from-purple-500 hover:via-pink-600 hover:to-red-600 transition duration-300 w-32 h-10 rounded flex items-center justify-center text-white' })}`}
+  >
+    후원하기
+    {/* <img src="/favicon.ico" alt="Token Image" className="ml-2 w-5 h-5 cursor-pointer mr-4" /> */}
 
-  <span className="cursor-pointer text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200 p-2 rounded-md transition hover:bg-gray-300">
-  <a href={`${BASE_URL}/r/myFeed/${session}`}>
-    ({userName}) 후원 글
-  </a>
-</span>
-
+  </Link>
+)}
 </div>
+
+      <>
+      <div className="flex space-x-2 font-sans items-center"> {/* items-center 추가 */}
+  <a 
+    href={`${BASE_URL}/r/myFeed/${session}`} 
+    className="inline-block border border-gray-200 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105"
+    style={{ fontFamily: "Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+  >
+    ({username}) 최신 글
+  </a>
+
+  {/* 후원 글 및 ChevronDown 아이콘을 같은 flex 컨테이너 내부에 배치 */}
+  <div className="flex items-center space-x-2">
+    <a 
+      href={`${BASE_URL}/r/donation/${session}`} 
+      className="inline-block bg-gradient-to-r from-blue-100 to-blue-200 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105"
+      style={{ fontFamily: "Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+    >
+      ({username}) 후원 글
+    </a>
+    <DropdownMenu>
+  <DropdownMenuTrigger>
+  <div className="cursor-pointer bg-white border rounded-full p-1 ml-2">
+  <ChevronDown />
+</div>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    {/* 팔로워 수 링크 추가 */}
+    <Link href={`/r/follower/${session}`}>
+   
+        <DropdownMenuItem>
+          팔로워 수 : {followersCount}
+        </DropdownMenuItem>
+      
+    </Link>
+    
+    {/* 팔로잉 수 링크 추가 */}
+    <Link href={`/r/following/${session}`}>
+      
+        <DropdownMenuItem>
+          팔로잉 수 : {followingCount}
+        </DropdownMenuItem>
+      
+    </Link>
+  </DropdownMenuContent>
+</DropdownMenu>
+
+  </div>
+</div>
+
+
+
 
       </>
   

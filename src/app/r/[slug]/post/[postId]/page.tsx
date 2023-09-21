@@ -45,7 +45,7 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
   if (!post && !cachedPost) return notFound()
   return (
     <div>
-<div className='w-full ml-1  mr-1 sm:w-4/5 sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm'>
+<div className='w-full ml-1  mr-1 sm:w-5/5 sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm'>
 
               {/* 포스트 상세 가로 길이 */}
               <div className='ml-0 mr-2  sm:w-full sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm sm:max-w-[100%]'>

@@ -66,7 +66,7 @@ const Layout = async ({
         <ToFeedButton />
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6'>
-          <ul className='flex flex-col col-span-2 space-y-6'>{children}</ul>
+        <ul className='hidden md:block flex flex-col col-span-2 space-y-6'>{children}</ul>
 
           {/* info sidebar */}
           <div className='overflow-hidden h-fit rounded-lg border border-gray-200 ml-2 mr-2 sm:ml-20 sm:mr-1 mt-3'>
@@ -120,6 +120,7 @@ const Layout = async ({
 }
 
 
+<ul className='block md:hidden flex flex-col col-span-2 space-y-6'>{children}</ul>
 
 
             </dl>

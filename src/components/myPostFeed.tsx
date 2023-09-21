@@ -12,14 +12,30 @@ import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import { ChevronDown } from 'lucide-react'; // ChevronDown은 아래 화살표 아이콘입니다. 필요에 따라 라이브러리를 수정해주세요.
+import { Button, buttonVariants } from '@/components/ui/Button'
+import { Home as HomeIcon } from 'lucide-react'
+
+
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
   session :any
+  username : any
+  followersCount:any
+  followingCount:any
+  yourUserId:any
   
 }
 
-const MyPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
+const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,username, followersCount,followingCount ,yourUserId}) => {
   const lastPostRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -60,29 +76,7 @@ const MyPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) 
     
   }, []);
 
-  const getUsernameFromSession = async (sessionValue: any) => {
-    try {
-      const response = await axios.post(`/api/getUserName`, { session: sessionValue });
-      
-      if (response.status === 200) {
-        return response.data.username;
-      } else {
-        throw new Error('Failed to get username');
-      }
-    } catch (error) {
-      console.error('Error fetching username:', error);
-    }
-  }
-  useEffect(() => {
-    const pathname = window.location.pathname;
-    if (pathname.includes('/r/myFeed') || pathname.includes('/r/donation')) {
-      (async function loadUsername() {
-        const username = await getUsernameFromSession(session);
-        setUsername(username);
-      })();
-    }
-  }, []);
-  
+
   useEffect(() => {
     if (entry?.isIntersecting) {
       fetchNextPage() // Load more posts when the last post comes into view
@@ -90,74 +84,82 @@ const MyPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) 
   }, [entry, fetchNextPage])
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
-  const [userName, setUsername] = useState<string | null>(null); // username 상태 변수를 추가
-  useEffect(() => {
-    const ids = posts.map(p => p.id);
-    const hasDuplicates = ids.some((id, index) => ids.indexOf(id) !== index);
-    if(hasDuplicates) {
-      console.warn('Duplicate IDs detected:', ids);
-    }
-  }, [posts]);
-  
+
   return (
+    
     <ul className='flex flex-col col-span-2 space-y-6'>
-      {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
-  <div className='flex gap-2'>
-    <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-      {currentURL === `${BASE_URL}/r/popular` ? (
-    <a href={BASE_URL}>
-   
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        커뮤니티 글
-      </span>
-  
-  </a>
-  
-      ) : (
-<a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
-        (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
-  <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
-  </span>
-</a>
 
 
-      )}
-      
-    </span>
-  <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : 
-        (currentURL.includes(`${BASE_URL}/r/${decodedSubredditName}/popular`)) ? `/r/${decodedSubredditName}` : `/r/${decodedSubredditName}`}>
-  <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-  </span>
-</a>
-  </span>
-</div>
 
+
+      <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start">
+        {session !== yourUserId && (
+  <Link 
+    href={`/r/myFeed/${session}/donate`} 
+    className={`${buttonVariants({ className: 'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 hover:from-purple-500 hover:via-pink-600 hover:to-red-600 transition duration-300 w-32 h-10 rounded flex items-center justify-center text-white' })}`}
+  >
+    후원하기
+    {/* <img src="/favicon.ico" alt="Token Image" className="ml-2 w-5 h-5 cursor-pointer mr-4" /> */}
+
+  </Link>
 )}
 
-{(currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) && (
-  // Your JSX content here
-
-      <>
-<div className="flex space-x-2"> {/* space-x-2는 두 span 태그 사이의 간격을 주기 위해 사용됩니다. */}
-<span className="cursor-pointer text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200 p-2 rounded-md transition hover:bg-gray-300">
-  <a href={`${BASE_URL}/r/myFeed/${session}`}>
-    ({userName}) 최신 글
-  </a>
-</span>
-
-  <span className='cursor-pointer bg-gray-100 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={`${BASE_URL}/r/donation/${session}`}>
-      ({userName}) 후원 글
-    </a>
-  </span>
 </div>
 
 
+
+      <>
+      <div className="flex space-x-2 font-sans">
+        
+      <a 
+    href={`${BASE_URL}/r/myFeed/${session}`} 
+    className="inline-block bg-gradient-to-r from-blue-100 to-blue-200 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105"
+    style={{ fontFamily: "Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+>
+    ({username}) 최신 글
+</a>
+
+  <a 
+    href={`${BASE_URL}/r/donation/${session}`} 
+    className="inline-block bg-white border border-gray-200 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105"
+    style={{ fontFamily: "Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+  >
+    ({username}) 후원 글
+  </a>
+
+  <DropdownMenu>
+  <DropdownMenuTrigger>
+  <div className="cursor-pointer bg-white border rounded-full p-1 ml-2">
+  <ChevronDown />
+  
+</div>
+
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    {/* 팔로워 수 링크 추가 */}
+    <Link href={`/r/follower/${session}`}>
+   
+        <DropdownMenuItem>
+          팔로워 수 : {followersCount}
+        </DropdownMenuItem>
+      
+    </Link>
+    
+    {/* 팔로잉 수 링크 추가 */}
+    <Link href={`/r/following/${session}`}>
+      
+        <DropdownMenuItem>
+          팔로잉 수 : {followingCount}
+        </DropdownMenuItem>
+      
+    </Link>
+  </DropdownMenuContent>
+</DropdownMenu>
+
+</div>
+
       </>
-    )}
+
       {posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1
@@ -201,8 +203,10 @@ const MyPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) 
           <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
         </li>
       )}
+      
     </ul>
+    
   )
 }
 
-export default MyPostFeed
+export default PostFeed

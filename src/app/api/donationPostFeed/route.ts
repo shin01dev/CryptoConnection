@@ -38,7 +38,7 @@ const posts = await db.post.findMany({
     },
     include: {
       subreddit: true,
-      votes: true,
+      votes: true, 
       author: true,
       comments: true,
     },

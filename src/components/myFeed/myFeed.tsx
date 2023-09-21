@@ -32,9 +32,32 @@ const PopularMyFeed = async ({ slug }: { slug: string }) => {
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   });
   
+  const user = await db.user.findUnique({
+    where: {
+      id: slug
+    },
+    select: {
+      username: true,
+      _count: {
+        select: {
+          followers: true,
+          following: true
+        }
+      }
+    }
+});
+
+if (!user) {
+    throw new Error("User not found"); // or handle this error in a way that's appropriate for your application
+}
+
+const followerCount = user._count?.followers;
+const followingCount = user._count?.following;
+
+
   
 
-  return <MyPostFeed initialPosts={posts} session={slug}  />;
+return <MyPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount} yourUserId={session.user.id} />;
 };
 
 export default PopularMyFeed;
