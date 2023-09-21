@@ -69,7 +69,7 @@ const Layout = async ({
         <ul className='hidden md:block flex flex-col col-span-2 space-y-6'>{children}</ul>
 
           {/* info sidebar */}
-          <div className='overflow-hidden h-fit rounded-lg border border-gray-200 ml-2 mr-2 sm:ml-20 sm:mr-1 mt-3'>
+          <div className='overflow-hidden h-fit rounded-lg border border-gray-200 ml-1 mr-1 sm:ml-20 sm:mr-1 mt-3'>
             <div className='px-6 py-4'>
             <p className='font-semibold py-3'>{decodeURIComponent(subreddit.name)}</p>
             </div>
@@ -120,10 +120,11 @@ const Layout = async ({
 }
 
 
-<ul className='block md:hidden flex flex-col col-span-2 space-y-6'>{children}</ul>
 
 
             </dl>
+            <ul className='block md:hidden flex flex-col col-span-2 space-y-6'>{children}</ul>
+
           </div>
         </div>
       </div>
