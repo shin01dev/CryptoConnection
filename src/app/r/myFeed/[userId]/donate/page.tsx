@@ -37,7 +37,7 @@ useEffect(() => {
 
   
   return (
-    <div className='flex flex-col items-start gap-6'>
+    <div className='flex flex-col items-start gap-6 sm:ml-10 sm:mr-10 ml-2 mr-2'>
       {/* heading */}
       <div className='border-b border-gray-200 pb-5'>
 
@@ -66,11 +66,12 @@ useEffect(() => {
 
 {
         coinNumber && coinNumber >= 1 ? (
-          <div className='w-full flex justify-end'>
-            <Button type='submit' className='w-full' form='subreddit-post-form'>
-              Post
-            </Button>
-          </div>
+          <div className='w-full flex justify-end bg-blue-500 mb-4'>
+          <Button type='submit' className='w-full' form='subreddit-post-form'>
+            게시하기
+          </Button>
+        </div>
+        
         ) : (
           <div className="text-center text-red-500">
             후원은 토큰 1개 이상부터 가능 합니다

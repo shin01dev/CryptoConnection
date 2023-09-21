@@ -84,16 +84,17 @@ const Page: React.FC<pageProps> = ({ params }) => {
       {/* form */}
       <Editor subredditId={subredditId || ''} editThumbnail={undefined} />
 
-      <div className='w-full flex justify-end'>
+      <div className='w-full flex justify-end bg-blue-500  mb-4'>
       <Button 
-      type='submit' 
-      className='w-full' 
-      form='subreddit-post-form' 
-      onClick={handlePost}
-      disabled={isLoading} // 로딩 중일 때 버튼 비활성화
-    >
-        {isLoading && <LoadingOverlay />}
-    </Button>
+    type='submit' 
+    className='w-full  text-white'  // 수정된 부분
+    form='subreddit-post-form' 
+    onClick={handlePost}
+    disabled={isLoading} // 로딩 중일 때 버튼 비활성화
+>
+    {isLoading ? <LoadingOverlay /> : "게시하기"} 
+</Button>
+
       </div>
     </div>
   )

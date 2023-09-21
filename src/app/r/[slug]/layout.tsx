@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
-
+import { BASE_URL } from '@/components/BASE_URL'
 export const metadata: Metadata = {
   title: 'Coin Community',
   description: 'Coin Community',
@@ -110,7 +110,7 @@ const Layout = async ({
           variant: 'outline',
           className: 'w-full mb-6',
         })}
-        href={`${slug}/submit`}
+        href={`${BASE_URL}/r/${slug}/submit`}
         
       >
         Create Post

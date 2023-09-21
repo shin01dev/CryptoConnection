@@ -104,7 +104,7 @@ const PostVoteClient = ({
   }
 
   return (
-    <div className='flex gap-0 sm:gap-0 pr-0 sm:w-20 pb-0 sm:pb-0'>
+    <div className='flex gap-0 sm:gap-0 pr-0 sm:w-20 pb-0 sm:pb-0 '>
       {/* upvote */}
       <Button
         onClick={handleUpVote}

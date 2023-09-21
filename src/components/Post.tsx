@@ -186,10 +186,15 @@ useEffect(() => {
   }, [isClient]);
 
   const isAuthor = post.author.id === session?.user?.id; // 작성자와 사용자의 일치 여부 확인
+
+
+
+
+  
   return (
 
-    <div className="rounded-md py-0 h-16">
-        <div className="flex justify-between items-center text-sm">
+<div className="rounded-md py-0 h-16  ">
+        <div className="flex justify-between items-center text-sm  ">
           
 {/* Thumbnail Image */}
 {post.thumbnail && (
@@ -197,7 +202,7 @@ useEffect(() => {
     <img
         src={post.thumbnail}
         alt="post image"
-        className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white "
+        className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white  "
         onClick={() => {
             saveCurrentPath(); 
             saveScrollPosition(window.location.pathname);
@@ -298,7 +303,7 @@ useEffect(() => {
 
 </div>
 {/* Voting */}
-<span className="flex items-center text-gray-600"> {/* 이 부분에 text-gray-600 추가 */}
+<span className="flex items-center text-gray-600 "> {/* 이 부분에 text-gray-600 추가 */}
     <PostVoteClient
         postId={post.id}
         initialVotesAmt={_votesAmt}

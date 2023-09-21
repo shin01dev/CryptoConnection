@@ -11,7 +11,6 @@ export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
 export default async function Home({ params }: { params: { userId: string } }) {
-  console.log(decodeURIComponent(params.userId)+"이게 슬러그");
 
   return (
     <>

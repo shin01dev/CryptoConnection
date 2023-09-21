@@ -92,7 +92,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
 
 
 
-      <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start">
+      <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start ">
         {session !== yourUserId && (
   <Link 
     href={`/r/myFeed/${session}/donate`} 
