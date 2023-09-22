@@ -107,51 +107,55 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
 </span>
 </div>
 )}
-      {posts.map((post, index) => {
-        const votesAmt = post.votes.reduce((acc, vote) => {
-          if (vote.type === 'UP') return acc + 1
-          if (vote.type === 'DOWN') return acc - 1
-          return acc
-        }, 0)
 
-        const currentVote = post.votes.find(
-          (vote) => vote.userId === session
-        )
+
+{posts.length === 0 ? (
+      <li className='text-center font-medium mt-4'>        인기 게시물이 되어 토큰을 지급 받으세요 !
+      </li>
+    ) : (
+      posts.map((post, index) => {
+        const votesAmt = post.votes.reduce((acc, vote) => {
+          if (vote.type === 'UP') return acc + 1;
+          if (vote.type === 'DOWN') return acc - 1;
+          return acc;
+        }, 0);
+
+        const currentVote = post.votes.find((vote) => vote.userId === session);
 
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-<li key={`${post.id}-${index}`} ref={ref}>
+            <li key={`${post.id}-${index}`} ref={ref}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
-                subredditName={post.subreddit?.name ?? "Unknown"}
+                subredditName={post.subreddit?.name ?? 'Unknown'}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
               />
             </li>
-          )
+          );
         } else {
           return (
             <Post
-            key={`${post.id}-${index}`}
-            post={post}
+              key={`${post.id}-${index}`}
+              post={post}
               commentAmt={post.comments.length}
-              subredditName={post.subreddit?.name ?? "Unknown"}
+              subredditName={post.subreddit?.name ?? 'Unknown'}
               votesAmt={votesAmt}
               currentVote={currentVote}
             />
-          )
+          );
         }
-      })}
+      })
+    )}
 
-      {isFetchingNextPage && (
-        <li className='flex justify-center'>
-          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-        </li>
-      )}
-    </ul>
-  )
-}
-
-export default SubredditPopularPostFeed
+    {isFetchingNextPage && (
+      <li className='flex justify-center'>
+        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+      </li>
+    )}
+  </ul>
+);
+    }
+export default SubredditPopularPostFeed;

@@ -55,9 +55,21 @@ const followerCount = user._count?.followers;
 const followingCount = user._count?.following;
 
 
-  
+const existingFollow = await db.follow.findUnique({
+  where: {
+    followerId_followingId: {
+      followerId: session.user.id,
+      followingId: slug,
+    },
+  },
+});
+const isFollowing = !!existingFollow; // existingFollow가 있으면 true, 없으면 false
 
-return <MyPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount} yourUserId={session.user.id} />;
+return <MyPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount}   
+
+followingCount={followingCount} // existingFollow가 있으면 followingCount, 없으면 0
+
+yourUserId={session?.user.id} existingFollow={existingFollow} />;
 };
 
 export default PopularMyFeed;

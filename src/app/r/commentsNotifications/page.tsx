@@ -213,13 +213,13 @@ export default function Home(props: any) {
     
                         return (
                             <li key={index} className="bg-white p-3 rounded-md mb-3 flex items-center">
-                                <Link href={`/r/myFeed/${comment.authorId}`}>
+                                <a href={`/r/myFeed/${comment.authorId}`}>
                                     <img
                                         src={userDetails[comment.authorId]?.image}
                                         alt={userDetails[comment.authorId]?.username}
                                         className="w-12 h-12 rounded-full border-2 border-gray-300 mr-4"
                                     />
-                                </Link>
+                                </a>
     
                                 <div className="flex-1">
                                     <p className="text-sm">{displayMessage}</p>

@@ -58,6 +58,7 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
   {post?.donateCoin && post?.donateCoin > "0" && (
     <span className="flex items-center ml-2">      
       <img src={"/favicon.ico"} alt="Donate Image" width="20" height="20"/> 
+      <div className='mr-1 ml-1'>  ·  </div>
       {post?.donateCoin}
     </span>
   )}

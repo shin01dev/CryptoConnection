@@ -46,6 +46,16 @@ const MyDonationFeed = async ({ slug }: { slug: string }) => {
     }
 });
 
+const existingFollow = await db.follow.findUnique({
+  where: {
+    followerId_followingId: {
+      followerId: session.user.id,
+      followingId: slug,
+    },
+  },
+});
+const isFollowing = !!existingFollow; // existingFollow가 있으면 true, 없으면 false
+
 if (!user) {
     throw new Error("User not found"); // or handle this error in a way that's appropriate for your application
 }
@@ -55,7 +65,7 @@ const followingCount = user._count?.following;
 
 
 
-  return <DonationPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount} yourUserId={session.user.id} />;
+  return <DonationPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount}  existingFollow={existingFollow}  yourUserId={session.user.id} />;
 };
 
 export default MyDonationFeed;

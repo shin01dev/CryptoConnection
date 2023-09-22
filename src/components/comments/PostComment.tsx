@@ -117,7 +117,7 @@ useEffect(() => {
   return (
     <div ref={commentRef} className='flex flex-col'>
       <div className='flex items-center'>
-      <Link href={`/r/myFeed/${authorId}`}>
+      <a href={`/r/myFeed/${authorId}`}>
 
         <UserAvatar
           user={{
@@ -126,13 +126,13 @@ useEffect(() => {
           }}
           className='h-6 w-6'
         />
-               </Link>
+               </a>
 
         <div className='ml-2 flex items-center gap-x-2'>
-        <Link href={`/r/myFeed/${authorId}`}>
+        <a href={`/r/myFeed/${authorId}`}>
           
         <div className='text-sm font-medium text-gray-900'>{comment.author.username} </div>
-       </Link>
+       </a>
           <p className='max-h-40 truncate text-xs text-zinc-500'>
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>

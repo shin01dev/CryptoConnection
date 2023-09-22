@@ -121,7 +121,7 @@ return (
                     ) : (
                         followers.map((follower: any) => (
                             <li key={follower.id} className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-lg">
-                                <Link href={`/r/myFeed/${follower.id}`}>
+                                <a href={`/r/myFeed/${follower.id}`}>
                                     <div className="flex items-center space-x-4">
                                         <img
                                             src={follower.image}
@@ -130,7 +130,7 @@ return (
                                         />
                                         <span className="text-sm font-medium text-gray-700">{follower.username}</span>
                                     </div>
-                                </Link>
+                                </a>
                             </li>
                         ))
                     )}

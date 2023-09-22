@@ -199,7 +199,7 @@ async function fetchUserVotes() {
             ) : (
               sortedPostNotifications.map((notification, idx) => (
                 <div key={idx} className="flex items-center mb-4 p-2 bg-white rounded-lg shadow">
-                    <Link href={`/r/myFeed/${notification.userId}`}>
+                    <a href={`/r/myFeed/${notification.userId}`}>
               
                             <img
                                 src={notification.userImage || "https://via.placeholder.com/40"}
@@ -207,7 +207,7 @@ async function fetchUserVotes() {
                                 className="w-12 h-12 rounded-full cursor-pointer mr-4"
                             />
                         
-                    </Link>
+                    </a>
                     <div className="text-gray-700 hover:text-blue-600 flex-1">
                         <Link href={notification.link}>
                       

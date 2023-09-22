@@ -74,7 +74,7 @@ const page = async ({ params }: pageProps) => {
       <Editor subredditId={subreddit.id} content={post?.content} title={post?.title} postId={post?.id} editThumbnail={post?.thumbnail}/>
       {/* <EditorOutput content={post?.content ?? cachedPost.content} /> */}
 
-      <div className='w-full flex justify-end'>
+      <div className='w-full flex justify-end bg-blue-500 mb-4'>
         <Button type='submit' className='w-full' form='subreddit-post-form'>
           게시하기
         </Button>

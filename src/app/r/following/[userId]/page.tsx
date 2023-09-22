@@ -89,7 +89,7 @@ export default function Home(props: any) {
                         <ul className="list-decimal pl-0">
                             {followings.map((following: any) => (
                                 <li key={following.id} className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-lg">
-                                    <Link href={`/r/myFeed/${following.id}`}>
+                                    <a href={`/r/myFeed/${following.id}`}>
                                         <div className="flex items-center space-x-4">
                                             <img
                                                 src={following.image}
@@ -98,7 +98,7 @@ export default function Home(props: any) {
                                             />
                                             <span className="text-sm font-medium text-gray-700">{following.username}</span>
                                         </div>
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>

@@ -80,7 +80,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
    posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
   return (
-    <ul className='flex flex-col col-span-2 space-y-6'>
+    <ul className='lg:ml-20 flex flex-col col-span-2 space-y-6'>
 
 {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
   <div className='flex gap-2'>
@@ -112,50 +112,56 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 </span>
 </div>
 )}
-      {posts.map((post, index) => {
-        const votesAmt = post.votes.reduce((acc, vote) => {
-          if (vote.type === 'UP') return acc + 1
-          if (vote.type === 'DOWN') return acc - 1
-          return acc
-        }, 0)
 
-        const currentVote = post.votes.find(
-          (vote) => vote.userId === session
-        )
+
+
+
+{posts.length === 0 ? (
+      <li className='text-center font-medium'>아직 게시물이 없습니다 !</li>
+    ) : (
+      posts.map((post, index) => {
+        const votesAmt = post.votes.reduce((acc, vote) => {
+          if (vote.type === 'UP') return acc + 1;
+          if (vote.type === 'DOWN') return acc - 1;
+          return acc;
+        }, 0);
+
+        const currentVote = post.votes.find((vote) => vote.userId === session);
 
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-<li key={`${post.id}-${index}`} ref={ref}>
+            <li key={`${post.id}-${index}`} ref={ref}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
-                subredditName={post.subreddit?.name ?? "Unknown"}
+                subredditName={post.subreddit?.name ?? 'Unknown'}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
               />
             </li>
-          )
+          );
         } else {
           return (
             <Post
-            key={`${post.id}-${index}`}
-            post={post}
+              key={`${post.id}-${index}`}
+              post={post}
               commentAmt={post.comments.length}
-              subredditName={post.subreddit?.name ?? "Unknown"}
+              subredditName={post.subreddit?.name ?? 'Unknown'}
               votesAmt={votesAmt}
               currentVote={currentVote}
             />
-          )
+          );
         }
-      })}
+      })
+    )}
 
-      {isFetchingNextPage && (
-        <li className='flex justify-center'>
-          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-        </li>
-      )}
-    </ul>
+    {isFetchingNextPage && (
+      <li className='flex justify-center'>
+        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+      </li>
+    )}
+  </ul>
   )
 }
 

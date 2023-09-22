@@ -68,21 +68,6 @@ const saveCurrentPath = () => {
   sessionStorage.setItem('previousPath', window.location.pathname);
 }
 
-// useLayoutEffect(() => {
-//   if (isWindow) {
-//     const previousPath = sessionStorage.getItem('previousPath');
-//     if (window.location.pathname === `/r/${subredditName}/post/${post.id}` && previousPath !== `/r/${subredditName}/post/${post.id}`) {
-//       const savedScrollPosition = sessionStorage.getItem(`y_${window.location.pathname}`);
-//       if (savedScrollPosition) {
-//         window.scroll(0, parseInt(savedScrollPosition, 10));
-//       }
-//     }
-//   }
-// }, []);
-
-
-//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__//__
-
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
   

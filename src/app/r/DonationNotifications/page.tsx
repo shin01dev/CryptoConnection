@@ -122,13 +122,13 @@ function formatTimestamp(timestamp: string) {
                 messages.map((item, idx) => (
                     <div key={idx} className="flex items-start mb-4 p-2 bg-white rounded-lg shadow">
                         {item.type === 'donation' && (
-                            <Link href={`/r/myFeed/${item.authorId}`}>
+                            <a href={`/r/myFeed/${item.authorId}`}>
                                 <img 
                                     src={item.image!} 
                                     alt="Author" 
                                     className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 cursor-pointer mr-4"
                                 />
-                            </Link>
+                            </a>
                         )}
                         <div className="flex-1">
                             <span className="flex items-center"> 

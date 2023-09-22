@@ -137,7 +137,7 @@ return (
             ) : followerUsernames.length > 0 ? (
                 followerUsernames.map((follower, idx) => (
         <div key={idx} className="flex items-center mb-4 p-2 bg-white rounded-lg shadow">
-          <Link href={`/r/myFeed/${followerId[idx]}`}>
+          <a href={`/r/myFeed/${followerId[idx]}`}>
             <div className="w-12 h-12 rounded-full cursor-pointer overflow-hidden">
               <img 
                 src={followerImages[idx] || ''} 
@@ -145,19 +145,19 @@ return (
                 className="w-12 h-12 rounded-full cursor-pointer mr-4"
               />
             </div>
-          </Link>
+          </a>
           <p className="ml-4">
-            <Link href={`/r/myFeed/${followerId[idx]}`}>
+            <a href={`/r/myFeed/${followerId[idx]}`}>
               <span className="text-blue-500 hover:underline cursor-pointer">
                 {follower}
               </span>
-            </Link>
+            </a>
             님이{' '}
-            <Link href={`/r/myFeed/${followingId[idx]}`}>
+            <a href={`/r/myFeed/${followingId[idx]}`}>
               <span className="text-blue-500 hover:underline cursor-pointer">
                 {followingUsernames[idx] || ''}
               </span>
-            </Link>
+            </a>
             님을 팔로우 합니다 - <span className="text-gray-500">{followCreationDates[idx]}</span>
           </p>
         </div>

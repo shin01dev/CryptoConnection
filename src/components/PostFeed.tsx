@@ -73,79 +73,82 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
+
+
+
+
+
+
+
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
       
-{((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
-  <div className='flex gap-2'>
-    <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-      {currentURL === `${BASE_URL}/r/popular` ? (
-    <a href={BASE_URL}>
-   
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        커뮤니티 글
-      </span>
-  
-  </a>
-  
-      ) : (
-        <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
-        <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-          커뮤니티 글
-        </span>
-      </a>
-      
+      {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
+        <div className='flex gap-2'>
+          <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+            {currentURL === `${BASE_URL}/r/popular` ? (
+              <a href={BASE_URL}>
+                <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+                  커뮤니티 글
+                </span>
+              </a>
+            ) : (
+              <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+                <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
+                  커뮤니티 글
+                </span>
+              </a>
+            )}
+          </span>
+          <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+            <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+              <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+                {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
+              </span>
+            </a>
+          </span>
+        </div>
       )}
-    </span>
-  <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-    <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-      </span>
-    </a>
-  </span>
-</div>
-)}
 
+      {posts.length === 0 ? (
+        <li className="text-center text-gray-600">
+          그룹에 가입해 게시물을 받아 보세요 !
+        </li>
+      ) : (
+        posts.map((post, index) => {
+          const votesAmt = post.votes.reduce((acc, vote) => {
+            if (vote.type === 'UP') return acc + 1;
+            if (vote.type === 'DOWN') return acc - 1;
+            return acc;
+          }, 0);
+          const currentVote = post.votes.find(vote => vote.userId === session);
 
-
-      {posts.map((post, index) => {
-        const votesAmt = post.votes.reduce((acc, vote) => {
-          if (vote.type === 'UP') return acc + 1
-          if (vote.type === 'DOWN') return acc - 1
-          return acc
-        }, 0)
-
-        const currentVote = post.votes.find(
-          (vote) => vote.userId === session
-        )
-
-        if (index === posts.length - 1) {
-          // Add a ref to the last post in the list
-          return (
-            <li key={post.id} ref={ref}>
+          if (index === posts.length - 1) {
+            return (
+              <li key={post.id} ref={ref}>
+                <Post
+                  post={post}
+                  commentAmt={post.comments.length}
+                  subredditName={post.subreddit?.name ?? "Unknown"}
+                  votesAmt={votesAmt}
+                  currentVote={currentVote}
+                />
+              </li>
+            );
+          } else {
+            return (
               <Post
+                key={post.id}
                 post={post}
                 commentAmt={post.comments.length}
                 subredditName={post.subreddit?.name ?? "Unknown"}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
               />
-            </li>
-          )
-        } else {
-          return (
-            <Post
-              key={post.id}
-              post={post}
-              commentAmt={post.comments.length}
-              subredditName={post.subreddit?.name ?? "Unknown"}
-              votesAmt={votesAmt}
-              currentVote={currentVote}
-            />
-          )
-        }
-      })}
+            );
+          }
+        })
+      )}
 
       {isFetchingNextPage && (
         <li className='flex justify-center'>
@@ -153,7 +156,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
         </li>
       )}
     </ul>
-  )
+  );
 }
 
-export default PostFeed
+export default PostFeed;

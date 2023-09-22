@@ -76,6 +76,25 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 
     
   }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
 
@@ -112,21 +131,25 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 </span>
 </div>
 )}
-      {posts.map((post, index) => {
+
+
+{posts.length === 0 ? (
+      <li className="text-center text-gray-600">
+        인기 게시물이 되어 토큰을 지급 받으세요 !
+      </li>
+    ) : (
+      posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1
           if (vote.type === 'DOWN') return acc - 1
           return acc
         }, 0)
 
-        const currentVote = post.votes.find(
-          (vote) => vote.userId === session
-        )
+        const currentVote = post.votes.find((vote) => vote.userId === session)
 
         if (index === posts.length - 1) {
-          // Add a ref to the last post in the list
           return (
-<li key={`${post.id}-${index}`} ref={ref}>
+            <li key={`${post.id}-${index}`} ref={ref}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -139,8 +162,8 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
         } else {
           return (
             <Post
-            key={`${post.id}-${index}`}
-            post={post}
+              key={`${post.id}-${index}`}
+              post={post}
               commentAmt={post.comments.length}
               subredditName={post.subreddit?.name ?? "Unknown"}
               votesAmt={votesAmt}
@@ -148,14 +171,15 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
             />
           )
         }
-      })}
+      })
+    )}
 
-      {isFetchingNextPage && (
-        <li className='flex justify-center'>
-          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-        </li>
-      )}
-    </ul>
+    {isFetchingNextPage && (
+      <li className='flex justify-center'>
+        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+      </li>
+    )}
+  </ul>
   )
 }
 
