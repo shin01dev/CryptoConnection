@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     const lastPostKey = recentPosts.get(ip);
     const lastRequestTime = recentIPs.get(ip);
     const now = Date.now();
-    const TIME_LIMIT = 10000;
+    const TIME_LIMIT = 5000;
 
     if (lastPostKey === postKey) {
       return new Response('Duplicate post content. Please change the content and try again.', { status: 429 });
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     // 현재 요청 시간 저장
 
     
-    // recentIPs.set(ip, now);
+    recentIPs.set(ip, now);
     recentPosts.set(ip, postKey);
     
 
