@@ -84,8 +84,8 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
 
   return (
-    <ul className='flex flex-col col-span-2 space-y-6'>
-    <div className='flex gap-2'>
+    <ul className='flex flex-col col-span-2 space-y-6 '>
+<div className='flex gap-2 bg-white sm:border sm:w-4/4 sm:w-7/8 border w:6/8 '>
       {/* "최신 글" 섹션 */}
       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
       <a href={BASE_URL}>
