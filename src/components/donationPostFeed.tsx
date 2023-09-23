@@ -217,6 +217,8 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
 
       </>
+
+      
       {posts.length === 0 ? (
         <li className="text-center text-gray-600">
         후원 받은 게시물이 없습니다 !</li>

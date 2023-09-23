@@ -20,7 +20,7 @@ export default async function Home() {
       {/* <Suspense fallback={<div>Loading...</div>}> */}
 
         {/* @ts-expect-error server component */}
-      <GeneralFeed />
+        <CustomFeed /> 
         {/* </Suspense> */}
 
 

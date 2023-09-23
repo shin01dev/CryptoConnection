@@ -93,47 +93,45 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 
 
 
-
-  
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
-
-{((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
-   <div className='flex gap-2'>
-   <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-     {currentURL === `${BASE_URL}/r/popular` ? (
-    <a href={BASE_URL}        onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}
-    >
+    <div className='flex gap-2'>
   
-    <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-      커뮤니티 글
-    </span>
 
-</a>
+      {/* "최신 글" 섹션 */}
+      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+      <a href={BASE_URL}>
 
-) : (
-  <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "/" : `/r/${decodedSubredditName}`}        onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}
-  >
-    <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-     커뮤니티 글
-    </span>
-  </a>
-)}
-</span>
-<span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-<a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}        onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}
->
-  <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-  </span>
-</a>
+        <span className='text-sm font-bold text-gray-700 hover:text-gray-900 '>
+          최신 글
+        </span>
+        </a>
 
-</span>
-</div>
-)}
+        </span>
+    
+  
+      {/* "인기 글" 섹션 */}
+      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+        <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
+          <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
+            {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
+          </span>
+        </a>
+      </span>
+        {/* "커뮤니티 글" 섹션 */}
+        <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+          <a href={`${BASE_URL}/r/community`}>
+            <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
+              커뮤니티 글
+            </span>
+          </a>
+   
+      </span>
+    </div>
 
-
-{posts.length === 0 ? (
+    {isFetchingNextPage ? null : (
+  <ul className='flex flex-col col-span-2 space-y-6'>
+    {posts.length === 0 ? (
       <li className="text-center text-gray-600">
         인기 게시물이 되어 토큰을 지급 받으세요 !
       </li>
@@ -173,12 +171,14 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
         }
       })
     )}
+  </ul>
+)}
+{isFetchingNextPage && (
+  <li className='flex justify-center'>
+    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+  </li>
+)}
 
-    {isFetchingNextPage && (
-      <li className='flex justify-center'>
-        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-      </li>
-    )}
   </ul>
   )
 }

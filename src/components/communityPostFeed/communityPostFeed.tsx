@@ -1,5 +1,5 @@
 'use client'
-import { BASE_URL } from './BASE_URL'
+import { BASE_URL } from '../BASE_URL'
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { ExtendedPost } from '@/types/db'
@@ -8,7 +8,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import { FC, useEffect, useRef, useState } from 'react'
-import Post from './Post'
+import Post from '../Post'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router from 'next/router';
@@ -19,7 +19,7 @@ interface PostFeedProps {
   
 }
 
-const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
+const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) => {
   const lastPostRef = useRef<HTMLElement>(null)
 
 
@@ -84,7 +84,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
       <a href={BASE_URL}>
 
-        <span className='text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200'>
+        <span className='text-sm font-bold text-gray-700 hover:text-gray-900 '>
           최신 글
         </span>
         </a>
@@ -92,7 +92,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
         </span>
 
   
-     
   
       {/* "인기 글" 섹션 */}
       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
@@ -102,30 +101,26 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
           </span>
         </a>
       </span>
-       {/* "커뮤니티 글" 섹션 */}
-       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
+
+      {/* "커뮤니티 글" 섹션 */}
+      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
   
 
-  <a href={`${BASE_URL}/r/community`}>
-        <span className="text-sm font-bold text-gray-700 hover:text-gray-900  ">
-          커뮤니티 글
-        </span>
-      </a>
-    
-  </span>
+      <a href={`${BASE_URL}/r/community`}>
+            <span className="text-sm font-bold text-gray-700 hover:text-gray-900  bg-blue-200">
+              커뮤니티 글
+            </span>
+          </a>
+        
+      </span>
     </div>
 
 
-    {isFetchingNextPage ? (
-  <li className="text-center text-gray-600">
-    {/* 로딩 중인 동안 숨깁니다. */}
-  </li>
-) : (
-  posts.length === 0 ? (
-    <li className="text-center text-gray-600">
-      아직 게시물이 없습니다 !
-    </li>
-  ) : (
+    {isFetchingNextPage ? null : (posts.length === 0 ? (
+      <li className="text-center text-gray-600">
+        그룹에 가입해 게시물을 받아 보세요 !
+      </li>
+    ) : (
         posts.map((post, index) => {
           const votesAmt = post.votes.reduce((acc, vote) => {
             if (vote.type === 'UP') return acc + 1;
@@ -159,7 +154,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
             );
           }
         })
-     ) )}
+      ))}
 
       {isFetchingNextPage && (
         <li className='flex justify-center'>
@@ -170,4 +165,4 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   );
 }
 
-export default PostFeed;
+export default CommunityPostFeed;

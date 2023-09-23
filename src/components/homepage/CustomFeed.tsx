@@ -1,7 +1,7 @@
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/db'
-import PostFeed from '../PostFeed'
+import CommunityPostFeed from '../communityPostFeed/communityPostFeed'
 import { notFound } from 'next/navigation'
 import { json } from 'stream/consumers'
 
@@ -49,7 +49,7 @@ const CustomFeed = async () => {
 
 
 
-  return <PostFeed initialPosts={posts} session={session.user.id} />
+  return <CommunityPostFeed initialPosts={posts} session={session.user.id} />
 }
 
 export default CustomFeed
