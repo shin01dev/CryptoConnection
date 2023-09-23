@@ -4,8 +4,8 @@ import { Post, User, Vote } from '@prisma/client';
 import { MessageSquare, Settings, Menu, MoreVertical } from 'lucide-react';
 import Link from 'next/link';
 import { FC, useRef } from 'react';
-import EditorOutput from './EditorOutput';
-import PostVoteClient from './post-vote/PostVoteClient';
+import EditorOutput from '../EditorOutput';
+import PostVoteClient from '../post-vote/PostVoteClient';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
@@ -43,7 +43,7 @@ const deletePost = async (postId: string) => {
 };
 
 
-const Post: FC<PostProps> = ({
+const CommunityPost: FC<PostProps> = ({
   post,
   votesAmt: _votesAmt,
   currentVote: _currentVote,
@@ -180,7 +180,7 @@ useEffect(() => {
 {post.thumbnail && (
   <Link href={`/r/${subredditName}/post/${post.id}`} >
 <img
-      src={post?.thumbnail}
+      src={post.thumbnail}
       alt={`Thumbnail`} // 이미지에 대한 설명을 개선합니다.
       className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white"
       onClick={() => {
@@ -344,4 +344,4 @@ useEffect(() => {
 
 };
 
-export default Post;
+export default CommunityPost;

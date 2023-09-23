@@ -33,11 +33,11 @@ export async function POST(req: Request) {
 
 
     const ip = req.headers.get('x-forwarded-for');
-    const postKey = `${title}-${content}-${subredditId}-${thumbnail}`;
+    const postKey = `${title}-${content}-${subredditId}-${thumbnail || ''}`;
     const lastPostKey = recentPosts.get(ip);
     const lastRequestTime = recentIPs.get(ip);
     const now = Date.now();
-    const TIME_LIMIT = 20000;
+    const TIME_LIMIT = 5000;
 
     if (lastPostKey === postKey) {
       return new Response('Duplicate post content. Please change the content and try again.', { status: 429 });

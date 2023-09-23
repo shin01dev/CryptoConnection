@@ -12,8 +12,9 @@ export const PostValidator = z.object({
   subredditId: z.string(),
   content: z.any(),
   postId: z.string().optional(), 
-  thumbnail: z.string().nullable().optional(), // 여기서 thumbnail이 optional이므로, 필수적이지 않습니다.
+  thumbnail: z.string().nullable().optional(),
   _editThumbnail: z.string().optional(),
+  
   donateTo: z.string().optional(),
   donateCoin: z.any().optional(),
   

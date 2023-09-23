@@ -127,11 +127,11 @@ const memberCount = await db.subscription.count({
 
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-end">
     {/* 왼쪽 컨텐츠 */}
       <div className="flex-1">
         {/* 포스트 상세 가로 길이 */}
-        <div className="ml-1 mr-1  sm:w-full sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm sm:max-w-[100%]">
+        <div className="lg:ml-20 ml-2 mr-2  justify-end sm:w-4/5 sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm sm:max-w-[100%]">
           <p className="max-h-40 mt-1 truncate text-xs text-gray-500 flex items-center">
             Posted by u/{post?.author.username ?? cachedPost.authorUsername}
             {" | "}
@@ -183,20 +183,8 @@ const memberCount = await db.subscription.count({
       
       {/* 오른쪽 컨텐츠 */}
    
-    </div>
-    
-  );
-};
-
-
-
-
-
-
-
-
-{/*] <div className="flex-2">
-<div className="h-fit rounded-lg border border-gray-200 md:block hidden flex justify-start ">
+ <div className="flex-2 ">
+<div className="h-fit rounded-lg border border-gray-200 md:block hidden flex justify-start mr-20 ml-20 ">
   <div className="px-6 py-4">
     <p className="font-semibold py-3">{decodeURIComponent(subreddit.name)}</p>
   </div>
@@ -244,6 +232,18 @@ const memberCount = await db.subscription.count({
 </div>
 
 
-</div> */}
+</div>
+    </div>
+    
+  );
+};
+
+
+
+
+
+
+
+
 
 export default SubRedditPostPage

@@ -12,6 +12,7 @@ import Post from '../Post'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router from 'next/router';
+import CommunityPost from '../communtyPost/communityPost'
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string

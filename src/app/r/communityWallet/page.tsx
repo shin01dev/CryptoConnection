@@ -244,42 +244,39 @@ useEffect(() => {
 }, []);
 
 
+const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 const [isRequestPending, setIsRequestPending] = useState<number | null>(null);
-
 const getTransactions = async (tokenAccountAddress: string, mintAddress: string) => {
   if (isButtonDisabled || isRequestPending !== null) return;
 
   const lastCalledTimeString = localStorage.getItem('lastCalledTime');
   const lastCalledTime = lastCalledTimeString ? parseInt(lastCalledTimeString) : null;
   const currentTime = new Date().getTime();
-
   const delay = lastCalledTime ? Math.max(0, 10000 - (currentTime - lastCalledTime)) : 0;
 
-  // 이전에 설정된 setTimeout이 있다면 취소
-  if (isRequestPending !== null) clearTimeout(isRequestPending);
+  if (delay > 0) {
+    // 제한 시간이 남아있는 경우, 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
+    console.log(`잠시 후 다시 시도하세요. 남은 시간: ${delay / 1000}초`);
+    return; // 여기서 함수를 종료
+  }
 
   setIsButtonDisabled(true);
+  setIsTransactionsLoading(false);
 
-  const timeoutId = window.setTimeout(async () => {
-    setIsTransactionsLoading(false);
-    const apiUrl = '/api/saveTransactionsInfo';
-    await axios.post(apiUrl, {
-      tokenAccountAddress,
-      mintAddress,
-    });
+  const apiUrl = '/api/saveTransactionsInfo';
+  await axios.post(apiUrl, {
+    tokenAccountAddress,
+    mintAddress,
+  });
 
-    setIsTransactionsLoading(true);
-    console.log("Transactions 서버로 전송됨");
-    localStorage.setItem('lastCalledTime', new Date().getTime().toString());
-    window.location.reload();
+  setIsTransactionsLoading(true);
+  console.log("Transactions 서버로 전송됨");
+  localStorage.setItem('lastCalledTime', new Date().getTime().toString());
+  window.location.reload();
 
-    setIsButtonDisabled(false);
-    setIsRequestPending(null);
-  }, delay);
-
-  // 상태 변수에 setTimeout의 ID 저장
-  setIsRequestPending(timeoutId);
+  setIsButtonDisabled(false);
+  setIsRequestPending(null);
 };
 
 

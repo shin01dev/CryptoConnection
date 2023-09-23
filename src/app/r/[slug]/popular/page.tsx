@@ -66,9 +66,10 @@ export default async function Home({ params }: { params: { slug: string } }) {
     <>
      
 
+
       
-     <div className='grid grid-cols-1  lg:grid-cols-3 gap-y-4 md:gap-x-4 py-6 ml-1 sm:ml-20'>
-      <div className='justify-end overflow-hidden h-fit rounded-lg border border-gray-200 ml-1 mr-1 sm:ml-20 sm:mr-1 mt-3 md:hidden'>
+     <div className='grid grid-cols-1 md:grid-cols-1 gap-y-4 md:gap-x-4 py-6 ml-1  sm:ml-20'>
+      <div className='justify-end overflow-hidden h-fit rounded-lg border border-gray-200 ml-1 mr-2 sm:ml-20 sm:mr-1 mt-3 md:hidden'>
             
             <div className='px-6 py-4'>
             <p className='font-semibold py-3'>{decodeURIComponent(subreddit.name)}</p>
@@ -128,7 +129,6 @@ export default async function Home({ params }: { params: { slug: string } }) {
             
 
           </div>
-
 
 
           <div className='  h-fit rounded-lg border border-gray-200  md:block hidden'>

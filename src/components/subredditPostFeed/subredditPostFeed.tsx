@@ -82,7 +82,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 
    
   return (
-    <ul className='lg:ml-20 flex flex-col col-span-2 space-y-6'>
+    <ul className=' flex flex-col col-span-3 space-y-6'>
 
 {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
   <div className='flex gap-2'>

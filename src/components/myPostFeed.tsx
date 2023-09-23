@@ -220,12 +220,12 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
   <DropdownMenuContent>
     <Link href={`/r/follower/${session}`}>
       <DropdownMenuItem>
-        팔로워 수 : {followersCount}
+        팔로워 수 : {followingCount}
       </DropdownMenuItem>
     </Link>
     <Link href={`/r/following/${session}`}>
       <DropdownMenuItem>
-        팔로잉 수 : {followingCount}
+        팔로잉 수 : {followersCount}
       </DropdownMenuItem>
     </Link>
   </DropdownMenuContent>

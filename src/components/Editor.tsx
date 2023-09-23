@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import TextareaAutosize from 'react-textarea-autosize'
 import { z } from 'zod'
-
+import { BASE_URL } from './BASE_URL'
 import CustomCodeRenderer from '@/components/renderers/CustomCodeRenderer'
 import CustomImageRenderer from '@/components/renderers/CustomImageRenderer'
 import { toast } from '@/hooks/use-toast'
@@ -41,7 +41,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId, content ,title, pos
   useEffect(() => {
     setCurrentURL(window.location.href);
   }, []);
-  const [imageUrl, setImageUrl] = useState<string | null>(editThumbnail || null); // editThumbnail로 초기화
+  const [imageUrl, setImageUrl] = useState<string | null>(editThumbnail ||"/logo2.png"); // editThumbnail로 초기화
   const [coinNumber, setCoinNumber] = useState<number | null>(0);
   const [warning, setWarning] = useState<string | null>(null);
   const [donateCoin, setdonateCoin] = useState("1");
@@ -197,17 +197,24 @@ useEffect(() => {
       // turn pathname /r/mycommunity/submit into /r/mycommunity
       const isEditing = pathname.includes('/edit/')
       const newPathname = isEditing ? pathname.split('/').slice(0, -2).join('/') : pathname.split('/').slice(0, -1).join('/')
-            router.push(newPathname)
-
-      router.refresh()
-
+      const segments = pathname.split('/');
+      const secondLastSegment = segments[segments.length - 2];
+      
+   
+      if (pathname.includes('donate')) {
+        // If it does, modify the newPathname to include "/donate" at the end
+        window.location.href = `/r/donation/${secondLastSegment}`;
+      } else {
+        window.location.href = newPathname;
+      }
       return toast({
-        description: 'Your post has been published.',
+        description: '글이 성공적으로 작성 되었습니다.',
 
 
       })
+
     },
-    //여기서 후원 정보 서버에 저장
+    
   })
 
   const initializeEditor = useCallback(async () => {
@@ -460,15 +467,13 @@ useEffect(() => {
     )}
     </>
 ) : null}
-
-
         </div>
-
-
 {warning && <p className="text-red-500 mt-2">{warning}</p>}
 
 
 {/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}
+
+
 
 
     </div>
