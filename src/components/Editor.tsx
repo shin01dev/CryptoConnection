@@ -204,7 +204,6 @@ useEffect(() => {
       if (pathname.includes('donate')) {
         // If it does, modify the newPathname to include "/donate" at the end
         window.location.href = `/r/donation/${secondLastSegment}`;
-
         
       } else {
         window.location.href = newPathname;
