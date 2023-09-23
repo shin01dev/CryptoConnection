@@ -203,10 +203,18 @@ useEffect(() => {
    
       if (pathname.includes('donate')) {
         // If it does, modify the newPathname to include "/donate" at the end
-        window.location.href = `/r/donation/${secondLastSegment}`;
+        // window.location.href = `/r/donation/${secondLastSegment}`;
+
+        router.push(`/r/donation/${secondLastSegment}`)
+
+        router.refresh()
         
+  
       } else {
-        window.location.href = newPathname;
+        // window.location.href = newPathname;
+        router.push(newPathname)
+        router.refresh()
+
       }
       return toast({
         description: '글이 성공적으로 작성 되었습니다.',
