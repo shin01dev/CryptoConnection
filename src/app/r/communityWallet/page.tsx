@@ -68,7 +68,6 @@ async function connectWallet() {
     connectWallet();
   }, []);
   
-  const [userInputWallet, setUserInputWallet] = useState('');
 
 
   
@@ -223,22 +222,69 @@ useEffect(() => {
   
 
 const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
+const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+const [remainingTime, setRemainingTime] = useState(0);
+useEffect(() => {
+  // 컴포넌트 마운트 시점에 마지막 호출 시간을 확인하고 남은 시간 계산
+  const lastCalledTimeString = localStorage.getItem('lastCalledTime');
+  const lastCalledTime = lastCalledTimeString ? parseInt(lastCalledTimeString) : null;
+  const currentTime = new Date().getTime();
+  const delay = lastCalledTime ? Math.max(0, 10000 - (currentTime - lastCalledTime)) : 0;
+  setRemainingTime(delay);
+
+  // 남은 시간이 있으면 매 초마다 남은 시간 갱신
+  let timer: string | number | NodeJS.Timeout | undefined;
+  if (delay > 0) {
+    timer = setInterval(() => {
+      setRemainingTime((prevRemainingTime) => Math.max(prevRemainingTime - 1000, 0));
+    }, 1000);
+  }
+
+  return () => clearInterval(timer); // 컴포넌트 언마운트 시 타이머 제거
+}, []);
+
+
+
+const [isRequestPending, setIsRequestPending] = useState<number | null>(null);
 
 const getTransactions = async (tokenAccountAddress: string, mintAddress: string) => {
-  setIsTransactionsLoading(false);
+  if (isButtonDisabled || isRequestPending !== null) return;
 
-  const apiUrl = '/api/saveTransactionsInfo';
-  
-  await axios.post(apiUrl, {
-    tokenAccountAddress,
-    mintAddress,
-  });
+  const lastCalledTimeString = localStorage.getItem('lastCalledTime');
+  const lastCalledTime = lastCalledTimeString ? parseInt(lastCalledTimeString) : null;
+  const currentTime = new Date().getTime();
 
-  setIsTransactionsLoading(true);
-  console.log("Transactions 서버로 전송됨");
-  window.location.reload(); // 페이지를 새로고침
+  const delay = lastCalledTime ? Math.max(0, 10000 - (currentTime - lastCalledTime)) : 0;
 
+  // 이전에 설정된 setTimeout이 있다면 취소
+  if (isRequestPending !== null) clearTimeout(isRequestPending);
+
+  setIsButtonDisabled(true);
+
+  const timeoutId = window.setTimeout(async () => {
+    setIsTransactionsLoading(false);
+    const apiUrl = '/api/saveTransactionsInfo';
+    await axios.post(apiUrl, {
+      tokenAccountAddress,
+      mintAddress,
+    });
+
+    setIsTransactionsLoading(true);
+    console.log("Transactions 서버로 전송됨");
+    localStorage.setItem('lastCalledTime', new Date().getTime().toString());
+    window.location.reload();
+
+    setIsButtonDisabled(false);
+    setIsRequestPending(null);
+  }, delay);
+
+  // 상태 변수에 setTimeout의 ID 저장
+  setIsRequestPending(timeoutId);
 };
+
+
+
+
 
 return (
   
@@ -322,6 +368,8 @@ return (
   <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300 mt-2" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }}onClick={() => getTransactions('HQNntSpnCFsEA3Vyac9yQNEsmBovwx6XYuzXsJomW8fE', 'AhrB82aokkXPXvqgdR5X4hVfo4iq7FQqigqTFpB236YB')}>
     커뮤니티 지갑으로 토큰 전송하기
   </button>
+  {remainingTime > 0 && <p style={{ color: 'purple' }}>{Math.ceil(remainingTime / 1000)}초 후에 다시 시도해주세요</p>}
+
   <div>
     {!isTransactionsLoading ? (
       <div className="flex items-center">
@@ -329,19 +377,14 @@ return (
   <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
 </div>
     ) : (
-      // 내용을 보여줄 부분
       <div>
-        {/* 내용 컴포넌트 */}
       </div>
     )}
   </div>
 </div>
 
 
-      {/* 설명 Section */}
-      {/* <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4">
-        등록된 지갑주소와 환전 주소로 토큰을 보낸 지갑 주소가 동일 해야, 커뮤니티 토큰이 충전 됩니다
-      </div> */}
+
 
       {inputError && <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4"><p className="text-red-500">{inputErrorMessage}</p></div>}
       {errorMsg && <div className="bg-white p-5 rounded shadow-md w-full max-w-xl mb-4"><p className="text-red-500">{errorMsg}</p></div>}

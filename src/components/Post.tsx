@@ -155,12 +155,6 @@ useEffect(() => {
 
 
 
-  // useEffect(() => {
-  //   if (isClient) {
-  //     // hydration 오류를 일으킬 수 있는 코드
-  //   }
-  // }, [isClient]);
-
 
   useEffect(() => {
    setIsClient(true);
