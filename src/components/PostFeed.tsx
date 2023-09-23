@@ -58,11 +58,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
   
   useEffect(() => {
-    setCurrentURL(window.location.href);
- 
-  }, []);
-  
-  useEffect(() => {
     if (entry?.isIntersecting) {
       fetchNextPage() // Load more posts when the last post comes into view
     }
@@ -74,6 +69,17 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
 
 
+
+//   const [isClient, setIsClient] = useState(false);
+
+
+//   useEffect(() => {
+//    setIsClient(true);
+//  }, []);
+ 
+//  if (!isClient) {
+//    return null; // or render a placeholder/loading indicator
+//  }
 
 
 
@@ -116,16 +122,11 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
     </div>
 
 
-    {isFetchingNextPage ? (
-  <li className="text-center text-gray-600">
-    {/* 로딩 중인 동안 숨깁니다. */}
-  </li>
-) : (
-  posts.length === 0 ? (
-    <li className="text-center text-gray-600">
-      아직 게시물이 없습니다 !
-    </li>
-  ) : (
+      {posts.length === 0 ? (
+        <li className="text-center text-gray-600">
+          그룹에 가입해 게시물을 받아 보세요 !
+        </li>
+      ) : (
         posts.map((post, index) => {
           const votesAmt = post.votes.reduce((acc, vote) => {
             if (vote.type === 'UP') return acc + 1;
@@ -159,7 +160,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
             );
           }
         })
-     ) )}
+      )}
 
       {isFetchingNextPage && (
         <li className='flex justify-center'>

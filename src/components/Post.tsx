@@ -68,6 +68,9 @@ const saveCurrentPath = () => {
   sessionStorage.setItem('previousPath', window.location.pathname);
 }
 
+
+
+
 useEffect(() => {
   const handleResize = () => {
     setIsDesktop(window.innerWidth > 768);
@@ -147,23 +150,31 @@ useEffect(() => {
       console.error('Could not delete the post:', error);
     }
   };
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (isClient) {
-      // hydration 오류를 일으킬 수 있는 코드
-    }
-  }, [isClient]);
-
   const isAuthor = post.author.id === session?.user?.id; // 작성자와 사용자의 일치 여부 확인
 
 
 
 
+  // useEffect(() => {
+  //   if (isClient) {
+  //     // hydration 오류를 일으킬 수 있는 코드
+  //   }
+  // }, [isClient]);
+
+
+  useEffect(() => {
+   setIsClient(true);
+ }, []);
+ 
+ if (!isClient) {
+   return null; // or render a placeholder/loading indicator
+ }
+
   
+
+
+
+ 
   return (
 
 <div className="rounded-md py-0 h-16  ">

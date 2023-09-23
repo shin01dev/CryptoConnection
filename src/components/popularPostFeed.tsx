@@ -33,6 +33,9 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
   })
   const queryClient = useQueryClient();
 
+  const [isClient, setIsClient] = useState(false);
+
+
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['infinite-query'],
@@ -68,29 +71,21 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
 
    posts = data?.pages.flatMap((page) => page) || [];
 
-   useEffect(() => {
-    setCurrentURL(window.location.href);
+  
 
-    const currentURL = window.location.href;
+  
+
+
+
+
  
-
-    
-  }, []);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  //  useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
+  
+  // if (!isClient) {
+  //   return null; // or render a placeholder/loading indicator
+  // }
 
 
   return (
@@ -113,8 +108,8 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
       {/* "인기 글" 섹션 */}
       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
         <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
-          <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-            {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
+          <span className={"text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" }>
+             인기 글
           </span>
         </a>
       </span>
@@ -129,9 +124,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
       </span>
     </div>
 
-    {isFetchingNextPage ? null : (
-  <ul className='flex flex-col col-span-2 space-y-6'>
-    {posts.length === 0 ? (
+{posts.length === 0 ? (
       <li className="text-center text-gray-600">
         인기 게시물이 되어 토큰을 지급 받으세요 !
       </li>
@@ -171,14 +164,12 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
         }
       })
     )}
-  </ul>
-)}
-{isFetchingNextPage && (
-  <li className='flex justify-center'>
-    <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-  </li>
-)}
 
+    {isFetchingNextPage && (
+      <li className='flex justify-center'>
+        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+      </li>
+    )}
   </ul>
   )
 }
