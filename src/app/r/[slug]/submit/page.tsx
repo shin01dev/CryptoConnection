@@ -46,6 +46,7 @@ const Page: React.FC<pageProps> = ({ params }) => {
         <Loader2 />
     </div>
 );
+const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handlePost = async () => {
     if (isLoading) return; // 로딩 중이면 요청을 중단
@@ -63,6 +64,9 @@ const Page: React.FC<pageProps> = ({ params }) => {
       setIsLoading(false); // 에러 발생 시 로딩 상태 종료
     }
   }
+
+
+
   useEffect(() => {
     fetchSubreddit(params.slug);
   }, [params.slug]);
@@ -85,6 +89,8 @@ const Page: React.FC<pageProps> = ({ params }) => {
       <Editor subredditId={subredditId || ''} editThumbnail={undefined} />
 
       <div className='w-full flex justify-end bg-blue-500  mb-4'>
+
+
       <Button 
     type='submit' 
     className='w-full  text-white'  // 수정된 부분
@@ -94,6 +100,8 @@ const Page: React.FC<pageProps> = ({ params }) => {
 >
     {isLoading ? <LoadingOverlay /> : "게시하기"} 
 </Button>
+
+
 
       </div>
     </div>
