@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config';
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -9,10 +9,7 @@ import { notFound } from 'next/navigation';
 const MyDonationFeed = async ({ slug }: { slug: string }) => {
   const session = await getAuthSession();
   // 현재 경로를 가져오기
-  if (typeof window !== 'undefined') {
-    const currentURL = window.location.href;
-    // 현재 경로에 대한 작업 수행
-  }
+
   // only rendered if session exists, so this will not happen
   if (!session) return notFound();
 
@@ -54,7 +51,6 @@ const existingFollow = await db.follow.findUnique({
     },
   },
 });
-const isFollowing = !!existingFollow; // existingFollow가 있으면 true, 없으면 false
 
 if (!user) {
     throw new Error("User not found"); // or handle this error in a way that's appropriate for your application

@@ -45,9 +45,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
     root: lastPostRef.current,
     threshold: 0.1,
   })
-  const [currentURL, setCurrentURL] = useState('');
-    const decodedSubredditName = decodeURIComponent(subredditName || '');
-  
+
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['infinite-query'],
     async ({ pageParam = 1 }) => {
@@ -70,15 +68,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
    refetchOnWindowFocus: true, // 사용자가 창에 포커스될 때 데이터를 새로 가져오지 않도록 설정합니다.
       }
   )
-
-  useEffect(() => {
-    setCurrentURL(window.location.href);
-
-    const currentURL = window.location.href;
- 
-
-    console.log(existingFollow+"팔로우 체크")
-  }, []);
 
 
 
@@ -151,6 +140,10 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
+
+
+
+  
   return (
     
     <ul className='flex flex-col col-span-2 space-y-6'>
@@ -165,7 +158,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
     className={`${buttonVariants({ className: 'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 hover:from-purple-500 hover:via-pink-600 hover:to-red-600 transition duration-300 w-32 h-10 rounded flex items-center justify-center text-white' })}`}
   >
     후원하기
-    {/* <img src="/favicon.ico" alt="Token Image" className="ml-2 w-5 h-5 cursor-pointer mr-4" /> */}
 
   </Link>
   
@@ -260,7 +252,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-            <li key={post.id} ref={ref}>
+            <li key={post.id+"mypost"} ref={ref}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -273,7 +265,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
         } else {
           return (
             <Post
-              key={post.id}
+              key={post.id+"mypost"}
               post={post}
               commentAmt={post.comments.length}
               subredditName={post.subreddit?.name ?? 'Unknown'}

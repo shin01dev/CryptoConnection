@@ -68,31 +68,16 @@ const saveCurrentPath = () => {
   sessionStorage.setItem('previousPath', window.location.pathname);
 }
 
-  useEffect(() => {
+useEffect(() => {
+  const handleResize = () => {
     setIsDesktop(window.innerWidth > 768);
+  };
+  window.addEventListener('resize', handleResize);
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
   
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768);
-    };
-  
-    window.addEventListener("resize", handleResize);
-  
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768);
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, []);
 
   const truncateTitle = (title: string) => {
     const maxLength = isDesktop ? 30 : 16;
@@ -134,11 +119,14 @@ const saveCurrentPath = () => {
 
 // Only listen to changes in post.id for fetching coins
 useEffect(() => {
+  if (typeof window !== 'undefined') {
+    const currentLastSegment = window.location.href.split('/').pop() || null;
+    setLastSegment(currentLastSegment);
+  }
   if (post.id) {
     fetchDonateCoins(post.id);
   }
 }, [post.id]);
-
 
 
 
@@ -184,14 +172,14 @@ useEffect(() => {
 {/* Thumbnail Image */}
 {post.thumbnail && (
   <Link href={`/r/${subredditName}/post/${post.id}`} >
-    <img
-        src={post.thumbnail}
-        alt="post image"
-        className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white  "
-        onClick={() => {
-            saveCurrentPath(); 
-            saveScrollPosition(window.location.pathname);
-        }}
+<img
+      src={post.thumbnail}
+      alt={`Thumbnail for ${post.title}`} // 이미지에 대한 설명을 개선합니다.
+      className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white"
+      onClick={() => {
+        saveCurrentPath(); 
+        saveScrollPosition(window.location.pathname);
+      }}
     />
 </Link>
 

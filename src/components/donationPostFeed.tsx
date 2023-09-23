@@ -9,10 +9,8 @@ import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import { FC, useEffect, useRef } from 'react'
 import Post from './Post'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link'
-import { ArrowDown } from 'lucide-react'; // Assuming this is the right import for the arrow icon.
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,15 +38,12 @@ interface PostFeedProps {
 
 const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,username ,followersCount,followingCount,yourUserId,existingFollow}) => {
   const lastPostRef = useRef<HTMLElement>(null)
-  const [isFollowVisible, setIsFollowVisible] = useState<boolean>(false); // Add this state for the toggle functionality
   const [isFollowing, setIsFollowing] = useState<boolean>(existingFollow);
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
     threshold: 0.1,
   })
-  const [userName, setUsername] = useState<string | null>(null); // username 상태 변수를 추가
-  const [currentURL, setCurrentURL] = useState('');
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['infinite-query'],
@@ -80,29 +75,8 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
   }, [entry, fetchNextPage])
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
-  const getUsernameFromSession = async (sessionValue: any) => {
-    try {
-      const response = await axios.post(`/api/getUserName`, { session: sessionValue });
-      
-      if (response.status === 200) {
-        return response.data.username;
-      } else {
-        throw new Error('Failed to get username');
-      }
-    } catch (error) {
-      console.error('Error fetching username:', error);
-    }
-  }
-  useEffect(() => {
-    const pathname = window.location.pathname;
-    if (pathname.includes('/r/myFeed') || pathname.includes('/r/donation')) {
-      (async function loadUsername() {
-        const username = await getUsernameFromSession(session);
-        setUsername(username);
-      })();
-    }
-  }, []);
   
+
 
   useEffect(() => {
     async function checkFollowStatus() {
@@ -161,6 +135,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
       });
     }
   }
+
   return (
     
     <ul className='flex flex-col col-span-2 space-y-6'>
@@ -171,7 +146,6 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
     className={`${buttonVariants({ className: 'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 hover:from-purple-500 hover:via-pink-600 hover:to-red-600 transition duration-300 w-32 h-10 rounded flex items-center justify-center text-white' })}`}
   >
     후원하기
-    {/* <img src="/favicon.ico" alt="Token Image" className="ml-2 w-5 h-5 cursor-pointer mr-4" /> */}
 
   </Link>
 )}
@@ -259,7 +233,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-            <li key={post.id} ref={ref}>
+            <li key={post.id+"donation_post"} ref={ref}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -272,7 +246,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
         } else {
           return (
             <Post
-              key={post.id}
+              key={post.id+"donation_post"}
               post={post}
               commentAmt={post.comments.length}
               subredditName={post.subreddit?.name ?? 'Unknown'}

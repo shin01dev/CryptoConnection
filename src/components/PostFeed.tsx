@@ -59,12 +59,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
   
   useEffect(() => {
     setCurrentURL(window.location.href);
-
-    const currentURL = window.location.href;
  
-
-    
   }, []);
+  
   useEffect(() => {
     if (entry?.isIntersecting) {
       fetchNextPage() // Load more posts when the last post comes into view
