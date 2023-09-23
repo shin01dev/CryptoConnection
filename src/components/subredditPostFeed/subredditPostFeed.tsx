@@ -79,6 +79,8 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 
    posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
+
+   
   return (
     <ul className='lg:ml-20 flex flex-col col-span-2 space-y-6'>
 

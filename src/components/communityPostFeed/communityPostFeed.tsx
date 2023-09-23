@@ -30,6 +30,7 @@ const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sess
   })
   const [currentURL, setCurrentURL] = useState('');
   const decodedSubredditName = decodeURIComponent(subredditName || '');
+  const [isClient, setIsClient] = useState(false);
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['infinite-query'],
@@ -73,7 +74,15 @@ const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sess
 
 
 
-
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
+  
+  // if (!isClient) {
+  //   return null; // or render a placeholder/loading indicator
+  // }
+ 
+   
 
 
 

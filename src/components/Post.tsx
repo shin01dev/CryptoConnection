@@ -156,13 +156,13 @@ useEffect(() => {
 
 
 
-  useEffect(() => {
-   setIsClient(true);
- }, []);
+//   useEffect(() => {
+//    setIsClient(true);
+//  }, []);
  
- if (!isClient) {
-   return null; // or render a placeholder/loading indicator
- }
+//  if (!isClient) {
+//    return null; // or render a placeholder/loading indicator
+//  }
 
   
 
@@ -179,7 +179,7 @@ useEffect(() => {
   <Link href={`/r/${subredditName}/post/${post.id}`} >
 <img
       src={post.thumbnail}
-      alt={`Thumbnail for ${post.title}`} // 이미지에 대한 설명을 개선합니다.
+      alt={`Thumbnail`} // 이미지에 대한 설명을 개선합니다.
       className="w-20 h-20 mr-1 object-cover mr-2 rounded-lg shadow-md border-2 border-white"
       onClick={() => {
         saveCurrentPath(); 

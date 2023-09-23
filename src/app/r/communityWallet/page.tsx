@@ -368,7 +368,7 @@ return (
   <button className="bg-green-500 text-white rounded p-2 w-full hover:bg-green-600 transition duration-300 mt-2" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }}onClick={() => getTransactions('HQNntSpnCFsEA3Vyac9yQNEsmBovwx6XYuzXsJomW8fE', 'AhrB82aokkXPXvqgdR5X4hVfo4iq7FQqigqTFpB236YB')}>
     커뮤니티 지갑으로 토큰 전송하기
   </button>
-  {remainingTime > 0 && <p style={{ color: 'purple' }}>{Math.ceil(remainingTime / 1000)}초 후에 다시 시도해주세요</p>}
+  {remainingTime > 0 && <p style={{ color: 'purple' }}>{Math.ceil(remainingTime / 1000)}초 후에 다시 시도해 주세요</p>}
 
   <div>
     {!isTransactionsLoading ? (
