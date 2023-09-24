@@ -34,23 +34,12 @@ export async function POST(req: Request) {
 
     const ip = req.headers.get('x-forwarded-for');
     const postKey = `${title}-${content}-${subredditId}-${thumbnail || ''}`;
-    const lastPostKey = recentPosts.get(ip);
-    const lastRequestTime = recentIPs.get(ip);
     const now = Date.now();
-    const TIME_LIMIT = 5000;
-
-    if (lastPostKey === postKey) {
-      return new Response('Duplicate post content. Please change the content and try again.', { status: 429 });
-    } else if (lastRequestTime && now - lastRequestTime < TIME_LIMIT) {
-      return new Response('Too many requests. Please wait a moment.', { status: 429 });
-    }
-
+    // const TIME_LIMIT = 5000;
+  
 
     // 현재 요청 시간 저장
 
-    
-    recentIPs.set(ip, now);
-    recentPosts.set(ip, postKey);
     
 
 

@@ -163,7 +163,11 @@ useEffect(() => {
   const pathname = usePathname()
 
 
+  
+  const [isMutationCalled, setIsMutationCalled] = useState(false);
+
   const { mutate: createPost } = useMutation({
+    
     mutationFn: async ({
       title,
       content,
@@ -174,6 +178,13 @@ useEffect(() => {
       donateCoin,
       donateTo,
     }: PostCreationRequest) => {
+      if (isMutationCalled) return; // 이미 뮤테이션이 호출된 경우 추가 호출 방지
+      setIsMutationCalled(true);
+
+
+
+  
+
       const payload: PostCreationRequest = { title, content, subredditId ,postId,thumbnail,editThumbnail,donateCoin,donateTo}
      
       // currentURL이 /edit/를 포함하는지 확인
@@ -203,17 +214,17 @@ useEffect(() => {
    
       if (pathname.includes('donate')) {
         // If it does, modify the newPathname to include "/donate" at the end
-        // window.location.href = `/r/donation/${secondLastSegment}`;
+        window.location.href = `/r/donation/${secondLastSegment}`;
 
-        router.push(`/r/donation/${secondLastSegment}`)
+        // router.push(`/r/donation/${secondLastSegment}`)
 
-        router.refresh()
+        // router.refresh()
         
   
       } else {
-        // window.location.href = newPathname;
-        router.push(newPathname)
-        router.refresh()
+        window.location.href = newPathname;
+        // router.push(newPathname)
+        // router.refresh()
 
       }
       return toast({
@@ -225,6 +236,11 @@ useEffect(() => {
     },
     
   })
+
+
+
+
+
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import('@editorjs/editorjs')).default
@@ -364,6 +380,10 @@ useEffect(() => {
     }
   }, [isMounted, initializeEditor])
 
+
+
+
+
   async function onSubmit(data: FormData) {
     const blocks = await ref.current?.save()
 
@@ -378,9 +398,18 @@ useEffect(() => {
       donateCoin: donateCoin,
       donateTo: data.donateTo
   }
-
+//
     createPost(payload)
+
+
+
+
   }
+
+
+
+
+
 
   if (!isMounted) {
     return null
