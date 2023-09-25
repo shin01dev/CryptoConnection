@@ -143,15 +143,15 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
 
 
 
-  
+
   return (
     
-    <ul className='flex flex-col col-span-2 space-y-6'>
+    <ul className='flex flex-col col-span-2 space-y-0'>
 
 
 
 
-      <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start ">
+      <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start  sm:ml-20 ">
         {session !== yourUserId && (
   <Link 
     href={`/r/myFeed/${session}/donate`} 
@@ -189,7 +189,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
 
 
 
-      <div className="flex space-x-2 font-sans items-center flex-wrap">
+      <div className="flex space-x-2 font-sans items-center flex-wrap sm:ml-20 ">
 
       <a 
   href={`${BASE_URL}/r/myFeed/${session}`} 

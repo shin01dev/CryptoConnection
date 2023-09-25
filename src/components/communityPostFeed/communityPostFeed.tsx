@@ -86,46 +86,37 @@ const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sess
    
 
 
-
   return (
-    <ul className='flex flex-col col-span-2 space-y-6'>
-    <div className='flex gap-2'>
-      {/* "최신 글" 섹션 */}
-      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-      <a href={BASE_URL}>
-
-        <span className='text-sm font-bold text-gray-700 hover:text-gray-900 '>
-          최신 글
+    <ul className='flex flex-col col-span-2 space-y-0'>
+      <div className='flex gap-2 mr-1 sm:ml-20 border border-gray-800 rounded-md sm:w-4/5 bg-purple-500 text-white mb-2'>
+        {/* "최신 글" 섹션 */}
+        <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400 rounded-lg'>
+          <a href={BASE_URL}>
+            <span className="text-sm font-bold text-white hover:text-gray-200">
+              최신 글
+            </span>
+          </a>
         </span>
-        </a>
-
+  
+        {/* "인기 글" 섹션 */}
+        <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400'>
+          <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
+            <span className="text-sm font-bold text-white hover:text-gray-200">
+              인기 글
+            </span>
+          </a>
         </span>
-
   
-  
-      {/* "인기 글" 섹션 */}
-      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-        <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
-          <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 " : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-            {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-          </span>
-        </a>
-      </span>
-
-      {/* "커뮤니티 글" 섹션 */}
-      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  
-
-      <a href={`${BASE_URL}/r/community`}>
-            <span className="text-sm font-bold text-gray-700 hover:text-gray-900  bg-blue-200">
+        {/* "커뮤니티 글" 섹션 */}
+        <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400 bg-purple-600'>
+          <a href={`${BASE_URL}/r/community`}>
+            <span className="text-sm font-bold text-white hover:text-gray-200 ">
               커뮤니티 글
             </span>
           </a>
-        
-      </span>
-    </div>
-
-
+        </span>
+      </div>
+  
       {posts.length === 0 ? (
         <li className="text-center text-gray-600">
           그룹에 가입해 게시물을 받아 보세요 !

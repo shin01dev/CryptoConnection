@@ -43,7 +43,7 @@ const deletePost = async (postId: string) => {
 };
 
 
-const Post: FC<PostProps> = ({
+const SubredditPost: FC<PostProps> = ({
   post,
   votesAmt: _votesAmt,
   currentVote: _currentVote,
@@ -184,23 +184,26 @@ useEffect(() => {
 
 
 
+
+
 return (
-  <div className="shadow-lg sm:w-4/5 border-1 border-gray-100 bg-white overflow-hidden my-0 sm:ml-20 border-t border-b border-gray-200">
-    <div className="flex justify-between items-center text-sm p-2">
+<div className="shadow-lg sm:w-4/6 border-1 border-gray-100 bg-white overflow-hidden my-0 sm:ml-10 border-t border-b border-gray-200">
+    <div className="flex justify-between items-center text-sm p-1 ml-1">
       {/* Left Container for Title, Author Info, Voting, etc. */}
       <div className="flex-grow flex pr-1">
         <div className="flex-grow pr-1">
           {/* Post Title and Donation */}
           <div className="flex items-center justify-between space-x-0.5 mt-0 ">
-            <Link href={`/r/${subredditName}/post/${post.id}`}>
-              <span className="flex-grow text-base cursor-pointer hover:underline">
-               <h1 className="font-bold truncate inline" style={{ color: '#3262C5', fontSize: '17px' }}>
-  {truncateTitle(post.title)}
-  <span className="ml-2" style={{ color: '#3262C5' }}>[{commentAmt}]</span>
-</h1>
 
-              </span>
-            </Link>
+          <Link href={`/r/${subredditName}/post/${post.id}`}>
+  <span className="flex-grow text-base cursor-pointer hover:underline" style={{ color: '#3262C5', fontSize: '17px' }}>
+    <h1 className="font-bold truncate inline">
+      {truncateTitle(post.title)}
+      <span className="ml-2" style={{ color: '#3262C5' }}>[{commentAmt}]</span>
+    </h1>
+  </span>
+</Link>
+
           </div>
 
           {/* Author, Date, and Subreddit Name (For Mobile) */}
@@ -232,17 +235,23 @@ return (
                     <span className="px-0 ml-0">
                       {donateCoins && donateCoins >= 1 ? (
                         <>
-                          <span>· </span>
+                          <span> · </span>
                           <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto', display: 'inline-block' }} />
-                          <span>· </span>
+                          <span> · </span>
                           {donateCoins}
                         </>
                       ) : null}
+                      
                     </span>
+                    
                   </span>
+                  
                 </Link>
+                
               </span>
+              
             )}
+            
           </div>
 
           {/* Voting */}
@@ -251,53 +260,60 @@ return (
             <a href={`/r/myFeed/${post.author.id}`}>
               <span className="cursor-pointer hover:underline">
                 / {post.author.username}
-                <span>· </span>
+                <span> · </span>
                 <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
+                
               </span>
+              
             </a>
             
-            {/* Post Actions Dropdown (For Authors) */}
-            {isAuthor && (
-              <div className="ml-1 mr-10 mt-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical className="h-3 w-3" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <Link href={`/r/${subredditName}/edit/${post.id}`}>
-                        <span className="cursor-pointer hover:underline">Edit Post</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <button onClick={() => { sessionStorage.setItem("y", String(window.pageYOffset)); handleDeletePost(post.id); }}>Delete Post</button>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            )}
+                {/* Post Actions Dropdown (For Authors) */}
+      {isAuthor && (
+        <div className="ml-1 mr-10 mt-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <MoreVertical className="h-3 w-3" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link href={`/r/${subredditName}/edit/${post.id}`}>
+                  <span className="cursor-pointer hover:underline">Edit Post</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <button onClick={() => { sessionStorage.setItem("y", String(window.pageYOffset)); handleDeletePost(post.id); }}>Delete Post</button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
           </span>
         </div>
         
         {post.thumbnail && (
-          <Link href={`/r/${subredditName}/post/${post.id}`}>
-            <img
-              src={post?.thumbnail}
-              alt={`Thumbnail`}
-              className="w-20 h-20 object-cover ml-0 mt-0 mr-0 border-2 border-gray-300 rounded-lg shadow-md"
-              onClick={() => {
-                saveCurrentPath();
-                saveScrollPosition(window.location.pathname);
-              }}
-            />
-          </Link>
-        )}
-      </div>
+  <Link href={`/r/${subredditName}/post/${post.id}`}>
+    <img
+      src={post?.thumbnail}
+      alt={`Thumbnail`}
+      className="w-20 h-20 object-cover ml-0 mt-0 mr-0 border-2 border-gray-300 rounded-lg shadow-md"
+      // 테두리 둥글게, 그림자 추가
+      onClick={() => {
+        saveCurrentPath();
+        saveScrollPosition(window.location.pathname);
+      }}
+    />
+  </Link>
+)}
+
+
+      </div> 
+
+  
     </div>
   </div>
 );
 
 };
 
-export default Post;
+export default SubredditPost;

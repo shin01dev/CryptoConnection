@@ -138,8 +138,8 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
   return (
     
-    <ul className='flex flex-col col-span-2 space-y-6'>
-     <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start">
+    <ul className='flex flex-col col-span-2 space-y-0 '>
+     <div className="my-4 flex justify-center items-center  p-4 rounded-lg space-x-4 sm:justify-start  sm:ml-20">
         {session !== yourUserId && (
   <Link 
     href={`/r/myFeed/${session}/donate`} 
@@ -169,11 +169,11 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
 
 
-      <div className="flex space-x-2 font-sans items-center flex-wrap">
+      <div className="flex space-x-2 font-sans items-center flex-wrap sm:ml-20 ">
 
       <a 
   href={`${BASE_URL}/r/myFeed/${session}`} 
-  className="flex-1 inline-block  text-gray-600 font-medium text-xs px-2 py-1 rounded-full transition-transform duration-200 hover:scale-105 whitespace-nowrap truncate"
+  className="flex-1 inline-block  text-gray-600 font-medium text-xs px-2 py-1 border rounded-full transition-transform duration-200 hover:scale-105 whitespace-nowrap truncate"
   style={{ fontFamily: "Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", maxWidth: '150px' }}
   title={`(${username}) 최신 글`}  // 툴팁을 추가하여 텍스트가 잘렸을 때에도 전체 내용을 볼 수 있습니다.
 >
@@ -200,12 +200,12 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
   <DropdownMenuContent>
     <Link href={`/r/follower/${session}`}>
       <DropdownMenuItem>
-        팔로워 수 : {followersCount}
+        팔로워 수 : {followingCount}
       </DropdownMenuItem>
     </Link>
     <Link href={`/r/following/${session}`}>
       <DropdownMenuItem>
-        팔로잉 수 : {followingCount}
+        팔로잉 수 : {followersCount}
       </DropdownMenuItem>
     </Link>
   </DropdownMenuContent>

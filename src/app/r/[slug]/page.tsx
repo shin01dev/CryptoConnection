@@ -131,9 +131,9 @@ export default async function Home({ params }: { params: { slug: string } }) {
 
 
 
-          <div className='  h-fit rounded-lg border border-gray-200  md:block hidden sm:mr-20'>
+          <div className='  h-fit w-3/4 rounded-lg border border-gray-200  md:block hidden sm:mr-20'>
             
-            <div className='px-6 py-4'>
+            <div className='px-6 py-4 ' >
             <p className='font-semibold py-3'>{decodeURIComponent(subreddit.name)}</p>
             </div>
             <dl className='divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white'>

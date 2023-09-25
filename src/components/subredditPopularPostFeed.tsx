@@ -12,6 +12,7 @@ import Post from './Post'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link'
+import SubredditPost from './subrredditPost'
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
@@ -74,39 +75,39 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
     
   }, []);
 
+   
   return (
-    <ul className='lg:ml-1  flex flex-col col-span-2 space-y-6'>
+    <ul className=' flex flex-col col-span-3 space-y-0 '>
 
 {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
-  <div className='flex gap-2'>
-    <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-      {currentURL === `${BASE_URL}/r/popular` ? (
-    <a href={BASE_URL}>
-   
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        커뮤니티 글
+  <div className='flex gap-2 mr-1 sm:ml-10 border border-gray-800 rounded-md sm:w-4/6 bg-purple-500 text-white mb-2'>
+      <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400 '>
+        {currentURL === `${BASE_URL}/r/popular` ? (
+          <a href={BASE_URL}>
+            <span className="text-sm font-bold text-white hover:text-gray-200">
+              커뮤니티 글
+            </span>
+          </a>
+        ) : (
+          <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+            <span className={(currentURL !== `${BASE_URL}/r/popular` && currentURL !== `${BASE_URL}/`) ? "text-sm font-bold text-white hover:text-gray-200" : "text-sm font-bold text-white hover:text-gray-200"}>
+              {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
+            </span>
+          </a>
+        )}
       </span>
-  
-  </a>
-  
-  ) : (
-    <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
-      <span className="text-sm font-bold text-gray-700 hover:text-gray-900">
-        {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
+      <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400'>
+        <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+          <span className="text-sm font-bold text-white hover:text-gray-200 bg-purple-400">
+            인기 글
+          </span>
+        </a>
       </span>
-    </a>
-  )}
-</span>
-<span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-<a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
-  <span className={(currentURL !== `${BASE_URL}/r/popular` && currentURL !== `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200" : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-    {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
-  </span>
-</a>
+    </div>
+  )
+}
 
-</span>
-</div>
-)}
+
 
 
 {posts.length === 0 ? (
@@ -126,7 +127,7 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
           // Add a ref to the last post in the list
           return (
             <li key={`${post.id}-${index}`} ref={ref}>
-              <Post
+              <SubredditPost
                 post={post}
                 commentAmt={post.comments.length}
                 subredditName={post.subreddit?.name ?? 'Unknown'}
@@ -137,7 +138,7 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
           );
         } else {
           return (
-            <Post
+            <SubredditPost
               key={`${post.id}-${index}`}
               post={post}
               commentAmt={post.comments.length}

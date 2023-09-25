@@ -83,92 +83,85 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session }) =>
 
 
 
-  return (
-    <ul className='flex flex-col col-span-2 space-y-6 '>
-<div className='flex gap-2 bg-white sm:border sm:w-4/4 sm:w-7/8 border w:6/8 '>
+return (
+  <ul className='flex flex-col col-span-2 space-y-0'>
+    <div className='flex gap-2 mr-1 sm:ml-20 border border-gray-800 rounded-md sm:w-4/5 bg-purple-500 text-white mb-2'>
       {/* "최신 글" 섹션 */}
-      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-      <a href={BASE_URL}>
-
-        <span className='text-sm font-bold text-gray-700 hover:text-gray-900 bg-blue-200'>
-          최신 글
-        </span>
-        </a>
-
-        </span>
-
-  
-     
-  
-      {/* "인기 글" 섹션 */}
-      <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-        <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
-          <span className={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? "text-sm font-bold text-gray-700 hover:text-gray-900 " : "text-sm font-bold text-gray-700 hover:text-gray-900"}>
-            {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '인기 글' : `인기 글`}
+      <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400 bg-purple-600 rounded-lg'>
+        <a href={BASE_URL}>
+          <span className="text-sm font-bold text-white hover:text-gray-200">
+            최신 글
           </span>
         </a>
       </span>
-       {/* "커뮤니티 글" 섹션 */}
-       <span className='cursor-pointer bg-f2f2f2 p-2 rounded-md transition hover:bg-gray-300'>
-  
 
-  <a href={`${BASE_URL}/r/community`}>
-        <span className="text-sm font-bold text-gray-700 hover:text-gray-900  ">
-          커뮤니티 글
-        </span>
-      </a>
-    
-  </span>
+      {/* "인기 글" 섹션 */}
+      <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400'>
+        <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`} onClick={() => sessionStorage.setItem(window.location.pathname, String(window.pageYOffset))}>
+          <span className="text-sm font-bold text-white hover:text-gray-200">
+            인기 글
+          </span>
+        </a>
+      </span>
+
+      {/* "커뮤니티 글" 섹션 */}
+      <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400'>
+        <a href={`${BASE_URL}/r/community`}>
+          <span className="text-sm font-bold text-white hover:text-gray-200">
+            커뮤니티 글
+          </span>
+        </a>
+      </span>
     </div>
 
+    {posts.length === 0 ? (
+      <li className="text-center text-white">
+        그룹에 가입해 게시물을 받아 보세요 !
+      </li>
+    ) : (
+      posts.map((post, index) => {
+        const votesAmt = post.votes.reduce((acc, vote) => {
+          if (vote.type === 'UP') return acc + 1;
+          if (vote.type === 'DOWN') return acc - 1;
+          return acc;
+        }, 0);
+        const currentVote = post.votes.find(vote => vote.userId === session);
 
-      {posts.length === 0 ? (
-        <li className="text-center text-gray-600">
-          그룹에 가입해 게시물을 받아 보세요 !
-        </li>
-      ) : (
-        posts.map((post, index) => {
-          const votesAmt = post.votes.reduce((acc, vote) => {
-            if (vote.type === 'UP') return acc + 1;
-            if (vote.type === 'DOWN') return acc - 1;
-            return acc;
-          }, 0);
-          const currentVote = post.votes.find(vote => vote.userId === session);
-
-          if (index === posts.length - 1) {
-            return (
-              <li key={post.id} ref={ref}>
-                <Post
-                  post={post}
-                  commentAmt={post.comments.length}
-                  subredditName={post.subreddit?.name ?? "Unknown"}
-                  votesAmt={votesAmt}
-                  currentVote={currentVote}
-                />
-              </li>
-            );
-          } else {
-            return (
+        if (index === posts.length - 1) {
+          return (
+            <li key={post.id} ref={ref}>
               <Post
-                key={post.id}
                 post={post}
                 commentAmt={post.comments.length}
                 subredditName={post.subreddit?.name ?? "Unknown"}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
               />
-            );
-          }
-        })
-      )}
+            </li>
+          );
+        } else {
+          return (
+            <Post
+              key={post.id}
+              post={post}
+              commentAmt={post.comments.length}
+              subredditName={post.subreddit?.name ?? "Unknown"}
+              votesAmt={votesAmt}
+              currentVote={currentVote}
+            />
+          );
+        }
+      })
+    )}
 
-      {isFetchingNextPage && (
-        <li className='flex justify-center'>
-          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
-        </li>
-      )}
-    </ul>
-  );
+    {isFetchingNextPage && (
+      <li className='flex justify-center'>
+        <Loader2 className='w-6 h-6 text-white animate-spin' />
+      </li>
+    )}
+  </ul>
+);
+
 }
 
 export default PostFeed;
