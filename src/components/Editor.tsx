@@ -41,7 +41,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId, content ,title, pos
   useEffect(() => {
     setCurrentURL(window.location.href);
   }, []);
-  const [imageUrl, setImageUrl] = useState<string | null>(editThumbnail ||"/logo2.png"); // editThumbnail로 초기화
+  const [imageUrl, setImageUrl] = useState<string | null>(editThumbnail ||""); // editThumbnail로 초기화
   const [coinNumber, setCoinNumber] = useState<number | null>(0);
   const [warning, setWarning] = useState<string | null>(null);
   const [donateCoin, setdonateCoin] = useState("1");
