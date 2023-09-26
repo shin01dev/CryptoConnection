@@ -132,10 +132,26 @@ useEffect(() => {
         <a href={`/r/myFeed/${authorId}`}>
           
         <div className='text-sm font-medium text-gray-900'>{comment.author.username} </div>
+       
        </a>
+
+
+
+   
+
+
           <p className='max-h-40 truncate text-xs text-zinc-500'>
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>
+          {comment.donationInput ? (
+  <>
+      <img src="/favicon.ico" alt="Donation Icon" className="w-6 h-6 mr-0" />
+
+    <span> · </span>
+    <div className='text-sm font-sm text-gray-900'>{comment.donationInput}</div>
+
+  </>
+) : null}
         </div>
       </div>
 
@@ -162,7 +178,6 @@ useEffect(() => {
 
       {isReplying ? (
         <div className='grid w-full gap-1.5'>
-          <Label htmlFor='comment'>Your comment</Label>
           <div className='mt-2'>
             <Textarea
               onFocus={(e) =>
@@ -176,7 +191,7 @@ useEffect(() => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               rows={1}
-              placeholder='What are your thoughts?'
+              placeholder='회원님의 의견은 어떤가요 ?'
             />
 
             <div className='mt-2 flex justify-end gap-2'>

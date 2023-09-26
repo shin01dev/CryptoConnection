@@ -192,7 +192,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
 <DropdownMenu >
   <DropdownMenuTrigger>
-    <div className="cursor-pointer bg-white border rounded-full p-1 ml-2 mr-2">
+    <div className="cursor-pointer bg-white border rounded-full p-1 ml-2 mr-2 mb-1">
       <ChevronDown />
     </div>
   </DropdownMenuTrigger>
@@ -220,9 +220,11 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
       
       {posts.length === 0 ? (
-        <li className="text-center text-gray-600">
-         아직 게시물이 없습니다 !</li>
-    ) : (
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh]">
+  아직 게시물이 없습니다
+  </li>
+) : (
+
       posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1;

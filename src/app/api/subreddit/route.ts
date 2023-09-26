@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     // create subreddit and associate it with the user
     const subreddit = await db.subreddit.create({
       data: {
-        name: encodeURIComponent(name),//여길 인코딩 해야지 한국어 커뮤니티 만들어짐.
+        name: encodeURIComponent(name),
         realname : name,
         creatorId: session.user.id,
       },

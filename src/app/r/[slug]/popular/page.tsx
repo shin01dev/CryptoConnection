@@ -20,7 +20,6 @@ export const fetchCache = 'force-no-store'
 
 
 export default async function Home({ params }: { params: { slug: string } }) {
-  console.log(params.slug+"!!!!!!");
   const session = await getAuthSession()
   const subreddit = await db.subreddit.findFirst({
     where: { name: params.slug },
@@ -179,7 +178,7 @@ export default async function Home({ params }: { params: { slug: string } }) {
         href={`${BASE_URL}/r/${params.slug}/submit`}
         
       >
-        Create Post
+        게시물 만들기
       </Link>
     </>
   )

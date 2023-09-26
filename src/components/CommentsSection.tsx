@@ -40,12 +40,20 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
       },
     },
   })
-
+// postId와 일치하는 Post를 찾습니다.
+const post = await db.post.findUnique({
+  where: {
+    id: postId,
+  },
+  select: {
+    authorId: true,
+  },
+});
   return (
     <div className='flex flex-col gap-y-4 mt-4'>
       <hr className='w-full h-px my-6' />
 
-      <CreateComment postId={postId} />
+      <CreateComment postId={postId} userId={session?.user.id} authorId={post?.authorId}/>
 
       <div className='flex flex-col gap-y-6 mt-4'>
         {comments

@@ -11,9 +11,9 @@ export async function PATCH(req: Request) {
 
     const session = await getAuthSession()
 
-    if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 })
-    }
+    // if (!session?.user) {
+    //   return new Response('Unauthorized', { status: 401 })
+    // }
 
     // Get the comment with the provided commentId
     const comment = await db.comment.findUnique({

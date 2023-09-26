@@ -187,7 +187,7 @@ useEffect(() => {
 
 
 return (
-<div className="shadow-lg sm:w-4/6 border-1 border-gray-100 bg-white overflow-hidden my-0 sm:ml-10 border-t border-b border-gray-200">
+<div className="shadow-lg sm:w-4/6 border-1  border-gray-100 bg-white overflow-hidden my-0 sm:ml-10 border-t border-b border-gray-200">
     <div className="flex justify-between items-center text-sm p-1 ml-1">
       {/* Left Container for Title, Author Info, Voting, etc. */}
       <div className="flex-grow flex pr-1">

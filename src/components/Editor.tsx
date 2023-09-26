@@ -178,10 +178,9 @@ useEffect(() => {
       donateCoin,
       donateTo,
     }: PostCreationRequest) => {
+    
       if (isMutationCalled) return; // 이미 뮤테이션이 호출된 경우 추가 호출 방지
       setIsMutationCalled(true);
-
-
 
   
 
@@ -198,11 +197,14 @@ useEffect(() => {
     
     },
     onError: () => {
+      setIsMutationCalled(false);
+
       return toast({
-        title: 'Something went wrong.',
-        description: 'Your post was not published. Please try again.',
+        title: '게시물 생성 실패.',
+        description: '다시 시도해 주세요.',
         variant: 'destructive',
       })
+
     },
     onSuccess: () => {
       // turn pathname /r/mycommunity/submit into /r/mycommunity
@@ -227,6 +229,8 @@ useEffect(() => {
         // router.refresh()
 
       }
+
+
       return toast({
         description: '글이 성공적으로 작성 되었습니다.',
 
@@ -259,7 +263,7 @@ useEffect(() => {
         onReady() {
           ref.current = editor
         },
-        placeholder: 'Type here to write your post...',
+        placeholder: '여기에 글을 작성 하세요 !',
         inlineToolbar: true,
 
 
@@ -347,7 +351,7 @@ useEffect(() => {
       for (const [_key, value] of Object.entries(errors)) {
         value
         toast({
-          title: 'Something went wrong.',
+          title: '다시 시도해 주세요.',
           description: (value as { message: string }).message,
           variant: 'destructive',
         })
@@ -454,16 +458,16 @@ useEffect(() => {
               _titleRef.current = e
             }}
             {...rest}
-            placeholder='Title'
+            placeholder='제목'
             className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
           />
           <div id='editor' className='min-h-[500px]' />
           <p className='text-sm text-gray-500'>
-            Use{' '}
+            커맨더 기능 사용을 위해{' '}
             <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>
               Tab
             </kbd>{' '}
-            to open the command menu.
+            버튼을 눌러 주세요.
           </p>
         </div>
       </form>

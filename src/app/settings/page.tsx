@@ -18,7 +18,7 @@ export default async function SettingsPage() {
   return (
     <div className='max-w-4xl mx-auto py-12'>
       <div className='grid items-start gap-8'>
-        <h1 className='font-bold text-3xl md:text-4xl ml-5'>Settings</h1>
+        <h1 className='font-bold text-3xl md:text-4xl ml-5'>유저 이름 설정</h1>
 
         <div className='grid gap-10'>
           <UserNameForm

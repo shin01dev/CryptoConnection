@@ -317,7 +317,7 @@ useEffect(() => {
     <span 
         className="cursor-pointer hover:underline"
     >
-        Edit Post
+        게시물 수정
     </span>
 </Link>
 
@@ -328,7 +328,7 @@ useEffect(() => {
                 onClick={() => {sessionStorage.setItem("y", String(window.pageYOffset));
                   handleDeletePost(post.id);
               }}>
-                  Delete Post
+                  게시물 삭제
               </button>
 
                 </DropdownMenuItem>

@@ -13,7 +13,7 @@ export const useCustomToasts = () => {
           onClick={() => dismiss()}
           href='/sign-in'
           className={buttonVariants({ variant: 'outline' })}>
-          Login
+          로그인
         </Link>
       ),
     })

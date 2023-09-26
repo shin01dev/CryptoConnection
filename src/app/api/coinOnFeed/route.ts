@@ -6,9 +6,9 @@ export async function GET(req: Request) {
     try {
         const session = await getAuthSession();
 
-        if (!session?.user) {
-            return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-        }
+        // if (!session?.user) {
+        //     return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+        // }
 
         // Assuming req has a 'url' property which is a string containing the full URL
         const parsedURL = new URL(req.url!);

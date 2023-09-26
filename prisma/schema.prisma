@@ -137,6 +137,8 @@ model Comment {
   replies   Comment[] @relation("ReplyTo")
 
   votes     CommentVote[]
+
+  donationInput String?
   commentId String?
 }
 

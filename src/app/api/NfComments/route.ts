@@ -38,7 +38,8 @@ export async function POST(req: any) {
         replyToId: true,
         replyTo: true,
         replies: true,
-        notification: true
+        notification: true,
+        donationInput: true,
       },
     });
 

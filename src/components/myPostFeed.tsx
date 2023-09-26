@@ -116,7 +116,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
         });
       } else {
         toast({
-          title: "Error",
+          title: "실패",
           description: response.data.message, // API의 응답 메시지를 사용
           variant: "destructive"
         });
@@ -124,7 +124,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
     } catch (error: any) {
       toast({
         title: "Error",
-        description: "작업 중 문제가 발생했습니다. 다시 시도해 주세요.",
+        description: "문제가 발생했습니다. 다시 시도해 주세요.",
         variant: "destructive"
       });
     }
@@ -212,7 +212,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
 
 <DropdownMenu >
   <DropdownMenuTrigger>
-    <div className="cursor-pointer bg-white border rounded-full p-1 ml-2 mr-2">
+    <div className="cursor-pointer bg-white border rounded-full p-1 ml-2 mr-2 mb-1">
       <ChevronDown />
     </div>
   </DropdownMenuTrigger>
@@ -237,9 +237,10 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,usern
       </>
       
       {posts.length === 0 ? (
-       <li className="text-center text-gray-600">
-       아직 게시물이 없습니다 !</li>
-    ) : (
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh]">
+  아직 게시물이 없습니다
+  </li>
+) : (
       posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1;

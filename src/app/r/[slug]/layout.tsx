@@ -66,7 +66,9 @@ const Layout = async ({
         
         <ToFeedButton />
 
-        <ul className='flex flex-col col-span-2 space-y-3 mx-auto sm:ml-20'>{children}</ul>
+        <ul className='flex flex-col col-span-2 space-y-3 mx-auto sm:ml-20'>
+          
+          {children}</ul>
 
       </div>
     </div>

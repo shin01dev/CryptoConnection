@@ -44,7 +44,7 @@ useEffect(() => {
 
         <div className='-ml-2 -mt-2 flex flex-wrap items-baseline'>
           <h3 className='ml-2 mt-2 text-base font-semibold leading-6 text-gray-900'>
-            Create Post
+            게시물 만들기
           </h3>
           <p className='ml-2 mt-1 truncate text-sm text-gray-500'>
              {' [토큰 후원] '}
@@ -58,8 +58,7 @@ useEffect(() => {
       <Editor 
         subredditId={"cllz0gqww00043n6w9da8k6vb"} 
         editThumbnail={undefined}
-        // donateCoin={donateCoin}  // 추가됨
-        donateTo={donateTo}  // 추가됨
+        donateTo={donateTo} 
       />
 
 

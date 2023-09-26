@@ -8,7 +8,6 @@ import { z } from 'zod'
 const CACHE_AFTER_UPVOTES = 1
 
 
-import { differenceInDays } from 'date-fns'; // date-fns 패키지의 함수를 사용해 날짜 차이를 계산합니다.
 
 async function awardTokens(post: { author: { id: string; }; id: string; subreddit: { id: string; name: string; createdAt: Date; updatedAt: Date; creatorId: string | null; } | null; }, votesAmt: number) {
   let tokenAmountToGive = 0;

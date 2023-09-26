@@ -4,10 +4,10 @@ export const PostValidator = z.object({
   title: z
     .string()
     .min(3, {
-      message: 'Title must be at least 3 characters long',
+      message: '제목은 최소 3글자 이상이어야 합니다',
     })
     .max(128, {
-      message: 'Title must be less than 128 characters long',
+      message: '제목은 128글자를 초과할 수 없습니다',
     }),
   subredditId: z.string(),
   content: z.any(),

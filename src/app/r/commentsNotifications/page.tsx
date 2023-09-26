@@ -220,13 +220,31 @@ export default function Home(props: any) {
                                         className="w-12 h-12 rounded-full border-2 border-gray-300 mr-4"
                                     />
                                 </a>
-    
-                                <div className="flex-1">
-                                    <p className="text-sm">{displayMessage}</p>
-                                    <span className="text-xs text-gray-500">{formatDate(comment.createdAt)}</span>
-                                </div>
+                                <div className="flex-1 flex flex-col">
+    <div className="flex items-center mb-1 mr-3">
+        <p className="text-sm flex-1">{displayMessage}</p>
+        {comment.donationInput && (
+            <Link href="/r/wallet">
+                <span className="flex items-center">
+                <img src="/favicon.ico" alt="Donation Icon" className="w-6 h-6 mr-1" />
+
+                    <span> · </span>
+
+                    <span className="text-sm ml-1">{comment.donationInput}</span>
+
+                </span>
+            </Link>
+        )}
+    </div>
+    <span className="text-xs text-gray-500">{formatDate(comment.createdAt)}</span>
+</div>
+
+
+                                
                             </li>
+                            
                         );
+                        
                     })}
                 </ul>
             ) : (

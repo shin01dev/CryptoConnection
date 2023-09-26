@@ -7,7 +7,7 @@ export async function PATCH(req: Request) {
   try {
     const body = await req.json()
 
-    const { postId, text, replyToId } = CommentValidator.parse(body)
+    const { postId, text, replyToId, donationInput } = CommentValidator.parse(body)
 
     const session = await getAuthSession()
 
@@ -15,15 +15,65 @@ export async function PATCH(req: Request) {
       return new Response('Unauthorized', { status: 401 })
     }
 
-    // if no existing vote, create a new vote
+    // Find the post by postId
+    const post = await db.post.findUnique({
+      where: { id: postId },
+    })
+
+    if (!post) {
+      return new Response('Post not found', { status: 404 })
+    }
+
+    // Find the account by post authorId
+    const authorAccount = await db.account.findUnique({
+      where: { userId: post.authorId },
+    })
+
+    if (!authorAccount) {
+      return new Response('Author Account not found', { status: 404 })
+    }
+
+    // Find the account by session user id
+    const userAccount = await db.account.findUnique({
+      where: { userId: session.user.id },
+    })
+
+    if (!userAccount) {
+      return new Response('User Account not found', { status: 404 })
+    }
+
+    // Update the crypto_currency value in the author account
+    const authorCurrentCryptoCurrencyValue = parseFloat(authorAccount.crypto_currency || '0');
+    const donationValue = parseFloat(donationInput ? donationInput.toString() : '0');
+    const updatedAuthorCryptoCurrencyValue = (authorCurrentCryptoCurrencyValue + donationValue).toString();
+    
+    await db.account.update({
+      where: { userId: authorAccount.userId },
+      data: { crypto_currency: updatedAuthorCryptoCurrencyValue },
+    });
+
+    // Update the crypto_currency value in the user account
+    const userCurrentCryptoCurrencyValue = parseFloat(userAccount.crypto_currency || '0');
+    const updatedUserCryptoCurrencyValue = (userCurrentCryptoCurrencyValue - donationValue).toString();
+
+    if (parseFloat(updatedUserCryptoCurrencyValue) < 0) {
+      return new Response('Insufficient funds in the user account', { status: 400 })
+    }
+
+    await db.account.update({
+      where: { userId: userAccount.userId },
+      data: { crypto_currency: updatedUserCryptoCurrencyValue },
+    });
+
+    // Create a new comment
     await db.comment.create({
       data: {
         text,
         postId,
         authorId: session.user.id,
         replyToId,
-        notification: "on",  // 여기에서 notification 필드를 "on"으로 설정합니다.
-
+        notification: "on", 
+        donationInput: donationInput !== null && donationInput !== undefined ? donationInput.toString() : null,
       },
     })
 

@@ -40,8 +40,8 @@ const SubscribeLeaveToggle = ({
         }
       }
       return toast({
-        title: 'There was a problem.',
-        description: 'Something went wrong. Please try again.',
+        title: '커뮤니티 가입 실패.',
+        description: '다시 시도해 주세요.',
         variant: 'destructive',
       })
     },
@@ -52,7 +52,7 @@ const SubscribeLeaveToggle = ({
         router.refresh()
       })
       toast({
-        title: 'Subscribed!',
+        title: '커뮤니티 가입 성공 !',
         description: `${decodeName} 그룹에 참여 하셨습니다`,
       })
     },
@@ -81,7 +81,7 @@ const SubscribeLeaveToggle = ({
         router.refresh()
       })
       toast({
-        title: 'Unsubscribed!',
+        title: '커뮤니티 탈퇴',
         description: `${decodeName} 그룹을 탈퇴 하셨습니다`,
       })
     },
@@ -92,14 +92,14 @@ const SubscribeLeaveToggle = ({
       className='w-full mt-1 mb-4'
       isLoading={isUnsubLoading}
       onClick={() => unsubscribe()}>
-      Leave community
+      커뮤니티 탈퇴
     </Button>
   ) : (
     <Button
       className='w-full mt-1 mb-4'
       isLoading={isSubLoading}
       onClick={() => subscribe()}>
-      Join to post
+      가입하고 글 작성하기
     </Button>
   )
 }

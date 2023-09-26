@@ -101,13 +101,13 @@ async function connectWallet() {
             setIsUpdated(true);
             toast({
                 title: '성공',
-                description: '퍼블릭 키가 성공적으로 등록 되었습니다!',
+                description: '지갑 주소가 성공적으로 등록 되었습니다!',
             });  // 성공 메시지
         } else if (response.status === 400) {
             // HTTP 상태 코드가 400인 경우 토스트 알림으로 오류 메시지를 표시합니다.
             toast({
-                title: '이미 등록된 공개 키 입니다.',
-                description: '다른 공개 키를 등록해 주세요.',
+                title: '이미 등록된 지갑 주소 입니다.',
+                description: '다른 지갑 주소를 등록해 주세요.',
                 variant: 'destructive'
             });
         } else {
@@ -117,12 +117,12 @@ async function connectWallet() {
         console.error('public_key_for_crypto_transactions 업데이트 중 오류 발생:', error);
         setIsUpdated(false);
         toast({
-            title: '공개 키 중복.',
-            description: '다른 유저가 이미 입력하신 공개 키를 사용하고 있습니다.',
+            title: '지갑 주소 중복.',
+            description: '이미 등록되어진 지갑 주소 입니다.',
             variant: 'destructive'
         });  // 예외 오류 메시지
     }
-    window.location.reload(); // 페이지를 새로고침
+    // window.location.reload(); // 페이지를 새로고침
 
 }
 
@@ -333,7 +333,7 @@ return (
       placeholder="Public Key for Crypto Transactions"
     />
     <button className="mt-2 bg-blue-500 text-white rounded p-2 w-full hover:bg-blue-600 transition duration-300"style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }} onClick={updatePublicKeyForCrypto}>
-      Update Public Key
+      지갑 주소 등록하기
     </button>
 </div>
 

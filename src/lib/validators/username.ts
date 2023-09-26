@@ -7,7 +7,7 @@ export const UsernameValidator = z.object({
 
     return isValidKorean && isValidEnglish;
   }, {
-    message: "9글자까지 허용됩니다.",
+    message: "9글자까지 허용 됩니다.",
     path: [],
   })
 })

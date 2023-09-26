@@ -133,7 +133,7 @@ const memberCount = await db.subscription.count({
         {/* 포스트 상세 가로 길이 */}
         <div className="lg:ml-20 ml-2 mr-2  justify-end sm:w-4/5 sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm sm:max-w-[100%]">
           <p className="max-h-40 mt-1 truncate text-xs text-gray-500 flex items-center">
-            Posted by u/{post?.author.username ?? cachedPost.authorUsername}
+            작성자/{post?.author.username ?? cachedPost.authorUsername}
             {" | "}
             {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
             {post?.donateCoin && post?.donateCoin > "0" && (
@@ -224,7 +224,7 @@ const memberCount = await db.subscription.count({
           })}
           href={`${BASE_URL}/r/${params.postId}/submit`}
         >
-          Create Post
+         게시물 만들기
         </Link>
       </>
     )}

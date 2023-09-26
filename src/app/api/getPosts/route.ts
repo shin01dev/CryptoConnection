@@ -45,7 +45,7 @@ export async function POST(req: any) {
         
         return new Response(JSON.stringify(posts));
     } catch (error) {
-        console.error('Error fetching postsㄴㄴㄴ:', error);
+        console.error('Error fetching posts:', error);
         throw new Error('An error occurred while fetching posts.');
     }
 }

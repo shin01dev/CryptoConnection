@@ -87,7 +87,6 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 
 
 
-
    
    
    return (
@@ -121,10 +120,11 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 
 
 
-
 {posts.length === 0 ? (
-      <li className='text-center font-medium'>아직 게시물이 없습니다 !</li>
-    ) : (
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh] sm:mr-10 ">
+    아직 게시물이 없습니다
+  </li>
+) : (
       posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1;

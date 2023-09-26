@@ -13,6 +13,8 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLayoutEffect } from 'react';
+import PopularPost from './popularPost'
+
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
@@ -122,8 +124,8 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session })
   
 
 {posts.length === 0 ? (
-      <li className="text-center text-gray-600">
-        인기 게시물이 되어 토큰을 지급 받으세요 !
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh]">
+  인기 게시물이 되어 토큰을 지급 받으세요 !
       </li>
     ) : (
       posts.map((post, index) => {

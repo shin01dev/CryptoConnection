@@ -175,7 +175,7 @@ useEffect(() => {
             const response = await axios.post('/api/saveKeyData', tokenData);
             console.log(response.data);
         } catch (error) {
-            console.error(error); // 서버 측에서 발생한 오류를 콘솔에 출력
+            console.error(error); 
         }
     } else {
         console.log('Mint or Wallet or Token Account Address is not initialized yet');
@@ -412,7 +412,7 @@ async function sendToken() {
   
   if (coinNumber === null || (transferAmount !== null && transferAmount / decimal > coinNumber)) {
     console.error('Transfer amount exceeds available coin number or coin number is not yet loaded');
-    setErrorMessage("전송 실패 !");
+    // setErrorMessage("전송 실패 !");
     return; // 함수를 여기서 종료합니다.
   }
   let provider = window && window.solana ? window.solana : null;
@@ -421,17 +421,15 @@ async function sendToken() {
 
   if (provider && provider.publicKey) {
     toWallet = new PublicKey(provider.publicKey);
-    console.log(provider.publicKey+"프로바이더퍼블리기키");
 } else if (manualWalletAddress) {
     console.log("no wallet");
-    console.log(manualWalletAddress+"qqqqqqqqqqq");
 
     toWallet = new PublicKey(manualWalletAddress);
-    console.log(toWallet+"qqqqqqqqqqq");
 
 } else {
-  console.error('Wallet not connected or manual address not provided');
   setErrorMessage("전송 실패");
+
+  console.error('Wallet not connected or manual address not provided');
   return;
   
 }
@@ -441,6 +439,7 @@ setErrorMessage(null);
   try {
     if (!toWallet) {
       console.error('Wallet not connected');
+      
       return;
     }
     console.log("Connected to towallet " +toWallet);
@@ -494,9 +493,13 @@ setErrorMessage(null);
       await minusCryptoCurrency(transferAmount / decimal); // 9자리 소수점으로 나눈 값을 전달합니다.
     } else {
       console.error('Transfer amount is not set');
+
+      
     }
       } catch (error) {
     console.error(error);
+
+
   }
   setIsLoading(false); // 로딩 종료
   window.location.reload(); // 페이지를 새로고침
@@ -651,10 +654,10 @@ return (
 
 {/* 에러 메시지 */}
 {errorMessage && (
-  <div className="text-red-600 font-medium text-sm bg-red-50 border border-red-400 p-3 rounded-md shadow-md transform transition-transform duration-300 hover:scale-105">
-    {errorMessage}
-  </div>
-)}
+        <div className="text-red-600 font-medium text-sm bg-red-50 border border-red-400 p-3 rounded-md shadow-md transform transition-transform duration-300 hover:scale-105">
+          {errorMessage}
+        </div>
+      )}
 
 {/* 토큰 전송 성공 메시지 */}
 {isTokenTransferred && (

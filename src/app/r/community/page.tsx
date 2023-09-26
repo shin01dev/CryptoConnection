@@ -35,7 +35,7 @@ export default async function Home() {
     <dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
         <div className='flex justify-between gap-x-4 py-3'>
             <p className='text-zinc-500'>
-            개인 커뮤니티를 생성하여, 다른 사람과 함께 공유해 보세요!
+            개인 커뮤니티를 생성하여, 다른 사람들과 함께 공유해 보세요!
             </p>
         </div>
 

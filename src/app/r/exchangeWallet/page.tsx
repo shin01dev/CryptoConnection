@@ -210,15 +210,6 @@ async function checkAndSaveKeys() {
   }
 }
 
-// useEffect(() => {
-//   const fetchKeys = async () => {
-//     const data = await checkAndSaveKeys();
-//     setKeys(data);
-//   };
-//   fetchKeys();
-// }, []);
-
-
 
 
 

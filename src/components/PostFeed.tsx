@@ -115,8 +115,8 @@ return (
     </div>
 
     {posts.length === 0 ? (
-      <li className="text-center text-white">
-        그룹에 가입해 게시물을 받아 보세요 !
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh] ">
+  아직 게시물이 없습니다
       </li>
     ) : (
       posts.map((post, index) => {

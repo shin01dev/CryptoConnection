@@ -43,7 +43,7 @@ const deletePost = async (postId: string) => {
 };
 
 
-const Post: FC<PostProps> = ({
+const PopularPost: FC<PostProps> = ({
   post,
   votesAmt: _votesAmt,
   currentVote: _currentVote,
@@ -202,11 +202,11 @@ return (
                 <span className="cursor-pointer hover:underline">[{decodeURIComponent(subredditName)}]</span>
               </Link>
             )}
-            <span className="px-0 ">
+            <span className="px-0">
               {donateCoins && donateCoins >= 1 ? (
                 <>
-                  <span> · </span>
-                  <img src="/favicon.ico" alt="Description of Image" className="inline mr-1" style={{ width: '1em', height: 'auto' }} />
+                  <span>· </span>
+                  <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto' }} />
                   <span> · </span>
                   {donateCoins}
                 </>
@@ -217,16 +217,16 @@ return (
           {/* Author, Date, and Subreddit Name (For Desktop) */}
           <div className="flex space-x-1 items-center text-xxxxs text-gray-500 hidden md:flex mt-0">
             {subredditName && (
-              <span className="cursor-pointer hover:underline ">
+              <span className="cursor-pointer hover:underline">
                 <Link href={`/r/${subredditName}`}>
                   <span>
                     [{decodeURIComponent(subredditName)}]
-                    <span className="px-0 ml-0 ">
+                    <span className="px-0 ml-0">
                       {donateCoins && donateCoins >= 1 ? (
                         <>
-                          <span> · </span>
+                          <span>· </span>
                           <img src="/favicon.ico" alt="Description of Image" className="inline" style={{ width: '1em', height: 'auto', display: 'inline-block' }} />
-                          <span> · </span>
+                          <span>· </span>
                           {donateCoins}
                         </>
                       ) : null}
@@ -250,10 +250,10 @@ return (
             
             {/* Post Actions Dropdown (For Authors) */}
             {isAuthor && (
-              <div className="ml-1 mr-10 mt-1">
+              <div className="ml-1 mr-10 mt-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <MoreVertical className="h-3 w-3 " />
+                    <MoreVertical className="h-3 w-3" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>
@@ -289,4 +289,4 @@ return (
 
 };
 
-export default Post;
+export default PopularPost;

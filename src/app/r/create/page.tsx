@@ -70,11 +70,11 @@ const Page = () => {
         <div>
           <p className='text-lg font-medium'>커뮤니티 이름</p>
           <p className='text-xs pb-2'>
-            Community names including capitalization cannot be changed.
-          </p>
+          부적절한 커뮤니티는 제재 조치를 당할 수 있습니다.
+                    </p>
           <div className='relative'>
             <p className='absolute text-sm left-0 w-8 inset-y-0 grid place-items-center text-zinc-400'>
-              r/
+          
             </p>
             <Input
               value={input}

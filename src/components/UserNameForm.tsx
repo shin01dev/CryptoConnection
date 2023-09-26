@@ -82,9 +82,9 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
       {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Your username</CardTitle>
+          <CardTitle> 회원님의 활동명을 설정해 주세요 !</CardTitle>
           <CardDescription>
-            Please enter a display name you are comfortable with.
+           중복은 허용되지 않습니다.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,7 +93,7 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
               <span className='text-sm text-zinc-400'></span>
             </div>
             <Label className='sr-only' htmlFor='name'>
-              Name
+              이름
             </Label>
             <Input
               id='name'
@@ -107,7 +107,7 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
           </div>
         </CardContent>
         <CardFooter>
-          <Button isLoading={isLoading}>Change name</Button>
+          <Button isLoading={isLoading}>이름 변경</Button>
         </CardFooter>
       </Card>
     </form>

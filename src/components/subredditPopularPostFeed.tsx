@@ -111,9 +111,10 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
 
 
 {posts.length === 0 ? (
-      <li className='text-center font-medium mt-4'>        인기 게시물이 되어 토큰을 지급 받으세요 !
-      </li>
-    ) : (
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh] sm:mr-10 ">
+  인기 게시물이 되어 토큰을 지급 받으세요!
+  </li>
+) : (
       posts.map((post, index) => {
         const votesAmt = post.votes.reduce((acc, vote) => {
           if (vote.type === 'UP') return acc + 1;
