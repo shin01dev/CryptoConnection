@@ -25,7 +25,7 @@ export default function Thumbnail() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <UploadButton<OurFileRouter>
-        endpoint="imageUploader"
+        endpoint="ThumbnailPost"
         onClientUploadComplete={(res) => {
           // Do something with the response
           if(res) {
