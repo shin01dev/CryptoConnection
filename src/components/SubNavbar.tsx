@@ -14,7 +14,7 @@ const SubNavbar = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className='top-[height of main navbar + 2px] inset-x-0 h-fit bg-gradient-to-r bg-gradient-to-l from-purple-800 to-purple-300 border-b border-zinc-300 z-[10] py-1'>
+    <div className='top-[height of main navbar + 2px] inset-x-0 h-fit bg-gradient-to-r bg-purple-600 border-b border-zinc-300 z-[10] py-1'>
     <div className='container max-w-7xl h-full mx-auto flex items-center justify-center gap-1'>
         <DropdownMenu >
           <DropdownMenuTrigger className='mr-4'>
@@ -23,7 +23,7 @@ const SubNavbar = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap mt-1'>
 유머/정보
               </p>
             </div>
@@ -54,7 +54,7 @@ const SubNavbar = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap  mt-1'>
 쇼핑/투자
               </p>
             </div>
@@ -85,7 +85,7 @@ const SubNavbar = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap  mt-1'>
 게임
               </p>
             </div>
@@ -116,7 +116,7 @@ const SubNavbar = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+<p className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap  mt-1'>
 스포츠
               </p>
             </div>
@@ -145,10 +145,11 @@ const SubNavbar = () => {
   className='relative pb-2'
   onMouseEnter={() => setIsHovering(true)}
   onMouseLeave={() => setIsHovering(false)}
->
-  <a href="/category" className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap'>
+><div className='mt-1'>
+  <Link href="/category" className='text-white text-sm font-medium cursor-pointer hover:underline whitespace-nowrap  '>
     게시판
-  </a>
+  </Link>
+  </div>
 </div>
 
           

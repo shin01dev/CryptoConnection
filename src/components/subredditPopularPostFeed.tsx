@@ -108,12 +108,12 @@ const SubredditPopularPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditNa
       </span>
       <div className='flex ml-auto items-center'>
       <a href="/r/공지사항">
-  <IoInformationCircleOutline className='mt-0 mr-1 w-6 h-6' />
+  <IoInformationCircleOutline className='mt-0 mr-1 w-5 h-5' />
 </a>
 <RxDividerVertical className='mt-2 mb-2 mr-1 w-5 h-5' />
 
 <a href="/r/create">
-  <AiOutlineHome className='mt-0 mr-2 w-5 h-5' />
+  <AiOutlineHome className='mt-0 mb-0 mr-2  w-5 h-4' />
 </a>
     </div>
     </div>
