@@ -2,6 +2,8 @@
 
 import CustomCodeRenderer from '@/components/renderers/CustomCodeRenderer'
 import CustomImageRenderer from '@/components/renderers/CustomImageRenderer'
+import CustomVideoRenderer from './renderers/CustomVideoRenderer'
+
 import { FC } from 'react'
 import dynamic from 'next/dynamic'
 
@@ -17,6 +19,7 @@ interface EditorOutputProps {
 const renderers = {
   image: CustomImageRenderer,
   code: CustomCodeRenderer,
+  video: CustomVideoRenderer, // 동영상을 렌더링하기 위한 커스텀 렌더러
 }
 
 const style = {

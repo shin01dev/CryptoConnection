@@ -19,7 +19,7 @@
     "@editorjs/link": "^2.5.0",
     "@editorjs/list": "^1.8.0",
     "@editorjs/paragraph": "^2.9.0",
-    "@editorjs/table": "^2.2.1",
+    "@editorjs/table": "^2.2.2",
     "@hookform/resolvers": "^3.1.0",
     "@mantine/hooks": "^6.0.13",
     "@metaplex-foundation/mpl-token-metadata": "^2.5.1",
@@ -52,6 +52,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "editorjs-react-renderer": "^3.5.1",
+    "editorjs-video": "^1.1.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "express": "^4.18.2",
@@ -79,6 +80,7 @@
     "react-use": "^17.4.0",
     "server-only": "^0.0.1",
     "sharp": "^0.32.1",
+    "simple-video-editorjs": "^1.4.9",
     "socket.io-client": "^4.7.2",
     "tailwind-merge": "^1.12.0",
     "tailwindcss": "3.3.2",
@@ -90,6 +92,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@editorjs/checklist": "^1.5.0",
     "@types/crypto-js": "^4.1.1",
     "@types/cuid": "^2.0.1",
     "@types/editorjs__header": "^2.6.0",
@@ -101,6 +104,8 @@
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "@types/react-router-dom": "^5.3.3",
+    "@weekwood/editorjs-video": "^1.0.2",
+    "i": "^0.3.7",
     "prisma": "^5.3.0"
   },
   "description": "Built with the Next.js App Router, TypeScript & Tailwind",

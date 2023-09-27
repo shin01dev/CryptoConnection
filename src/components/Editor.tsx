@@ -12,6 +12,7 @@ import CustomCodeRenderer from '@/components/renderers/CustomCodeRenderer'
 import CustomImageRenderer from '@/components/renderers/CustomImageRenderer'
 import { toast } from '@/hooks/use-toast'
 import { uploadFiles } from '@/lib/uploadthing'
+import { uploadFiles as videoFile } from '@/lib/uploadthingvideo'
 import { PostCreationRequest, PostValidator } from '@/lib/validators/post'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
@@ -19,6 +20,7 @@ import React from 'react';
 import "@uploadthing/react/styles.css";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
+import VideoTool from '@weekwood/editorjs-video';
 
 
 import '@/styles/editor.css'
@@ -308,7 +310,7 @@ useEffect(() => {
                   const newFile = new File([file], newFileName, { type: file.type });
                 
                 
-                  const [res] = await uploadFiles([newFile], 'imageUploader')
+                  const [res] = await uploadFiles([newFile], 'mediaPost')
                 
                   return {
                     success: 1,
@@ -323,8 +325,44 @@ useEffect(() => {
           list: List,
           code: Code,
           inlineCode: InlineCode,
-          table: Table,
           embed: Embed,
+
+      video: {
+  class: VideoTool,
+  config: {
+    uploader: {
+      // video 파일 업로드 로직
+      async uploadByFile(file: File) {
+        // Get the original file's extension
+        const fileExtension = file.name.split(".").pop();
+        
+        // Encode and clean the file name
+        const encodedName = encodeURIComponent(file.name);
+        const cleanName = encodedName.replace(/[^a-zA-Z0-9]/g, "");
+      
+        // Add the original extension to the cleaned file name
+        const newFileName = `${cleanName}.${fileExtension}`;
+      
+        const newFile = new File([file], newFileName, { type: file.type });
+      
+      
+        const [res] = await videoFile([newFile], 'mediaPost') // video 업로드를 위한 엔드포인트
+      
+        return {
+          success: 1,
+          file: {
+            url: res.fileUrl,
+          },
+        }
+      },
+    },
+    player: {
+      controls: true,
+      autoplay: false
+    }
+  }
+},
+
         },
       })
     }
@@ -475,7 +513,7 @@ useEffect(() => {
 {/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}
 <main className="flex min-h-screen flex-col items-center justify-between p-24">
   <UploadButton<OurFileRouter>
-    endpoint="imageUploader"
+    endpoint="ThumbnailPost"
     onClientUploadComplete={handleUploadComplete}
     onUploadError={(error: Error) => {
       // Do something with the error.
