@@ -269,8 +269,8 @@ return (
             
                 {/* Post Actions Dropdown (For Authors) */}
       {isAuthor && (
-        <div className="ml-1 mr-10 mt-2">
-          <DropdownMenu>
+              <div className="ml-1 mr-10 mt-1">
+              <DropdownMenu>
             <DropdownMenuTrigger>
               <MoreVertical className="h-3 w-3" />
             </DropdownMenuTrigger>

@@ -19,7 +19,7 @@ const GeneralFeed = async () => {
     take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
   })
 
-  return <PostFeed initialPosts={posts} session={session} />
+  return <PostFeed initialPosts={posts} session={session?.user.id} />
 }
 
 export default GeneralFeed
