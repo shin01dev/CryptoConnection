@@ -247,6 +247,10 @@ useEffect(() => {
 const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 const [isRequestPending, setIsRequestPending] = useState<number | null>(null);
+const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+
+
 const getTransactions = async (tokenAccountAddress: string, mintAddress: string) => {
   if (isButtonDisabled || isRequestPending !== null) return;
 
@@ -260,25 +264,29 @@ const getTransactions = async (tokenAccountAddress: string, mintAddress: string)
     console.log(`잠시 후 다시 시도하세요. 남은 시간: ${delay / 1000}초`);
     return; // 여기서 함수를 종료
   }
-
   setIsButtonDisabled(true);
   setIsTransactionsLoading(false);
 
   const apiUrl = '/api/saveTransactionsInfo';
-  await axios.post(apiUrl, {
-    tokenAccountAddress,
-    mintAddress,
-  });
+  
+  try {
+    await axios.post(apiUrl, {
+      tokenAccountAddress,
+      mintAddress,
+    });
 
-  setIsTransactionsLoading(true);
-  console.log("Transactions 서버로 전송됨");
-  localStorage.setItem('lastCalledTime', new Date().getTime().toString());
-  window.location.reload();
-
-  setIsButtonDisabled(false);
-  setIsRequestPending(null);
+    setIsTransactionsLoading(true);
+    console.log("Transactions 서버로 전송됨");
+    localStorage.setItem('lastCalledTime', new Date().getTime().toString());
+    window.location.reload();
+  } catch (error) {
+    console.error("Error in sending transactions:", error);
+    setErrorMessage("등록된 지갑 주소가 올바른지 확인해 주세요");
+  } finally {
+    setIsButtonDisabled(false);
+    setIsRequestPending(null);
+  }
 };
-
 
 
 
@@ -368,16 +376,22 @@ return (
   {remainingTime > 0 && <p style={{ color: 'purple' }}>{Math.ceil(remainingTime / 1000)}초 후에 다시 시도해 주세요</p>}
 
   <div>
-    {!isTransactionsLoading ? (
-      <div className="flex items-center">
-  <div className="text-purple-500">회원님이 전송한 토큰을 확인하는 중...</div>
-  <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
-</div>
-    ) : (
-      <div>
-      </div>
-    )}
+  {errorMessage ? (
+      <div className="flex items-center justify-center text-red-600 mt-3 font-medium text-sm bg-red-50 border border-red-400 p-3 rounded-md shadow-md transform transition-transform duration-300 hover:scale-105">
+      {errorMessage}
   </div>
+  
+  ) : !isTransactionsLoading ? (
+    <div className="flex items-center">
+      <div className="text-purple-500">회원님이 전송한 토큰을 확인하는 중...</div>
+      <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
+    </div>
+  ) : (
+    <div>
+    </div>
+  )}
+</div>
+
 </div>
 
 
