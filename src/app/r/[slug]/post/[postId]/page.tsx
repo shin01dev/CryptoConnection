@@ -208,7 +208,7 @@ const memberCount = await db.subscription.count({
         <dt className="text-gray-500">You created this community</dt>
       </div>
     ) : null}
-    {decodeURIComponent(subreddit.name) !== "토큰 후원" && (
+{decodeURIComponent(subreddit.name) !== "토큰 후원" && decodeURIComponent(subreddit.name) !== "공지사항" && (
       <>
         {subreddit.creatorId !== session?.user?.id && (
           <SubscribeLeaveToggle
@@ -217,15 +217,15 @@ const memberCount = await db.subscription.count({
             subredditName={subreddit.name}
           />
         )}
-        <Link
+        <a
           className={buttonVariants({
             variant: 'outline',
             className: 'w-full mb-6',
           })}
-          href={`${BASE_URL}/r/${params.postId}/submit`}
-        >
+          href={`/r/${decodeURIComponent(subreddit.name)}/submit`}
+          >
          게시물 만들기
-        </Link>
+        </a>
       </>
     )}
   </dl>

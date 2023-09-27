@@ -13,6 +13,10 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react';
 import Link from 'next/link'
 import SubredditPost from '../subrredditPost'
+import { AiOutlineHome } from 'react-icons/ai';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { RxDividerVertical } from "react-icons/rx";
+
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
@@ -90,7 +94,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
    
    
    return (
-    <ul className=' flex flex-col col-span-3 space-y-0 '>
+    <ul className=' flex flex-col col-span-4 space-y-0 sm:ml-20  '>
       {((currentURL === `${BASE_URL}/r/myFeed/${session}` || currentURL === `${BASE_URL}/r/donation/${session}`) ? null : 'my_커뮤니티') && (
         <div className='flex gap-2 mr-1 sm:ml-10 border border-gray-800 rounded-md sm:w-4/6 bg-purple-500 text-white mb-2'>
           <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400 rounded-lg'>
@@ -115,14 +119,25 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
               </span>
             </a>
           </span>
-        </div>
+          <div className='flex ml-auto items-center'>
+      <a href="/r/공지사항">
+  <IoInformationCircleOutline className='mt-0 mr-1 w-6 h-6' />
+</a>
+<RxDividerVertical className='mt-2 mb-2 mr-1 w-5 h-5' />
+
+<a href="/r/create">
+  <AiOutlineHome className='mt-0 mr-2 w-5 h-5' />
+</a>
+    </div>
+
+      </div>
       )}
 
 
 
 {posts.length === 0 ? (
-  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh] sm:mr-10 ">
-    아직 게시물이 없습니다
+  <li className="flex items-center justify-center text-gray-600 min-h-[70vh] mt-[-10vh] sm:mr-[25%] ">
+  아직 게시물이 없습니다
   </li>
 ) : (
       posts.map((post, index) => {
@@ -164,7 +179,7 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
 
     {isFetchingNextPage && (
       <li className='flex justify-center sm:mr-20'>
-        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+        <Loader2 className='w-6 h-6 mt-3 sm:mr-[25%] text-zinc-500 animate-spin' />
       </li>
     )}
   </ul>

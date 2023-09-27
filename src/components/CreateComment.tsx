@@ -102,7 +102,7 @@ useEffect(() => {
 <div className="flex items-center">
   {userId !== authorId && (
     <>
-      <label htmlFor='numberInput' className='mr-1 mt-2'>토큰 후원 금액</label>
+      <label htmlFor='numberInput' className='mr-1 mt-2'>토큰 후원</label>
       <img src="/favicon.ico" alt="토큰 이미지" className='mr-2 w-5 h-5 mt-2' />
       <input
         id='numberInput'

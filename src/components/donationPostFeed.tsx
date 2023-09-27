@@ -264,7 +264,7 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
     {isFetchingNextPage && (
       <li className='flex justify-center'>
-        <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+        <Loader2 className='w-6 h-6 mt-3 text-zinc-500 animate-spin' />
       </li>
     )}
   </ul>

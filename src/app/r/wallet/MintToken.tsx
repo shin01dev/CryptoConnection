@@ -406,6 +406,16 @@ const [isTokenTransferred, setIsTokenTransferred] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
 const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+
+
+
+
+
+
+
+
+
+
 async function sendToken() {
   setIsLoading(true);       // 로딩 시작
   setIsTokenTransferred(false);  // 토큰 전송 상태를 리셋
@@ -417,25 +427,36 @@ async function sendToken() {
   }
   let provider = window && window.solana ? window.solana : null;
   
-
-
   if (provider && provider.publicKey) {
-    toWallet = new PublicKey(provider.publicKey);
+    try {
+        toWallet = new PublicKey(provider.publicKey);
+    } catch (error) {
+        console.error('Invalid public key input:', error);
+        setErrorMessage("전송 실패");
+        return;
+    }
 } else if (manualWalletAddress) {
-    console.log("no wallet");
-
-    toWallet = new PublicKey(manualWalletAddress);
-
+    try {
+        toWallet = new PublicKey(manualWalletAddress);
+    } catch (error) {
+        console.error('Invalid public key input:', error);
+        setErrorMessage("전송 실패");
+        return;
+    }
 } else {
-  setErrorMessage("전송 실패");
-
-  console.error('Wallet not connected or manual address not provided');
-  return;
-  
+    setErrorMessage("전송 실패");
+    console.error('Wallet not connected or manual address not provided');
+    return;
 }
-setErrorMessage(null);
-
   
+  // 여기서 toWallet 값이 유효한지 확인합니다.
+  if (!toWallet) {
+    setErrorMessage("전송 실패");
+    console.error('Invalid toWallet value');
+    return;
+  }
+  
+  setErrorMessage(null);
   try {
     if (!toWallet) {
       console.error('Wallet not connected');
@@ -456,7 +477,7 @@ setErrorMessage(null);
     // tokenData.data가 배열이므로 각각의 토큰 데이터에 대해 반복합니다.
     for (let i = 0; i < tokenData.data.length; i++) {
       const { mint, privateKey, fromTokenAccountAddress } = tokenData.data[i];
-      console.log("mintmintmint " + mint);
+      console.log("mint " + mint);
 
       // privateKey를 바로 사용하여 fromWallet Keypair 생성
       const fromWallet = Keypair.fromSecretKey(new Uint8Array(privateKey.map(Number)));
@@ -505,6 +526,21 @@ setErrorMessage(null);
   window.location.reload(); // 페이지를 새로고침
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const minusCryptoCurrency = async (coinNumber: any) => {
@@ -635,11 +671,13 @@ return (
     </div>
 
     {inputError && <div className="text-red-500 shadow-md p-4 bg-white rounded-md w-full max-w-md">{inputErrorMessage}</div>}
-
-    <button className="mr-10 ml-10 text-black rounded-md p-2 hover:bg-opacity-90 active:bg-opacity-80 focus:outline-none shadow-md w-3/4 max-w-md transform transition-transform duration-300 hover:scale-105" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }} onClick={sendToken}>
-    <span style={{ backgroundColor: 'rgba(255, 255, 0, 0.6)' }}>
+ <span style={{ backgroundColor: 'rgba(255, 255, 0, 0.6)' }}>
         3. 연결된 팬텀 지갑으로 토큰 전송하기
     </span>
+    <button className="mr-10 ml-10 mt-10 text-black rounded-md p-2 hover:bg-opacity-90 active:bg-opacity-80 focus:outline-none shadow-md w-3/4 max-w-md transform transition-transform duration-300 hover:scale-105" style={{ background: 'linear-gradient(45deg, #673AB7, #9C27B0, #E040FB)' }} onClick={sendToken}>
+   <span className='text-white'>
+   전송하기
+   </span>
 </button>
 
 

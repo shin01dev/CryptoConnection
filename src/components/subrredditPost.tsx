@@ -277,12 +277,12 @@ return (
             <DropdownMenuContent>
               <DropdownMenuItem>
                 <Link href={`/r/${subredditName}/edit/${post.id}`}>
-                  <span className="cursor-pointer hover:underline">Edit Post</span>
+                  <span className="cursor-pointer hover:underline">게시물 수정하기</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <button onClick={() => { sessionStorage.setItem("y", String(window.pageYOffset)); handleDeletePost(post.id); }}>Delete Post</button>
+                <button onClick={() => { sessionStorage.setItem("y", String(window.pageYOffset)); handleDeletePost(post.id); }}>게시물 삭제하기</button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

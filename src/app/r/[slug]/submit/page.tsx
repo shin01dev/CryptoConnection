@@ -15,6 +15,9 @@ const Page: React.FC<pageProps> = ({ params }) => {
   const [subredditId, setSubredditId] = useState<string | null>(null);
   const [subredditName, setSubredditName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+  const isRestrictedSlug = decodeURIComponent(params.slug) === '공지사항' || decodeURIComponent(params.slug) === '토큰 후원';
+
+
 
   const fetchSubreddit = async (slug: string) => {
     try {
@@ -70,40 +73,38 @@ const [isSubmitted, setIsSubmitted] = useState(false);
   useEffect(() => {
     fetchSubreddit(params.slug);
   }, [params.slug]);
-
   return (
     <div className='flex flex-col items-start gap-6'>
-      {/* heading */}
-      <div className='border-b border-gray-200 pb-5'>
-        <div className='-ml-2 -mt-2 flex flex-wrap items-baseline'>
-          <h3 className='ml-2 mt-2 text-base font-semibold leading-6 text-gray-900'>
-            Create Post
-          </h3>
-          <p className='ml-2 mt-1 truncate text-sm text-gray-500'>
-            {subredditName ? ` [ ${subredditName} ] ` : ''}
-          </p>
-        </div>
-      </div>
+      {!isRestrictedSlug && (
+        <>
+          {/* heading */}
+          <div className='border-b border-gray-200 pb-5'>
+            <div className='-ml-2 -mt-2 flex flex-wrap items-baseline'>
+              <h3 className='ml-2 mt-2 text-base font-semibold leading-6 text-gray-900'>
+                Create Post
+              </h3>
+              <p className='ml-2 mt-1 truncate text-sm text-gray-500'>
+                {subredditName ? ` [ ${subredditName} ] ` : ''}
+              </p>
+            </div>
+          </div>
 
-      {/* form */}
-      <Editor subredditId={subredditId || ''} editThumbnail={undefined} />
+          {/* form */}
+          <Editor subredditId={subredditId || ''} editThumbnail={undefined} />
 
-      <div className='w-full flex justify-end bg-blue-500  mb-4'>
-
-
-      <Button 
-    type='submit' 
-    className='w-full  text-white'  // 수정된 부분
-    form='subreddit-post-form' 
-    onClick={handlePost}
-    disabled={isLoading} // 로딩 중일 때 버튼 비활성화
->
-    {isLoading ? <LoadingOverlay /> : "게시하기"} 
-</Button>
-
-
-
-      </div>
+          <div className='w-full flex justify-end bg-blue-500  mb-4'>
+            <Button 
+              type='submit' 
+              className='w-full  text-white' 
+              form='subreddit-post-form' 
+              onClick={handlePost}
+              disabled={isLoading} // 로딩 중일 때 버튼 비활성화
+            >
+              {isLoading ? <LoadingOverlay /> : "게시하기"} 
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   )
 }

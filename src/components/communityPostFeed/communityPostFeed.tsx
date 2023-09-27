@@ -13,6 +13,10 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router from 'next/router';
 import CommunityPost from '../communtyPost/communityPost'
+import { AiOutlineHome } from 'react-icons/ai';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { RxDividerVertical } from "react-icons/rx";
+
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
   subredditName?: string
@@ -115,6 +119,17 @@ const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sess
             </span>
           </a>
         </span>
+        <div className='flex ml-auto items-center'>
+      <a href="/r/공지사항">
+  <IoInformationCircleOutline className='mt-0 mr-1 w-6 h-6' />
+</a>
+<RxDividerVertical className='mt-2 mb-2 mr-1 w-5 h-5' />
+
+<a href="/r/create">
+  <AiOutlineHome className='mt-0 mr-2 w-5 h-5' />
+</a>
+    </div>
+
       </div>
   
       {posts.length === 0 ? (
@@ -159,7 +174,7 @@ const CommunityPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sess
 
       {isFetchingNextPage && (
         <li className='flex justify-center'>
-          <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
+          <Loader2 className='w-6 h-6 mt-3 text-zinc-500 animate-spin' />
         </li>
       )}
     </ul>
