@@ -56,7 +56,7 @@ useEffect(() => {
 
       {/* form */}
       <Editor 
-        subredditId={"cllz0gqww00043n6w9da8k6vb"} 
+        subredditId={"cln2rd2hw0006squwqb8ox0sf"} 
         editThumbnail={undefined}
         donateTo={donateTo} 
       />
