@@ -138,33 +138,24 @@ async function fetchUserVotes() {
           .then(async (data) => {
             if (data && data.postsVotes.length > 0) {
               const promises = data.postsVotes.map(async (vote: any) => {
-                try {
-                  const info = await fetchUserAndPostInfo(vote.userId, vote.postId);
-                  return {
-                    message: `"${info.user.username}"님이 회원님의 (${decodeURIComponent(info.post.subreddit.name)})"${info.post.title}" 게시물을 좋아합니다`,
-                    link: `/r/${decodeURIComponent(info.post.subreddit.name)}/post/${vote.postId}`,
-                    userImage: vote.user.image,
-                    userId: vote.userId,
-                    createdAt: vote.createdAt
-                  };
-                } catch (error) {
-                  console.error('사용자와 게시물 정보 요청 중 오류 발생:', error);
-                  return null; // In case of an error
-                }
+                // ... (기존 코드 유지)
               });
       
               const newMessages = await Promise.all(promises);
               const filteredNewMessages = newMessages.filter(Boolean);
-              
+      
               setPostNotifications(prevNotifications => [...prevNotifications, ...filteredNewMessages]);
-              setLoading(false);
+            } else {
+              setHasMore(false); // 응답 데이터가 없으면 더 가져올 데이터가 없다고 판단합니다.
             }
+            setLoading(false); // 이 부분을 수정하여 빈 배열일 때도 로딩 상태를 false로 설정
           })
           .catch((error) => {
             console.error('투표 정보 요청 중 오류 발생:', error);
             setLoading(false);
           });
       }, []);
+      
 
       const sortedPostNotifications = [...postNotifications].sort((a, b) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -195,7 +186,7 @@ async function fetchUserVotes() {
                 <Loader2 className='w-6 h-6 text-zinc-500 animate-spin' />
               </div>
             ) : sortedPostNotifications.length === 0 ? (
-              <p className="text-gray-400 text-center">댓글 좋아요 알림이 없습니다.</p>
+              <p className="text-gray-400 text-center">게시물 좋아요 알림이 없습니다.</p>
             ) : (
               sortedPostNotifications.map((notification, idx) => (
                 <div key={idx} className="flex items-center mb-4 p-2 bg-white rounded-lg shadow">

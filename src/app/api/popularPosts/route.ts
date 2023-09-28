@@ -25,7 +25,7 @@ export async function GET(req: Request) {
     const validPosts = await db.post.findMany({
       where: {
         vote_Sum: {
-          gte: 1, 
+          gte: 10, 
         },
       },
       orderBy: {

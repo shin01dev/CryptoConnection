@@ -18,6 +18,8 @@ import {
 } from '@/components/ui/DropdownMenu';
 import axios from 'axios';
 import { useLayoutEffect } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 type PartialVote = Pick<Vote, 'type'>;
 
@@ -171,7 +173,8 @@ useEffect(() => {
 
 
 
-
+let formattedTime = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: ko });
+formattedTime = formattedTime.replace('약 ', ''); // "약 " 제거
 
 
 
@@ -206,7 +209,7 @@ return (
               {donateCoins && donateCoins >= 1 ? (
                 <>
                   <span> · </span>
-                  <img src="/favicon.ico" alt="Description of Image" className="inline mr-1" style={{ width: '1em', height: 'auto' }} />
+                  <img src="/favicon.ico" alt="Description of Image" className="inline ml-1 mr-1" style={{ width: '1em', height: 'auto' }} />
                   <span> · </span>
                   {donateCoins}
                 </>
@@ -243,8 +246,8 @@ return (
             <a href={`/r/myFeed/${post.author.id}`}>
               <span className="cursor-pointer hover:underline">
                 / {post.author.username}
-                <span>· </span>
-                <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
+                <span> · </span>
+                <span className="truncate">{formattedTime}</span>
               </span>
             </a>
             

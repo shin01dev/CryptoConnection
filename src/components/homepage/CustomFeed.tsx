@@ -12,10 +12,9 @@ const CustomFeed = async () => {
   const session = await getAuthSession()
 
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound()
   const subscribedSubredditIds = await db.subscription.findMany({
     where: {
-      userId: session.user.id,
+      userId: session?.user.id,
     },
     select: {
       subredditId: true,
@@ -27,11 +26,22 @@ const CustomFeed = async () => {
   const subscribedSubredditIdsArray = subscribedSubredditIds.map(sub => sub.subredditId);
   const posts = await db.post.findMany({
     where: {
-      subreddit: {
-        id: {
-          in: subscribedSubredditIdsArray,
+      AND: [
+        {
+          subreddit: {
+            id: {
+              in: subscribedSubredditIdsArray,
+            },
+          },
         },
-      },
+        {
+          subreddit: {
+            name: {
+              not: encodeURIComponent("토큰 후원"),
+            },
+          },
+        },
+      ],
     },
     orderBy: {
       createdAt: 'desc',
@@ -49,7 +59,7 @@ const CustomFeed = async () => {
 
 
 
-  return <CommunityPostFeed initialPosts={posts} session={session.user.id} />
+  return <CommunityPostFeed initialPosts={posts} session={session?.user.id} />
 }
 
 export default CustomFeed

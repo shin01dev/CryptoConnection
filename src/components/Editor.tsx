@@ -203,7 +203,7 @@ useEffect(() => {
 
       return toast({
         title: '게시물 생성 실패.',
-        description: '다시 시도해 주세요.',
+        description: '커뮤니티 그룹에 가입 후 다시 시도해 주세요.',
         variant: 'destructive',
       })
 
@@ -507,6 +507,13 @@ useEffect(() => {
             </kbd>{' '}
             버튼을 눌러 주세요.
           </p>
+          <p className='text-sm text-gray-600'>
+          동영상 파일은 최대 256MB , 사진 파일은 최대 32MB 업로드 가능합니다.
+          </p>
+          <p className='text-sm text-gray-600'>
+  
+          </p>
+
         </div>
       </form>
 

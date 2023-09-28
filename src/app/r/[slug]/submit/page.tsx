@@ -80,8 +80,8 @@ const [isSubmitted, setIsSubmitted] = useState(false);
           {/* heading */}
           <div className='border-b border-gray-200 pb-5'>
             <div className='-ml-2 -mt-2 flex flex-wrap items-baseline'>
-              <h3 className='ml-2 mt-2 text-base font-semibold leading-6 text-gray-900'>
-                Create Post
+              <h3 className='ml-5 mt-5 text-base font-semibold leading-6 text-gray-900'>
+            게시물 만들기
               </h3>
               <p className='ml-2 mt-1 truncate text-sm text-gray-500'>
                 {subredditName ? ` [ ${subredditName} ] ` : ''}
@@ -92,10 +92,10 @@ const [isSubmitted, setIsSubmitted] = useState(false);
           {/* form */}
           <Editor subredditId={subredditId || ''} editThumbnail={undefined} />
 
-          <div className='w-full flex justify-end bg-blue-500  mb-4'>
+          <div className='w-full flex justify-end bg-blue-500  mb-2 '>
             <Button 
               type='submit' 
-              className='w-full  text-white' 
+              className='w-full  text-white ' 
               form='subreddit-post-form' 
               onClick={handlePost}
               disabled={isLoading} // 로딩 중일 때 버튼 비활성화

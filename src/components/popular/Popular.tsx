@@ -12,7 +12,7 @@ const PopularFeed = async () => {
   const posts = await db.post.findMany({
     where: {
       vote_Sum: {
-        gte: 1, // "gte" stands for "greater than or equal to". It will only fetch posts with vote_Sum 1 or more.
+        gte: 10, // "gte" stands for "greater than or equal to". It will only fetch posts with vote_Sum 1 or more.
       },
     },
     orderBy: {

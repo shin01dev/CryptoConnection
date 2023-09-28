@@ -16,7 +16,7 @@ enum VoteType {
   DOWN
 }
 model Account {
-  crypto_currency   String? @default("0")
+  crypto_currency   String? @default("10")
   id                String  @id @default(cuid())
   userId            String   @default(cuid()) @unique
   type              String

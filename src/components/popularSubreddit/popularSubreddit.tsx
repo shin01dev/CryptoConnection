@@ -25,7 +25,7 @@ const PopularSubredditFeed = async ({ slug }: { slug: string }) => {
         },
         {
           vote_Sum: {
-            gte: 1, // 'gt'는 'greater than'의 약자로, vote_Sum이 1보다 큰 경우만 검색합니다.
+            gte: 10, // 'gt'는 'greater than'의 약자로, vote_Sum이 1보다 큰 경우만 검색합니다.
           },
         },
       ],

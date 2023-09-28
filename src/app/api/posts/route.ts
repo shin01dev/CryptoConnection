@@ -39,19 +39,36 @@ export async function GET(req: Request) {
       })
 
     let whereClause = {}
+
+    
     if (subredditName) {
       whereClause = {
-        subreddit: {
-          name: subredditName,
-        },
-      }
+        AND: [
+          {
+            subreddit: {
+              name: subredditName,
+            },
+          },
+          {
+            NOT: {
+              subreddit: {
+                name: encodeURIComponent("토큰 후원"),
+              },
+            },
+          },
+        ],
+      };
+      
     } else if (session) {
       whereClause = {
         subreddit: {
           id: {
             in: followedCommunitiesIds,
           },
+          
         },
+        
+        
       }
     }
 
@@ -68,6 +85,7 @@ export async function GET(req: Request) {
         comments: true,
       },
       where: whereClause,
+      
     })
 
     return new Response(JSON.stringify(posts))

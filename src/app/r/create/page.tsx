@@ -28,16 +28,16 @@ const Page = () => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           return toast({
-            title: 'Subreddit already exists.',
-            description: 'Please choose a different name.',
+            title: '커뮤니티가 이미 존재 합니다.',
+            description: '다른 이름을 사용해 주세요.',
             variant: 'destructive',
           })
         }
 
         if (err.response?.status === 422) {
           return toast({
-            title: 'Invalid subreddit name.',
-            description: 'Please choose a name between 3 and 21 letters.',
+            title: '실패.',
+            description: '1글자 이상 20글자 이하로 이름을 설정해 주세요.',
             variant: 'destructive',
           })
         }
@@ -48,8 +48,8 @@ const Page = () => {
       }
 
       toast({
-        title: 'There was an error.',
-        description: 'Could not create subreddit.',
+        title: '실패.',
+        description: '커뮤니티 생성 실패.',
         variant: 'destructive',
       })
     },

@@ -16,6 +16,8 @@ import { format } from 'date-fns'
 import Link from 'next/link'
 import { BASE_URL } from '@/components/BASE_URL'
 import SubscribeLeaveToggle from '@/components/SubscribeLeaveToggle'
+import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 interface SubRedditPostPageProps {
   params: {
@@ -124,6 +126,7 @@ const memberCount = await db.subscription.count({
 
 
 
+  const formattedTime = formatDistanceToNow(new Date(post?.createdAt ?? cachedPost.createdAt), { addSuffix: true, locale: ko });
 
 
   return (
@@ -133,9 +136,9 @@ const memberCount = await db.subscription.count({
         {/* 포스트 상세 가로 길이 */}
         <div className="lg:ml-20 ml-2 mr-2  justify-end sm:w-4/5 sm:flex-1 sm:bg-white sm:p-4 sm:rounded-sm sm:max-w-[100%]">
           <p className="max-h-40 mt-1 truncate text-xs text-gray-500 flex items-center">
-            작성자/{post?.author.username ?? cachedPost.authorUsername}
+            {post?.author.username ?? cachedPost.authorUsername}
             {" | "}
-            {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
+            <span className="truncate ml-1">{formattedTime}</span>
             {post?.donateCoin && post?.donateCoin > "0" && (
               <span className="flex items-center ml-2">
                 <img src={"/favicon.ico"} alt="Donate Image" width="20" height="20" />

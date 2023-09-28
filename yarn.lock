@@ -1562,10 +1562,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hookform/resolvers@^3.1.0":
-  version "3.1.1"
-  resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-3.1.1.tgz"
-  integrity sha512-tS16bAUkqjITNSvbJuO1x7MXbn7Oe8ZziDTJdA9mMvsoYthnOOiznOTGBYwbdlYBgU+tgpI/BtTU3paRbCuSlg==
+"@hookform/resolvers@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-3.3.1.tgz"
+  integrity sha512-K7KCKRKjymxIB90nHDQ7b9nli474ru99ZbqxiqDAWYsYhOsU3/4qLxW91y+1n04ic13ajjZ66L3aXbNef8PELQ==
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.10"

@@ -41,9 +41,9 @@ async function awardTokens(post: { author: { id: string; }; id: string; subreddi
   }
 
   if (votesAmt === 10) {
-    tokenAmountToGive = 5;
-  } else if (votesAmt == 50) {
     tokenAmountToGive = 30;
+  } else if (votesAmt == 50) {
+    tokenAmountToGive = 80;
   }
 
   if (tokenAmountToGive > 0) {

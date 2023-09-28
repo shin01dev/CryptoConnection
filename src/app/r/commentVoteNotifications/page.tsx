@@ -215,14 +215,14 @@ useEffect(() => {
       }
     } catch (error) {
       console.error('There was an error fetching the data:', error);
+    } finally {
+      setLoading(false); // 여기에 추가. API 호출이 끝나면 항상 loading을 false로 설정.
     }
   }
 
   fetchVotesByUser();
-  
+
 }, []);
-
-
 
 
 
