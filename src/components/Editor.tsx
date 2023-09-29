@@ -21,8 +21,7 @@ import "@uploadthing/react/styles.css";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
-import ImageCompressor from 'image-compressor.js';
-import CustomVideoRenderer from './renderers/CustomVideoRenderer'
+
 
 import '@/styles/editor.css'
 import { encode } from 'punycode'
@@ -151,7 +150,6 @@ useEffect(() => {
     const renderers = {
     image: CustomImageRenderer,
     code: CustomCodeRenderer,
-    video: CustomVideoRenderer, 
   }
 
   const style = {
@@ -263,19 +261,15 @@ useEffect(() => {
     const LinkTool = (await import('@editorjs/link')).default
     const InlineCode = (await import('@editorjs/inline-code')).default
     const ImageTool = (await import('@editorjs/image')).default
-    const videoTool = (await import('@weekwood/editorjs-video')).default
-
 
     if (!ref.current) {
       const editor = new EditorJS({
         holder: 'editor',
         onReady() {
           ref.current = editor
-          
         },
         placeholder: '여기에 글을 작성 하세요 !',
         inlineToolbar: true,
-        
 
 
 
@@ -337,7 +331,7 @@ useEffect(() => {
           embed: Embed,
 
       video: {
-  class: videoTool,
+  class: VideoTool,
   config: {
     uploader: {
       // video 파일 업로드 로직
@@ -368,7 +362,6 @@ useEffect(() => {
     player: {
       controls: true,
       autoplay: false
-   
     }
   }
 },
@@ -540,8 +533,6 @@ useEffect(() => {
   />
       {imageUrl && <img src={imageUrl} alt="Uploaded file" />}
 </main>
-
-
 <div>
 
 {coinNumber && coinNumber >= 1 ? (
