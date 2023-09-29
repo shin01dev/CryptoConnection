@@ -13,8 +13,7 @@ import PostFeed from '@/components/PostFeed'
 import { toast } from '@/hooks/use-toast'
 import axios, { AxiosError } from 'axios'
 import { SubredditSubscriptionValidator } from '@/lib/validators/subreddit'
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
+
 import { useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 
@@ -92,15 +91,15 @@ async function fetchUserVotes() {
     }
 
     const result = await response.json();
-    if (result.length === 0) setHasMore(false); // 응답 데이터가 없으면 더 가져올 데이터가 없다고 판단합니다.
+    if (result.postsVotes.length === 0) setHasMore(false); // 수정된 부분
 
     return result;
   } catch (error) {
     console.error('오류 발생:', error);
     throw error;
-    
   }
 }
+
 
     
       async function fetchUserAndPostInfo(userId: any, postId: any) {
@@ -130,32 +129,47 @@ async function fetchUserVotes() {
         }
       }
 
-
       useEffect(() => {
+        console.log(" 실행 2")
         setLoading(true);
       
         fetchUserVotes()
           .then(async (data) => {
             if (data && data.postsVotes.length > 0) {
               const promises = data.postsVotes.map(async (vote: any) => {
-                // ... (기존 코드 유지)
+                try {
+                  const info = await fetchUserAndPostInfo(vote.userId, vote.postId);
+                  return {
+                    message: `"${info.user.username}"님이 회원님의 (${decodeURIComponent(info.post.subreddit.name)})"${info.post.title}" 게시물을 좋아합니다`,
+                    link: `/r/${decodeURIComponent(info.post.subreddit.name)}/post/${vote.postId}`,
+                    userImage: vote.user.image,
+                    userId: vote.userId,
+                    createdAt: vote.createdAt
+                  };
+                } catch (error) {
+                  console.error('사용자와 게시물 정보 요청 중 오류 발생:', error);
+                  return null; // In case of an error
+                }
               });
       
               const newMessages = await Promise.all(promises);
               const filteredNewMessages = newMessages.filter(Boolean);
-      
+              
               setPostNotifications(prevNotifications => [...prevNotifications, ...filteredNewMessages]);
-            } else {
-              setHasMore(false); // 응답 데이터가 없으면 더 가져올 데이터가 없다고 판단합니다.
             }
-            setLoading(false); // 이 부분을 수정하여 빈 배열일 때도 로딩 상태를 false로 설정
           })
           .catch((error) => {
             console.error('투표 정보 요청 중 오류 발생:', error);
-            setLoading(false);
+          })
+          .finally(() => {
+            setLoading(false); // 모든 경우에 로딩 상태를 해제
           });
       }, []);
       
+
+
+
+
 
       const sortedPostNotifications = [...postNotifications].sort((a, b) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -190,7 +204,7 @@ async function fetchUserVotes() {
             ) : (
               sortedPostNotifications.map((notification, idx) => (
                 <div key={idx} className="flex items-center mb-4 p-2 bg-white rounded-lg shadow">
-                    <a href={`/r/myFeed/${notification.userId}`}>
+                    <Link href={`/r/myFeed/${notification.userId}`}>
               
                             <img
                                 src={notification.userImage || "https://via.placeholder.com/40"}
@@ -198,7 +212,7 @@ async function fetchUserVotes() {
                                 className="w-12 h-12 rounded-full cursor-pointer mr-4"
                             />
                         
-                    </a>
+                    </Link>
                     <div className="text-gray-700 hover:text-blue-600 flex-1">
                         <Link href={notification.link}>
                       

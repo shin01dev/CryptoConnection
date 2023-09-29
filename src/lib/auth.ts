@@ -68,4 +68,55 @@ export const authOptions: NextAuthOptions = {
   },
 }
 
+
+
+
 export const getAuthSession = () => getServerSession(authOptions)
+
+
+// // 새로운 비동기 함수를 추가합니다.
+// export async function POST(req: any) {
+//   try {
+//     // 현재 세션에서 사용자 정보를 가져옵니다.
+//     const session = await getAuthSession();
+//     if (!session || !session.user || !session.user.id) {
+//       return new Response(JSON.stringify({ message: '인증되지 않은 사용자입니다.' }), { status: 401 });
+//     }
+
+//     const subredditId = 'cln2rd2hw0006squwqb8ox0sf';
+
+//     const subscriptionExists = await db.subscription.findFirst({
+//       where: {
+//         subredditId,
+//         userId: session.user.id,
+//       },
+//     });
+
+//     if (subscriptionExists) {
+//       return new Response("You've already subscribed to this subreddit", {
+//         status: 400,
+//       });
+//     }
+
+//     // create subreddit and associate it with the user
+//     await db.subscription.create({
+//       data: {
+//         subredditId,
+//         userId: session.user.id,
+//       },
+//     });
+
+//     const notificationOnCount = await db.giveCryptoUser.count({
+//       where: {
+//         userId: session.user.id,
+//         notification: "on",
+//       },
+//     });
+
+//     return new Response(JSON.stringify({ notificationOnCount }), { status: 200 });
+
+//   } catch (error) {
+//     console.error(error);
+//     return new Response(JSON.stringify({ message: '서버 내부 오류가 발생했습니다.' }), { status: 500 });
+//   }
+// }

@@ -4,8 +4,7 @@ const nextConfig = {
     domains: ['uploadthing.com', 'lh3.googleusercontent.com'],
   },
   experimental: {
-    appDir: true,
-
+    // appDir 프로퍼티를 제거했습니다.
   }
 }
 

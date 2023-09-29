@@ -10,8 +10,7 @@ import PostFeed from '@/components/PostFeed'
 import { toast } from '@/hooks/use-toast'
 import axios, { AxiosError } from 'axios'
 import { SubredditSubscriptionValidator } from '@/lib/validators/subreddit'
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
+
 import { useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 

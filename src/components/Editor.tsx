@@ -125,10 +125,10 @@ async function subscribeToSubreddit(subredditId: string) {
 
 useEffect(() => {
   if (window.location.href.includes('donate')) {
-    subscribeToSubreddit('cllz0gqww00043n6w9da8k6vb');
+    subscribeToSubreddit('cln2rd2hw0006squwqb8ox0sf');
   }
 
-  return () => {};
+  // return () => {};
 }, []);
 
   const {
