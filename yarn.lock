@@ -5093,6 +5093,11 @@ bluebird@3.7.2:
   resolved "https://registry.npmjs.org/bluebird/-/bluebird-3.7.2.tgz"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
+blueimp-canvas-to-blob@^3.14.0:
+  version "3.29.0"
+  resolved "https://registry.npmjs.org/blueimp-canvas-to-blob/-/blueimp-canvas-to-blob-3.29.0.tgz"
+  integrity sha512-0pcSSGxC0QxT+yVkivxIqW0Y4VlO2XSDPofBAqoJ1qJxgH9eiUDLv50Rixij2cDuEfx4M6DpD9UGZpRhT5Q8qg==
+
 bn.js@^4.0.0:
   version "4.12.0"
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-4.12.0.tgz"
@@ -5197,6 +5202,13 @@ brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz"
   integrity sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==
+
+browser-image-compression@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/browser-image-compression/-/browser-image-compression-2.0.2.tgz"
+  integrity sha512-pBLlQyUf6yB8SmmngrcOw3EoS4RpQ1BcylI3T9Yqn7+4nrQTXJD4sJDe5ODnJdrvNMaio5OicFo75rDyJD2Ucw==
+  dependencies:
+    uzip "0.20201231.0"
 
 browserify-aes@^1.0.0, browserify-aes@^1.0.4, browserify-aes@^1.2.0:
   version "1.2.0"
@@ -7745,6 +7757,14 @@ ignore@^5.2.0, ignore@^5.2.4:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.4.tgz"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+image-compressor.js@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/image-compressor.js/-/image-compressor.js-1.1.4.tgz"
+  integrity sha512-DF1YFSw+m6FqpXsleD4+q9eu/wFFkm8sHuYhgYy5GWFVencXeuB1/UqC12xz+dCZooPetf5LIb8JOGkgEWmlcg==
+  dependencies:
+    blueimp-canvas-to-blob "^3.14.0"
+    is-blob "^1.0.0"
+
 image-size@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/image-size/-/image-size-1.0.2.tgz"
@@ -7923,6 +7943,11 @@ is-binary-path@~2.1.0:
   integrity sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==
   dependencies:
     binary-extensions "^2.0.0"
+
+is-blob@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/is-blob/-/is-blob-1.0.0.tgz"
+  integrity sha512-QIZDHQZpRfMEZwSTD7egdNZS7H/awVW9FZ3yJv+gg1z8d8GPXEs76QWL67fZs2BoBqp2dGtamTJpEYFJHmD73g==
 
 is-boolean-object@^1.1.0:
   version "1.1.2"
@@ -10806,6 +10831,11 @@ react-icons@^4.11.0:
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.11.0.tgz"
   integrity sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==
 
+react-image-file-resizer@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.npmjs.org/react-image-file-resizer/-/react-image-file-resizer-0.4.8.tgz"
+  integrity sha512-Ue7CfKnSlsfJ//SKzxNMz8avDgDSpWQDOnTKOp/GNRFJv4dO9L5YGHNEnj40peWkXXAK2OK0eRIoXhOYpUzUTQ==
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
@@ -12770,6 +12800,11 @@ uuid@8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.0.0.tgz"
   integrity sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw==
+
+uzip@0.20201231.0:
+  version "0.20201231.0"
+  resolved "https://registry.npmjs.org/uzip/-/uzip-0.20201231.0.tgz"
+  integrity sha512-OZeJfZP+R0z9D6TmBgLq2LHzSSptGMGDGigGiEe0pr8UBe/7fdflgHlHBNDASTXB5jnFuxHpNaJywSg8YFeGng==
 
 validate-npm-package-license@^3.0.4:
   version "3.0.4"

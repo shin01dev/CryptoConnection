@@ -21,7 +21,8 @@ import "@uploadthing/react/styles.css";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
-
+import ImageCompressor from 'image-compressor.js';
+import CustomVideoRenderer from './renderers/CustomVideoRenderer'
 
 import '@/styles/editor.css'
 import { encode } from 'punycode'
@@ -150,6 +151,7 @@ useEffect(() => {
     const renderers = {
     image: CustomImageRenderer,
     code: CustomCodeRenderer,
+    // video:CustomVideoRenderer
   }
 
   const style = {
@@ -218,16 +220,19 @@ useEffect(() => {
    
       if (pathname.includes('donate')) {
         // If it does, modify the newPathname to include "/donate" at the end
-        window.location.href = `/r/donation/${secondLastSegment}`;
-
+        if (typeof window !== 'undefined') {
+          window.location.href = `/r/donation/${secondLastSegment}`;
+        }
+        
         // router.push(`/r/donation/${secondLastSegment}`)
 
         // router.refresh()
         
   
       } else {
-        window.location.href = newPathname;
-        // router.push(newPathname)
+        if (typeof window !== 'undefined') {
+          window.location.href = newPathname;
+        }        // router.push(newPathname)
         // router.refresh()
 
       }
@@ -400,6 +405,7 @@ useEffect(() => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMounted(true)
+      
     }
   }, [])
 
@@ -529,6 +535,8 @@ useEffect(() => {
   />
       {imageUrl && <img src={imageUrl} alt="Uploaded file" />}
 </main>
+
+
 <div>
 
 {coinNumber && coinNumber >= 1 ? (

@@ -130,7 +130,6 @@ async function fetchUserVotes() {
       }
 
       useEffect(() => {
-        console.log(" 실행 2")
         setLoading(true);
       
         fetchUserVotes()
