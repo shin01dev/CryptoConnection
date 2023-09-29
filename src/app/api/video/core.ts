@@ -17,8 +17,8 @@ export const ourFileRouter = {
  
   // Takes a 4 2mb images and/or 1 256mb video
   mediaPost: f({
-    image: { maxFileSize: "2MB", maxFileCount: 4 },
-    video: { maxFileSize: "256MB", maxFileCount: 1 },
+    image: { maxFileSize: "2MB", maxFileCount: 10 },
+    video: { maxFileSize: "256MB", maxFileCount: 10 },
   })
     .onUploadComplete((data) => console.log("file", data)),
 } satisfies FileRouter;
