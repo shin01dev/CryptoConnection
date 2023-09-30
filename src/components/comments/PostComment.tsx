@@ -19,6 +19,8 @@ import { useSession } from 'next-auth/react'
 import { getAuthSession } from '@/lib/auth'
 import Link from 'next/link'
 import { db } from '@/lib/db'
+import ko from 'date-fns/locale/ko';
+import { formatDistanceToNow } from 'date-fns';
 
 type ExtendedComment = Comment & {
   votes: CommentVote[]
@@ -40,7 +42,11 @@ const PostComment: FC<PostCommentProps> = ({ comment, votesAmt, currentVote, pos
   const [input, setInput] = useState<string>(`@${comment.author.username} `)
   const [author, setAuthor] = useState()
   const [authorId, setAuthorId] = useState("");
-
+  let formattedTime = formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true, locale: ko });
+  formattedTime = formattedTime.replace('약 ', ''); // "약 " 제거
+  
+  
+  
   const router = useRouter()
   useOnClickOutside(commentRef, () => {
     setIsReplying(false)
@@ -141,7 +147,7 @@ useEffect(() => {
 
 
           <p className='max-h-40 truncate text-xs text-zinc-500'>
-            {formatTimeToNow(new Date(comment.createdAt))}
+            {formattedTime}
           </p>
           {comment.donationInput ? (
   <>
