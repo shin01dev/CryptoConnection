@@ -1,3 +1,5 @@
+
+
 .dark .ce-block--selected .ce-block__content,
 .dark .ce-inline-toolbar,
 .dark .codex-editor--narrow .ce-toolbox,
@@ -33,6 +35,7 @@
   color: inherit;
 }
 
+
 .dark ::selection {
   background: theme('colors.accent.DEFAULT');
 }
@@ -62,4 +65,17 @@
 
 .codex-editor__redactor {
   padding-bottom: 0 !important;
+}
+
+
+/* 부모 요소의 너비에 맞게 동영상을 최적화 */
+.video-tool__video > div, div[style="width: 640px; height: 360px;"] {
+  width: 100% !important;  /* 너비를 100%로 설정 */
+  height: auto !important; /* 높이를 auto로 설정 */
+}
+
+/* 비디오 태그의 크기도 부모 요소의 크기에 맞게 조절 */
+video {
+  width: 100% !important;
+  height: auto !important;
 }

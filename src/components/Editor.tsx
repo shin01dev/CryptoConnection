@@ -362,7 +362,10 @@ useEffect(() => {
     player: {
       controls: true,
       autoplay: false
+
+      
     }
+    
   }
 },
 
