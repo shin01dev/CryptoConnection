@@ -105,15 +105,16 @@ const SubPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session ,d
                 </span>
               </a>
             ) : (
-              <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName}`}>
+              <a href={(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? BASE_URL : `/r/${decodedSubredditName.replace(/\//g, '%2F')}`}>
               <span className={(currentURL !== `${BASE_URL}/r/popular` && currentURL !== `${BASE_URL}/`) ? "text-sm font-bold text-white hover:text-gray-200 bg-purple-400" : "text-sm font-bold text-white hover:text-gray-200"}>
-                {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
+                  {(currentURL === `${BASE_URL}/r/popular` || currentURL === `${BASE_URL}/`) ? '커뮤니티 글' : `최신 글`}
               </span>
-            </a>
+          </a>
+          
             )}
           </span>
           <span className='cursor-pointer p-2 rounded-md transition hover:bg-purple-400'>
-            <a href={(currentURL === `${BASE_URL}/r/popular`) ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName}/popular`}>
+          <a href={currentURL === `${BASE_URL}/r/popular` ? `${BASE_URL}/r/popular` : `/r/${decodedSubredditName.replace(/\//g, '%2F')}/popular`}>
               <span className="text-sm font-bold text-white hover:text-gray-200">
                 인기 글
               </span>

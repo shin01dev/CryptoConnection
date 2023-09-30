@@ -226,7 +226,7 @@ const memberCount = await db.subscription.count({
             variant: 'outline',
             className: 'w-full mb-6',
           })}
-          href={`/r/${decodeURIComponent(subreddit.name)}/submit`}
+          href={`/r/${subreddit.name.replace(/\//g, '%2F')}/submit`}
           >
          게시물 만들기
         </a>
