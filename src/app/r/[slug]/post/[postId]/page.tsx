@@ -126,7 +126,8 @@ const memberCount = await db.subscription.count({
 
 
 
-  const formattedTime = formatDistanceToNow(new Date(post?.createdAt ?? cachedPost.createdAt), { addSuffix: true, locale: ko });
+  let formattedTime = formatDistanceToNow(new Date(post?.createdAt ?? cachedPost.createdAt), { addSuffix: true, locale: ko });
+  formattedTime = formattedTime.replace('약 ', ''); // "약 " 제거
 
 
   return (

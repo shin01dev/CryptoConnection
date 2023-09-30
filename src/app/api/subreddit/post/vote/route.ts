@@ -16,9 +16,9 @@ async function awardTokens(post: { author: { id: string; }; id: string; subreddi
   const currentDate = new Date();
   const authorId = post.author.id;
 
-  if (votesAmt === 1) {
+  if (votesAmt === 10) {
     tokenLevel = '1';
-  } else if (votesAmt == 2) {
+  } else if (votesAmt == 50) {
     tokenLevel = '2';
   }
 
@@ -40,9 +40,9 @@ async function awardTokens(post: { author: { id: string; }; id: string; subreddi
     return; // 해당 레벨의 레코드가 이미 있다면, 함수를 종료합니다.
   }
 
-  if (votesAmt === 1) {
+  if (votesAmt === 10) {
     tokenAmountToGive = 30;
-  } else if (votesAmt == 2) {
+  } else if (votesAmt == 50) {
     tokenAmountToGive = 80;
   }
 

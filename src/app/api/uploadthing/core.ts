@@ -17,13 +17,13 @@ export const ourFileRouter = {
 
 
     ThumbnailPost: f({
-      image: { maxFileSize: "32MB", maxFileCount: 1 },
+      image: { maxFileSize: "16MB", maxFileCount: 1 },
     })
       .onUploadComplete((data) => console.log("file", data)),
   // Takes a 4 2mb images and/or 1 256mb video
   mediaPost: f({
-    image: { maxFileSize: "32MB", maxFileCount: 4 },
-    video: { maxFileSize: "256MB", maxFileCount: 1 },
+    image: { maxFileSize: "16MB", maxFileCount: 4 },
+    video: { maxFileSize: "64MB", maxFileCount: 1 },
   })
     .onUploadComplete((data) => console.log("file", data)),
 } satisfies FileRouter;

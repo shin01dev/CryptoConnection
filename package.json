@@ -52,6 +52,7 @@
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
     "editorjs-react-renderer": "^3.5.1",
     "editorjs-video": "^1.1.0",
     "eslint": "8.41.0",

@@ -18,6 +18,8 @@ import {
 } from '@/components/ui/DropdownMenu';
 import axios from 'axios';
 import { useLayoutEffect } from 'react';
+import ko from 'date-fns/locale/ko';
+import { formatDistanceToNow } from 'date-fns';
 
 type PartialVote = Pick<Vote, 'type'>;
 
@@ -67,6 +69,8 @@ const saveScrollPosition = (url: any) => {
 const saveCurrentPath = () => {
   sessionStorage.setItem('previousPath', window.location.pathname);
 }
+let formattedTime = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: ko });
+formattedTime = formattedTime.replace('약 ', ''); // "약 " 제거
 
 
 
@@ -261,7 +265,7 @@ return (
               <span className="cursor-pointer hover:underline">
                 / {post.author.username}
                 <span> · </span>
-                <span className="truncate">{formatTimeToNow(new Date(post.createdAt))}</span>
+                <span className="truncate">{formattedTime}</span>
                 
               </span>
               
