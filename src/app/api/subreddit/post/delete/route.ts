@@ -1,5 +1,3 @@
-// src/app/api/subreddit/post/delete
-
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { PostValidator } from '@/lib/validators/post';
@@ -8,7 +6,6 @@ import { z } from 'zod';
 const postDeleteSchema = z.object({
   postId: z.string(),
 });
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -33,6 +30,29 @@ export async function POST(req: Request) {
       return new Response('Post not found or unauthorized', { status: 404 });
     }
 
+    // Fetch all comments related to the post.
+    const comments = await db.comment.findMany({
+      where: {
+        postId: postId,
+      },
+    });
+
+    // Delete all replies for each comment.
+    for (const comment of comments) {
+      await db.comment.deleteMany({
+        where: {
+          replyToId: comment.id,
+        },
+      });
+    }
+
+    // Delete all comments related to the post.
+    await db.comment.deleteMany({
+      where: {
+        postId: postId,
+      },
+    });
+
     // Delete the post.
     await db.post.delete({
       where: {
@@ -40,9 +60,9 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response('Post deleted successfully');
+    return new Response('Post and related comments deleted successfully');
   } catch (error) {
-    console.error('Error while deleting post:', error);
-    return new Response('Could not delete the post at this time. Please try later', { status: 500 });
+    console.error('Error while deleting post and related comments:', error);
+    return new Response('Could not delete the post and comments at this time. Please try later', { status: 500 });
   }
 }
