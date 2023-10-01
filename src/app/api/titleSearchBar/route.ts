@@ -19,6 +19,5 @@ export async function GET(req: Request) {
     },
     take: 20,
   });
-
   return new Response(JSON.stringify(results));
 }

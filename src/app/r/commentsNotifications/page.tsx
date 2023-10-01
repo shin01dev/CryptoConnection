@@ -184,7 +184,7 @@ export default function Home(props: any) {
                         if (comment.replyTo) { 
                             displayMessage = (
                                 <>
-                                    <Link href={`/r/${decodeURIComponent(userDetails[comment.authorId]?.subredditName)}/post/${comment.postId}`}>
+<Link href={`/r/${userDetails[comment.authorId]?.subredditName.replace(/\//g, '%2F')}/post/${comment.postId}`}>
                     <span>&quot;{userDetails[comment.authorId]?.username}&quot;님이 </span>
                 ({decodeURIComponent(userDetails[comment.authorId]?.subredditName)})
                 &quot;{comment.replyTo.text}&quot;
@@ -195,7 +195,7 @@ export default function Home(props: any) {
                         } else if (comment.post) { 
                             displayMessage = (
                                 <>
-                                   <Link href={`/r/${decodeURIComponent(userDetails[comment.authorId]?.subredditName)}/post/${comment.postId}`}>
+<Link href={`/r/${userDetails[comment.authorId]?.subredditName.replace(/\//g, '%2F')}/post/${comment.postId}`}>
                     <span>&quot;{userDetails[comment.authorId]?.username}&quot; 님이 회원님의 </span>
                   ({decodeURIComponent(userDetails[comment.authorId]?.subredditName)})
                   &quot;{comment.post.title}&quot;

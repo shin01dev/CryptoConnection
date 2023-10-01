@@ -140,7 +140,7 @@ async function fetchUserVotes() {
                   const info = await fetchUserAndPostInfo(vote.userId, vote.postId);
                   return {
                     message: `"${info.user.username}"님이 회원님의 (${decodeURIComponent(info.post.subreddit.name)})"${info.post.title}" 게시물을 좋아합니다`,
-                    link: `/r/${decodeURIComponent(info.post.subreddit.name)}/post/${vote.postId}`,
+                    link: `/r/${info.post.subreddit.name.replace(/\//g, '%2F')}/post/${vote.postId}`,
                     userImage: vote.user.image,
                     userId: vote.userId,
                     createdAt: vote.createdAt

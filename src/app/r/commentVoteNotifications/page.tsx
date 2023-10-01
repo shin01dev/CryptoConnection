@@ -201,7 +201,7 @@ useEffect(() => {
           return {
             userId: vote.userId,
             userImage: vote.user.image,
-            link: `/r/${decodeURIComponent(vote.comment.post.subreddit.name)}/post/${vote.comment.postId}`,
+            link: `/r/${vote.comment.post.subreddit.name.replace(/\//g, '%2F')}/post/${vote.comment.postId}`,
             message: `"${vote.user.username}"님이 회원님의 (${decodeURIComponent(vote.comment.post.subreddit.name)}) "${vote.comment.text}" 댓글을 좋아합니다`,
             createdAt: vote.createdAt // createdAt 속성 추가
           };
