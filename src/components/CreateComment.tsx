@@ -64,10 +64,9 @@ async function getCoinNumber() {
   const firstObject = response.data[0];
   setCoinNumber(firstObject.crypto_currency);  
 }
-// useEffect(() => {
-//   getCoinNumber();
-//   console.log(coinNumber)
-// })
+useEffect(() => {
+  getCoinNumber();
+})
 
 
 
