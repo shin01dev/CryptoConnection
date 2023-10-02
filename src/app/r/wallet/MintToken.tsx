@@ -133,7 +133,7 @@ useEffect(() => {
       console.error("Connection is not initialized.");
       return;
   }   
-  const amountPerMint = BigInt(10000000000) * BigInt(decimal);  // 100억 * 10의 9승
+  const amountPerMint = BigInt(10000000000) * BigInt(decimal);  // 100억 * 10의 7승
 
   for (let i = 0; i < 5; i++) {
       const signature = await mintTo(
@@ -187,8 +187,8 @@ async function saveUserOwnKeyData() {
   const keypair = solanaWeb3.Keypair.generate();
   const privateKeyArray = Array.from(keypair.secretKey);
 
-  console.log('Private Key Type:', typeof privateKeyArray); // 출력: "Private Key Type: object"
-  console.log('Private Key Value:', privateKeyArray); // 출력: (n) [number1, number2, ...]
+  console.log('Private Key Type:', typeof privateKeyArray); 
+  console.log('Private Key Value:', privateKeyArray); 
 
   const tokenData = {
     publicKey: keypair.publicKey.toBase58(),
@@ -583,12 +583,12 @@ return (
           <div className="">
           {coinNumber !== null ? (
       <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md  flex items-center">
-        <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> {/* 이미지 추가 */}
+        <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6" /> 
         <span className="ml-2">COT : {coinNumber}</span>
       </div>
     ) : ( 
     <div className="shadow-md p-4 bg-white rounded-md w-full max-w-md mr-4 ml-4 flex items-center">
-      <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> {/* 이미지 추가 */}
+      <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> 
       <span className="flex items-center">
     Loading... <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
   </span>
@@ -598,7 +598,7 @@ return (
   </div>
 ) : ( 
 <div className="shadow-md p-4 bg-white rounded-md flex items-center">
-  <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> {/* 이미지 추가 */}
+  <img src="/favicon.ico" alt="Coin Image" className="w-6 h-6 mr-2" /> 
   <span className="flex items-center">
     Loading... <Loader2 className='w-6 h-6 text-zinc-500 animate-spin ml-2' />
   </span>
@@ -647,27 +647,40 @@ return (
     2. 전송할 토큰 수량을 입력해 주세요.
 </label>
 
-      <input
-        type="number"
-        className="border rounded-md p-2 w-full"
-        value={transferAmount !== null ? transferAmount / decimal : ''}
-        onChange={(e) => {
-          const inputValue = e.target.value === '' ? null : Number(e.target.value) * decimal;
-          const roundedValue = inputValue !== null ? Math.floor(inputValue) : null;
-          
-          if (roundedValue !== null && roundedValue !== inputValue) {
-            setInputError(true);
-            setInputErrorMessage('입력한 값이 소수점 9자리를 초과 할 수 없습니다.');
-          } else if (coinNumber !== null && inputValue !== null && inputValue / decimal > coinNumber) {
-            setInputError(true);
-            setInputErrorMessage('입력한 값이 사용 가능한 코인 수량을 초과 할 수 없습니다.');
-          } else {
-            setTransferAmount(inputValue);
-            setInputError(false);
-            setInputErrorMessage('');
-          }
-        }}
-      />
+<input
+  type="number"
+  className="border rounded-md p-2 w-full"
+  value={transferAmount !== null ? transferAmount / decimal : ''}
+  onChange={(e) => {
+    const inputValue = e.target.value;
+
+    // Check if the input is empty and set transferAmount to null
+    if (inputValue === '') {
+      setTransferAmount(null);
+      setInputError(false);
+      setInputErrorMessage('');
+      return;
+    }
+
+    // Check if input has more than 7 decimal places
+    const decimalPart = inputValue.split('.')[1];
+    const hasMoreThan7DecimalPlaces = decimalPart && decimalPart.length > 7;
+
+    if (hasMoreThan7DecimalPlaces) {
+      setInputError(true);
+      setInputErrorMessage('입력한 값이 소수점 7자리를 초과 할 수 없습니다.');
+    } else if (coinNumber !== null && Number(inputValue) > coinNumber) {
+      setInputError(true);
+      setInputErrorMessage('입력한 값이 사용 가능한 코인 수량을 초과 할 수 없습니다.');
+    } else {
+      setTransferAmount(Number(inputValue) * decimal);
+      setInputError(false);
+      setInputErrorMessage('');
+    }
+  }}
+/>
+
+
     </div>
 
     {inputError && <div className="text-red-500 shadow-md p-4 bg-white rounded-md w-full max-w-md">{inputErrorMessage}</div>}

@@ -104,24 +104,36 @@ useEffect(() => {
       <label htmlFor='numberInput' className='mr-1 mt-2'>토큰 후원</label>
       <img src="/favicon.ico" alt="토큰 이미지" className='mr-2 w-5 h-5 mt-2' />
       <input
-        id='numberInput'
-        type='number'
-        style={{ paddingLeft: '3px' }} // 이 부분을 추가합니다.
-        className='w-20 h-8 mt-2 ml-1 text-sm border rounded-md border-gray-300 focus:outline-none focus:border-indigo-500'
-        value={donationInput !== null ? donationInput : ''}
-        onChange={(e) => {
-          const value = e.target.value ? Number(e.target.value) : null;
-          if (value !== null) {
-            if (value >= 1 && (coinNumber === null || value <= coinNumber)) {
-              setDonationInput(value);
-            } else if (coinNumber !== null && value > coinNumber) {
-              setDonationInput(coinNumber);
-            }
-          } else {
-            setDonationInput(null);
-          }
-        }}
-      />
+  id='numberInput'
+  type='number'
+  style={{ paddingLeft: '3px' }} // 이 부분을 추가합니다.
+  className='w-20 h-8 mt-2 ml-1 text-sm border rounded-md border-gray-300 focus:outline-none focus:border-indigo-500'
+  value={donationInput !== null ? donationInput : ''}
+  onChange={(e) => {
+    const inputValue = e.target.value;
+
+    // Check if input has more than 7 decimal places
+    const decimalPart = inputValue.split('.')[1];
+    const hasMoreThan7DecimalPlaces = decimalPart && decimalPart.length > 7;
+
+    if (hasMoreThan7DecimalPlaces) {
+      // Don't update donationInput and optionally provide user feedback
+      return;
+    }
+
+    const value = inputValue ? Number(inputValue) : null;
+    if (value !== null) {
+      if (value >= 1 && (coinNumber === null || value <= coinNumber)) {
+        setDonationInput(value);
+      } else if (coinNumber !== null && value > coinNumber) {
+        setDonationInput(coinNumber);
+      }
+    } else {
+      setDonationInput(null);
+    }
+  }}
+/>
+
     </>
   )}
 </div>
