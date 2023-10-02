@@ -10,12 +10,15 @@ export async function GET(req: Request) {
   const results = await db.post.findMany({
     where: {
       title: {
-        contains: encodedQuery,  // Modify this line to use contains instead of startsWith
+        contains: encodedQuery,  // Use contains instead of startsWith
       },
     },
     include: {
       subreddit: true, // Include the related subreddit information
       _count: true,
+    },
+    orderBy: {
+      createdAt: 'desc'  // Order by createdAt in descending order (most recent first)
     },
     take: 20,
   });
