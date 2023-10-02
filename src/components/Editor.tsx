@@ -21,6 +21,7 @@ import "@uploadthing/react/styles.css";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
+import { v4 as uuidv4 } from 'uuid';
 
 
 import '@/styles/editor.css'
@@ -469,6 +470,7 @@ useEffect(() => {
    const handleUploadComplete = async (res: any) => {
     if(res) {
       setImageUrl(res[0].fileUrl);
+      console.log(JSON.stringify(res[0])+"QQQ")
       const result = await fetch(`/api/subreddit/post/create`, {  // API 엔드포인트가 실제로 존재하는지 확인해야 합니다
         method: 'POST',
         headers: {
