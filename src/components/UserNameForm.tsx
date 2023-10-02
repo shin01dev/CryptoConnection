@@ -54,22 +54,22 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           return toast({
-            title: 'Username already taken.',
-            description: 'Please choose another username.',
+            title: '이미 사용중인 이름 입니다.',
+            description: '다른 유저 이름을 사용해 주세요.',
             variant: 'destructive',
           })
         }
       }
 
       return toast({
-        title: 'Something went wrong.',
-        description: 'Your username was not updated. Please try again.',
+        title: '실패.',
+        description: '다시 시도해 주세요.',
         variant: 'destructive',
       })
     },
     onSuccess: () => {
       toast({
-        description: 'Your username has been updated.',
+        description: '이름이 성공적으롶변경되었습니다.',
       })
       router.refresh()
     },

@@ -64,16 +64,16 @@ async function getCoinNumber() {
   const firstObject = response.data[0];
   setCoinNumber(firstObject.crypto_currency);  
 }
-useEffect(() => {
-  getCoinNumber();
-  console.log(coinNumber)
-})
+// useEffect(() => {
+//   getCoinNumber();
+//   console.log(coinNumber)
+// })
 
 
 
-  useEffect(() => {
-    console.log('donationInput has changed:', donationInput);
-  }, [donationInput]); // dependency 배열에 donationInput을 추가하여 해당 상태가 변할 때마다 훅이 실행되도록 함
+  // useEffect(() => {
+  //   console.log('donationInput has changed:', donationInput);
+  // }, [donationInput]); // dependency 배열에 donationInput을 추가하여 해당 상태가 변할 때마다 훅이 실행되도록 함
   const inputClass = `
   w-20
   py-2

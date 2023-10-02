@@ -139,7 +139,7 @@ async function connectWallet() {
       privateKey: Array.from(newWallet.secretKey)
     });
     
-    console.log(`새로운 publicKey, 솔라나 먼저 충전 해주세요: ${newWallet.publicKey.toBase58()}`);
+    // console.log(`새로운 publicKey, 솔라나 먼저 충전 해주세요: ${newWallet.publicKey.toBase58()}`);
 
 
 

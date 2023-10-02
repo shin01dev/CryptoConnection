@@ -58,7 +58,7 @@ const connection = new web3.Connection('https://fragrant-cosmological-ensemble.s
   const fromWallet = Keypair.fromSeed(seedBuffer.slice(0, 32));
   // const fromWallet = Keypair.generate();
 
-    console.log(`새로운 publicKey, 솔라나 먼저 충전 해주세요: ${fromWallet.publicKey.toBase58()}`);
+    // console.log(`새로운 publicKey, 솔라나 먼저 충전 해주세요: ${fromWallet.publicKey.toBase58()}`);
 
     // Public Key to your Phantom Wallet
   let [toWallet, setToWallet] = useState<PublicKey | null>(null);

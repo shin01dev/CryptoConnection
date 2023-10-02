@@ -11,7 +11,6 @@ export async function POST(req: Request) {
     const body = await req.json()
 
     const { title, content, subredditId, thumbnail, donateCoin,donateTo} = PostValidator.parse(body);
-
     const session = await getAuthSession()
   
     if (!session?.user) {
@@ -35,7 +34,6 @@ export async function POST(req: Request) {
     const ip = req.headers.get('x-forwarded-for');
     const postKey = `${title}-${content}-${subredditId}-${thumbnail || ''}`;
     const now = Date.now();
-    // const TIME_LIMIT = 5000;
   
 
     // 현재 요청 시간 저장

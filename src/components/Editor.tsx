@@ -443,7 +443,6 @@ useEffect(() => {
       subredditId,
       postId,
       thumbnail: imageUrl,  // imageUrl 상태를 thumbnail로 추가
-      editThumbnail: imageUrl,  // imageUrl 상태를 editThumbnail로 추가
 
       donateCoin: donateCoin,
       donateTo: data.donateTo
@@ -471,6 +470,8 @@ useEffect(() => {
     if(res) {
       setImageUrl(res[0].fileUrl);
       console.log(JSON.stringify(res[0])+"QQQ")
+      console.log(res[0].fileUrl +"QQQ")
+
       const result = await fetch(`/api/subreddit/post/create`, {  // API 엔드포인트가 실제로 존재하는지 확인해야 합니다
         method: 'POST',
         headers: {
@@ -535,9 +536,12 @@ useEffect(() => {
       // Do something with the error.
       alert(`ERROR! ${error.message}`);
     }}
+    
   />
       {imageUrl && <img src={imageUrl} alt="Uploaded file" />}
 </main>
+{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}
+
 <div>
 
 {coinNumber && coinNumber >= 1 ? (
@@ -567,7 +571,6 @@ useEffect(() => {
 {warning && <p className="text-red-500 mt-2">{warning}</p>}
 
 
-{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}{/* 썸네일 */}
 
 
 
