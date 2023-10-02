@@ -178,7 +178,7 @@ useEffect(() => {
           variant='ghost'
           size='xs'>
           <MessageSquare className='h-4 w-4 mr-1.5' />
-          Reply
+          답글
         </Button>
       </div>
 
@@ -205,7 +205,7 @@ useEffect(() => {
                 tabIndex={-1}
                 variant='subtle'
                 onClick={() => setIsReplying(false)}>
-                Cancel
+                취소
               </Button>
               <Button
                 isLoading={isLoading}
@@ -217,7 +217,7 @@ useEffect(() => {
                     replyToId: comment.replyToId ?? comment.id, // default to top-level comment
                   })
                 }}>
-                Post
+                확인
               </Button>
             </div>
           </div>
