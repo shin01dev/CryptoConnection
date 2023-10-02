@@ -114,7 +114,7 @@ export default async function Home({ params }: { params: { slug: string } }) {
         href={`${BASE_URL}/r/${params.slug}/submit`}
         
       >
-        Create Post
+       게시물 만들기
       </Link>
     </>
   )
