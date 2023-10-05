@@ -11,7 +11,7 @@ const MyDonationFeed = async ({ slug }: { slug: string }) => {
   // 현재 경로를 가져오기
 
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound();
+  // if (!session) return notFound();
 
   const posts = await db.post.findMany({
     where: {
@@ -46,7 +46,7 @@ const MyDonationFeed = async ({ slug }: { slug: string }) => {
 const existingFollow = await db.follow.findUnique({
   where: {
     followerId_followingId: {
-      followerId: session.user.id,
+      followerId: session?.user.id || 'defaultUserId',
       followingId: slug,
     },
   },
@@ -61,7 +61,7 @@ const followingCount = user._count?.following;
 
 
 
-  return <DonationPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount}  existingFollow={existingFollow}  yourUserId={session.user.id} />;
+  return <DonationPostFeed initialPosts={posts} session={slug} username={user?.username} followersCount={followerCount} followingCount={followingCount}  existingFollow={existingFollow}  yourUserId={session?.user.id} />;
 };
 
 export default MyDonationFeed;

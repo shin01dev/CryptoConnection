@@ -21,7 +21,7 @@ import {
 import { ChevronDown } from 'lucide-react'; // ChevronDown은 아래 화살표 아이콘입니다. 필요에 따라 라이브러리를 수정해주세요.
 import { Button, buttonVariants } from '@/components/ui/Button'
 import { toast } from '@/hooks/use-toast'
-
+import { useSession } from 'next-auth/react'
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[]
@@ -39,6 +39,7 @@ interface PostFeedProps {
 const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,session,username ,followersCount,followingCount,yourUserId,existingFollow}) => {
   const lastPostRef = useRef<HTMLElement>(null)
   const [isFollowing, setIsFollowing] = useState<boolean>(existingFollow);
+  const { data: severSession } = useSession()
 
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -107,6 +108,12 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
 
   
   async function handleFollow() {
+    if (!severSession) {
+      // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
+      window.location.href = "/sign-in";
+      return;
+    }
+
     try {
       const endpoint = isFollowing ? '/api/notFollowing' : '/api/following'; // API endpoint 변경
   
@@ -155,8 +162,9 @@ const DonationPostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName,sessi
   className={`relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm ${
     isFollowing
       ? 'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 focus:bg-gradient-to-r focus:from-purple-400 focus:via-pink-500 focus:to-red-500 active:bg-gradient-to-r active:from-purple-400 active:via-pink-500 active:to-red-500' // 팔로잉 중일 때 색상
-      : 'inline-block bg-white border border-gray-300 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105 whitespace-nowrap focus:bg-white active:bg-white focus:border-gray-200 active:border-gray-200 focus:text-gray-800 active:text-gray-800' // 팔로잉이 아닐 때 색상
-  } outline-none`}
+      : 'inline-block bg-white border border-gray-300 text-gray-800 font-medium text-sm px-4 py-2 rounded-full transition-transform duration-200 hover:bg-gradient-to-r hover:from-purple-400 hover:via-pink-500 hover:to-red-500 whitespace-nowrap focus:bg-white active:bg-white focus:border-gray-200 active:border-gray-200 focus:text-gray-800 active:text-gray-800' // 팔로잉이 아닐 때 색상
+    } outline-none`}
+  
 >
   <p className="">
     {isFollowing ? "팔로잉" : "팔로우"}

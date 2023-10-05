@@ -10,7 +10,7 @@ const PopularMyFeed = async ({ slug }: { slug: string }) => {
   const session = await getAuthSession();
 
   // only rendered if session exists, so this will not happen
-  if (!session) return notFound();
+  // if (!session) return notFound();
 
   const posts = await db.post.findMany({
     where: {
@@ -54,7 +54,7 @@ const followingCount = user._count?.following;
 const existingFollow = await db.follow.findUnique({
   where: {
     followerId_followingId: {
-      followerId: session.user.id,
+      followerId: session?.user.id || 'defaultUserId',
       followingId: slug,
     },
   },
