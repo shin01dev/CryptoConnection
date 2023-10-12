@@ -23,6 +23,7 @@ import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
 
 import '@/styles/editor.css'
 import { encode } from 'punycode'
@@ -252,11 +253,11 @@ useEffect(() => {
 
   async function compressFile(file:any) {
     const options = {
-      maxSizeMB: 1, // (예시) 최대 파일 크기
-      maxWidthOrHeight: 1920, // (예시) 최대 너비 또는 높이
-      useWebWorker: true,
+      maxSizeMB: 1, // 이전보다 큰 파일 크기 제한을 설정하여 품질 손실을 줄입니다.
+      maxWidthOrHeight: 1920, // 더 높은 해상도를 유지하여 이미지/비디오의 선명도를 보존합니다.
+      useWebWorker: true, // 웹 워커를 사용하여 메인 스레드에서 압축 프로세스를 비동기적으로 처리합니다.
     };
-  
+    
     try {
       const compressedFile = await imageCompression(file, options);
       return compressedFile;
