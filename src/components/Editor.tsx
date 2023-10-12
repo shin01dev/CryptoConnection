@@ -248,29 +248,42 @@ useEffect(() => {
     
   })
 
-
   async function compressVideo(file:any) {
-    
     const ffmpeg = createFFmpeg({
       log: true,
-    });  
-    // FFmpeg 라이브러리가 로드되었는지 확인
+    });
+  
     if (!ffmpeg.isLoaded()) {
       await ffmpeg.load();
     }
   
-    // 원본 파일을 메모리에 작성
+    // 원본 파일을 메모리에 작성합니다.
     ffmpeg.FS('writeFile', file.name, new Uint8Array(await file.arrayBuffer()));
   
-    // 압축 명령 실행. 이 부분은 필요에 따라 매개변수를 조정할 수 있습니다.
-    await ffmpeg.run('-i', file.name, '-c:v', 'libx264', '-crf', '28', '-preset', 'fast', 'output.mp4');
-  
-    // 압축된 파일을 메모리에서 읽기
+    // 압축 명령 실행. 여기서 CRF 값을 33으로 설정합니다.
+    await ffmpeg.run(
+      '-i', file.name, // 입력 파일
+      '-c:v', 'libx264', // 비디오 코덱 설정
+      '-preset', 'superfast', // 인코딩 속도와 압축률 사이의 밸런스 설정. 'veryfast'는 좋은 속도와 압축률을 제공합니다.
+      '-crf', '28', // 품질 설정. 18-28은 대부분의 경우에 적합합니다. 값이 높을수록 품질이 낮아지고 파일 크기가 작아집니다.
+      '-vf', 'scale=-2:720', // 해상도 조정. 높이를 720p로 설정하고 비율은 유지합니다.
+      '-c:a', 'aac', // 오디오 코덱 설정. 대부분의 경우에 적합합니다.
+      '-strict', 'experimental', // 일부 오래된 FFmpeg 버전에서 필요한 옵션.
+      '-b:a', '128k', // 오디오 비트레이트 설정. 대부분의 사용에 적합한 값입니다.
+      'output.mp4' // 출력 파일 이름
+    );
+    
+    // 압축된 파일을 메모리에서 읽습니다.
     const compressedFile = ffmpeg.FS('readFile', 'output.mp4');
   
-    // Blob 형식으로 변환하여 반환
-    return new Blob([compressedFile.buffer], { type: 'video/mp4' });
+    // Blob을 File 객체로 변환하여 파일의 원래 이름을 유지하고, MIME type도 설정합니다.
+    const compressedBlob = new Blob([compressedFile.buffer], { type: 'video/mp4' });
+    const fileName = file.name; // 원본 파일 이름을 유지할 수도 있고, 필요에 따라 변경할 수도 있습니다.
+    const compressedVideoFile = new File([compressedBlob], fileName, { type: 'video/mp4' });
+  
+    return compressedVideoFile; // 압축된 비디오 파일을 반환합니다.
   }
+  
 
 
 
