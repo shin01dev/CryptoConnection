@@ -24,7 +24,6 @@ import VideoTool from '@weekwood/editorjs-video';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
 
-
 import '@/styles/editor.css'
 import { encode } from 'punycode'
 
@@ -328,7 +327,7 @@ useEffect(() => {
                   // Add the original extension to the cleaned file name
                   const newFileName = `${cleanName}.${fileExtension}`;
                 
-                  const newFile = new File([file], newFileName, { type: file.type });
+                  const newFile = new File([compressedFile], newFileName, { type: compressedFile.type });
                 
                 
                   const [res] = await uploadFiles([newFile], 'mediaPost')
@@ -366,7 +365,7 @@ useEffect(() => {
         // Add the original extension to the cleaned file name
         const newFileName = `${cleanName}.${fileExtension}`;
       
-        const newFile = new File([file], newFileName, { type: file.type });
+        const newFile = new File([compressedFile], newFileName, { type: compressedFile.type });
       
       
         const [res] = await videoFile([newFile], 'mediaPost') // video 업로드를 위한 엔드포인트
