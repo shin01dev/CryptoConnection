@@ -23,7 +23,7 @@ import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 
 import '@/styles/editor.css'
 import { encode } from 'punycode'
@@ -249,8 +249,32 @@ useEffect(() => {
   })
 
 
+  async function compressVideo(file:any) {
+    
+    const ffmpeg = createFFmpeg({
+      log: true,
+    });  
+    // FFmpeg 라이브러리가 로드되었는지 확인
+    if (!ffmpeg.isLoaded()) {
+      await ffmpeg.load();
+    }
+  
+    // 원본 파일을 메모리에 작성
+    ffmpeg.FS('writeFile', file.name, new Uint8Array(await file.arrayBuffer()));
+  
+    // 압축 명령 실행. 이 부분은 필요에 따라 매개변수를 조정할 수 있습니다.
+    await ffmpeg.run('-i', file.name, '-c:v', 'libx264', '-crf', '28', '-preset', 'fast', 'output.mp4');
+  
+    // 압축된 파일을 메모리에서 읽기
+    const compressedFile = ffmpeg.FS('readFile', 'output.mp4');
+  
+    // Blob 형식으로 변환하여 반환
+    return new Blob([compressedFile.buffer], { type: 'video/mp4' });
+  }
 
 
+
+  
   async function compressFile(file:any) {
     const options = {
       maxSizeMB: 1, // 이전보다 큰 파일 크기 제한을 설정하여 품질 손실을 줄입니다.
@@ -354,8 +378,7 @@ useEffect(() => {
     uploader: {
       // video 파일 업로드 로직
       async uploadByFile(file: File) {
-        const compressedFile = await compressFile(file);
-
+        const compressedFile = await compressVideo(file);
         // Get the original file's extension
         const fileExtension = file.name.split(".").pop();
         
@@ -382,8 +405,6 @@ useEffect(() => {
     player: {
       controls: true,
       autoplay: false
-
-      
     }
     
   }
