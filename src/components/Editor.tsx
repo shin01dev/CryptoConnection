@@ -22,6 +22,7 @@ import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import VideoTool from '@weekwood/editorjs-video';
 import { v4 as uuidv4 } from 'uuid';
+import imageCompression from 'browser-image-compression';
 
 
 import '@/styles/editor.css'
@@ -250,7 +251,21 @@ useEffect(() => {
 
 
 
-
+  async function compressFile(file:any) {
+    const options = {
+      maxSizeMB: 1, // (예시) 최대 파일 크기
+      maxWidthOrHeight: 1920, // (예시) 최대 너비 또는 높이
+      useWebWorker: true,
+    };
+  
+    try {
+      const compressedFile = await imageCompression(file, options);
+      return compressedFile;
+    } catch (error) {
+      console.error("파일 압축 중 오류 발생: ", error);
+      return file; // 압축에 실패한 경우 원본 파일 반환
+    }
+  }
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import('@editorjs/editorjs')).default
@@ -301,6 +316,8 @@ useEffect(() => {
             config: {
               uploader: {
                 async uploadByFile(file: File) {
+                  const compressedFile = await compressFile(file);
+
                   // Get the original file's extension
                   const fileExtension = file.name.split(".").pop();
                   
@@ -337,6 +354,8 @@ useEffect(() => {
     uploader: {
       // video 파일 업로드 로직
       async uploadByFile(file: File) {
+        const compressedFile = await compressFile(file);
+
         // Get the original file's extension
         const fileExtension = file.name.split(".").pop();
         
