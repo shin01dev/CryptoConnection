@@ -356,10 +356,10 @@ useEffect(() => {
                   const compressedFile = await compressFile(file);
 
                   // Get the original file's extension
-                  const fileExtension = file.name.split(".").pop();
+                  const fileExtension = compressedFile.name.split(".").pop();
                   
                   // Upload to uploadthing
-                  const encodedName = encodeURIComponent(file.name);
+                  const encodedName = encodeURIComponent(compressedFile.name);
                   const cleanName = encodedName.replace(/[^a-zA-Z0-9]/g, "");
                 
                   // Add the original extension to the cleaned file name
