@@ -24,6 +24,7 @@ import VideoTool from '@weekwood/editorjs-video';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+import { DANGEROUS__uploadFiles } from "uploadthing/client"; // 라이브러리에서 제공하는 업로드 함수.
 
 import '@/styles/editor.css'
 import { encode } from 'punycode'
@@ -247,45 +248,61 @@ useEffect(() => {
     },
     
   })
-
+       const ffmpeg = createFFmpeg({
+        log: true,
+      });
+  
   async function compressVideo(file:any) {
-    const ffmpeg = createFFmpeg({
-      log: true,
-    });
+    try {
+ 
+      if (!ffmpeg.isLoaded()) {
+        await ffmpeg.load();
+      }
   
-    if (!ffmpeg.isLoaded()) {
-      await ffmpeg.load();
+      // 원본 파일을 메모리에 작성합니다.
+      ffmpeg.FS('writeFile', file.name, new Uint8Array(await file.arrayBuffer()));
+  
+      // 압축 명령 실행. 여기서 CRF 값을 28로 설정합니다.
+      await ffmpeg.run(
+        '-i',
+        file.name,
+        '-c:v',
+        'libx264', // 비디오 코덱 설정
+        '-preset',
+        'superfast', // 인코딩 속도와 압축률 사이의 밸런스 설정. 'superfast'는 좋은 속도를 제공합니다.
+        '-crf',
+        '28', // 품질 설정. 18-28은 대부분의 경우에 적합합니다. 값이 높을수록 품질이 낮아지고 파일 크기가 작아집니다.
+        '-vf',
+        'scale=-2:720', // 해상도 조정. 높이를 720p로 설정하고 비율은 유지합니다.
+        '-c:a',
+        'aac', // 오디오 코덱 설정. 대부분의 경우에 적합합니다.
+        '-strict',
+        'experimental', // 일부 오래된 FFmpeg 버전에서 필요한 옵션.
+        '-b:a',
+        '128k', // 오디오 비트레이트 설정. 대부분의 사용에 적합한 값입니다.
+        'output.mp4' // 출력 파일 이름
+      );
+  
+      // 압축된 파일을 메모리에서 읽습니다.
+      const compressedFile = ffmpeg.FS('readFile', 'output.mp4');
+  
+      // 메모리에서 원본 파일을 삭제합니다.
+      ffmpeg.FS('unlink', file.name);
+  
+      // Blob을 File 객체로 변환하여 파일의 원래 이름을 유지하고, MIME type도 설정합니다.
+      const compressedBlob = new Blob([compressedFile.buffer], { type: 'video/mp4' });
+      const fileName = file.name; // 원본 파일 이름을 유지할 수도 있고, 필요에 따라 변경할 수도 있습니다.
+      const compressedVideoFile = new File([compressedBlob], fileName, { type: 'video/mp4' });
+  
+      return compressedVideoFile; // 압축된 비디오 파일을 반환합니다.
+    } catch (error) {
+      console.error('Video compression error:', error); // 오류를 콘솔에 기록합니다.
+      // 필요에 따라 사용자에게 오류 메시지를 표시할 수 있습니다.
+      // 예: alert('비디오를 압축하는 동안 오류가 발생했습니다. 다시 시도해주세요.');
+      throw error; // 오류를 다시 throw하여 이 함수를 호출하는 코드에서 처리할 수 있도록 합니다.
     }
-  
-    // 원본 파일을 메모리에 작성합니다.
-    ffmpeg.FS('writeFile', file.name, new Uint8Array(await file.arrayBuffer()));
-  
-    // 압축 명령 실행. 여기서 CRF 값을 33으로 설정합니다.
-    await ffmpeg.run(
-      '-i', file.name, // 입력 파일
-      '-c:v', 'libx264', // 비디오 코덱 설정
-      '-preset', 'superfast', // 인코딩 속도와 압축률 사이의 밸런스 설정. 'veryfast'는 좋은 속도와 압축률을 제공합니다.
-      '-crf', '28', // 품질 설정. 18-28은 대부분의 경우에 적합합니다. 값이 높을수록 품질이 낮아지고 파일 크기가 작아집니다.
-      '-vf', 'scale=-2:720', // 해상도 조정. 높이를 720p로 설정하고 비율은 유지합니다.
-      '-c:a', 'aac', // 오디오 코덱 설정. 대부분의 경우에 적합합니다.
-      '-strict', 'experimental', // 일부 오래된 FFmpeg 버전에서 필요한 옵션.
-      '-b:a', '128k', // 오디오 비트레이트 설정. 대부분의 사용에 적합한 값입니다.
-      'output.mp4' // 출력 파일 이름
-    );
-    
-    // 압축된 파일을 메모리에서 읽습니다.
-    const compressedFile = ffmpeg.FS('readFile', 'output.mp4');
-  
-    // Blob을 File 객체로 변환하여 파일의 원래 이름을 유지하고, MIME type도 설정합니다.
-    const compressedBlob = new Blob([compressedFile.buffer], { type: 'video/mp4' });
-    const fileName = file.name; // 원본 파일 이름을 유지할 수도 있고, 필요에 따라 변경할 수도 있습니다.
-    const compressedVideoFile = new File([compressedBlob], fileName, { type: 'video/mp4' });
-  
-    return compressedVideoFile; // 압축된 비디오 파일을 반환합니다.
   }
   
-
-
 
   
   async function compressFile(file:any) {
@@ -391,7 +408,7 @@ useEffect(() => {
     uploader: {
       // video 파일 업로드 로직
       async uploadByFile(file: File) {
-        const compressedFile = await compressVideo(file);
+        // const compressedFile = await compressVideo(file);
         // Get the original file's extension
         const fileExtension = file.name.split(".").pop();
         
@@ -402,7 +419,7 @@ useEffect(() => {
         // Add the original extension to the cleaned file name
         const newFileName = `${cleanName}.${fileExtension}`;
       
-        const newFile = new File([compressedFile], newFileName, { type: compressedFile.type });
+        const newFile = new File([file], newFileName, { type: file.type });
       
       
         const [res] = await videoFile([newFile], 'mediaPost') // video 업로드를 위한 엔드포인트
@@ -570,7 +587,7 @@ useEffect(() => {
             버튼을 눌러 주세요.
           </p>
           <p className='text-sm text-gray-600'>
-          동영상 파일은 최대 64MB , 사진 파일은 최대 16MB 업로드 가능합니다.
+          동영상 파일은 최대 32MB , 사진 파일은 최대 16MB 업로드 가능합니다.
           </p>
           <p className='text-sm text-gray-600'>
   
